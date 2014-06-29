@@ -14,7 +14,7 @@ Running for the first time
 ==========================
 
 From the command line, type:
-java -jar users mylogin mypassword
+```java -jar users mylogin mypassword```
 
 This command will create a text file "users.txt" containing one user per line.
 
@@ -24,11 +24,11 @@ When you want to finish, just press "CTRL+C"
 Usage examples
 ==============
 
-Example #1 - creating a list of users
-java -jar users
+Example #1 - creating a list of users:
+```java -jar users```
 
-Example #2 - creating a list of repositories
-java -jar repositories
+Example #2 - creating a list of repositories:
+```java -jar repositories```
 
 
 Special notes
@@ -43,7 +43,7 @@ Don't worry, our code is prepared to resume from the last point where it has sto
 
 If you're using linux, there is a neat way to follow the progress in overall:
 
-wc -l users.txt
+```wc -l users.txt```
 
 This command counts the lines, which in our case are the number of users or repositories that were already indexed.
 
@@ -63,8 +63,8 @@ section.
 Thanks
 ======
 Thanks go out for the development team of https://github.com/jcabi/jcabi for
-making available the Java-API wrapper and to @yegor256 for his blazzing-fast
+making available the Java-API wrapper and to https://github.com/yegor256 for his blazzing-fast
 support to make the wrapper work in top shape.
 
-Special thanks to @github for making this API available, you guys rock!
+Special thanks to https://github.com/ for making this API available, you guys rock!
 
