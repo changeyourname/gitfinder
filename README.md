@@ -25,10 +25,10 @@ Usage examples
 ==============
 
 Example #1 - creating a list of users:
-```java -jar users```
+```java -jar gitfinder users```
 
 Example #2 - creating a list of repositories:
-```java -jar repositories```
+```java -jar gitfinder repositories```
 
 
 Special notes

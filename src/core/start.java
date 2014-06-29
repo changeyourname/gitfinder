@@ -13,9 +13,12 @@
 package core;
 
 import com.jcabi.github.Github;
+import com.jcabi.github.Repo;
+import com.jcabi.github.Repos;
 import com.jcabi.github.RtGithub;
 import com.jcabi.github.User;
 import com.jcabi.github.wire.CarefulWire;
+import com.jcabi.http.response.JsonResponse;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,9 +26,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import javax.json.JsonObject;
 
 /**
  *
@@ -39,13 +45,17 @@ public class start {
     final static String filenameUsers = "users.txt";
     final static String filenameRepositories = "repositories.txt";
     
+    // the root folder where all code ends up stored
+    final static File folderCode = new File("./code");
+    
     /**
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
-                
-        setLoginDetails(args);
+
+        // ensure that we have the needed credentials for github
+        setLoginDetails();
         
         // are we looking to index the users?
         if(args[0].equalsIgnoreCase("users")){
@@ -56,10 +66,31 @@ public class start {
         
         // or are we interested in indexing repositories?
         if(args[0].equalsIgnoreCase("repositories")){
-            System.out.println("Indexing the repositories");
+            setLoginDetails();
+            System.out.println("Indexing repositories");
             launchRepositoryIndexing();
             return;
         }
+        
+               
+        // or are we interested in grabbing files from repositories?
+        if(args[0].equalsIgnoreCase("grab")){
+            System.out.println("Grabbing files");
+            launchGrabFiles(args[1]);
+            return;
+        }
+
+               
+        // or are we interested in grabbing files from repositories?
+        if(args[0].equalsIgnoreCase("reset")){
+            System.out.println("Resetting user details");
+            prefs.remove("username");
+            prefs.remove("password");
+            System.out.println("Done");
+            return;
+        }
+
+        
         
         
         // no arguments specified, show a simple syntax usage
@@ -67,6 +98,35 @@ public class start {
                 + "\n"
                 + "Example:\n"
                 + "java -jar gitfinder.jar repositories mylogin mypassword");
+    }
+    
+    /**
+     * Returns the last line from a given text file
+     * @param file  A file on disk 
+     * @return The last line if available or an empty string if nothing
+     * was found
+     */
+    static String getLastLine(File file){
+        String result = "";
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+       
+         String line = "";
+            while (line != null) {
+                line = reader.readLine();
+                if(line != null){
+                    result = line;
+                }
+                // we don't care about the content, just move to the last line
+            }
+        
+        } catch (IOException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        // all done    
+        return result;
     }
     
     /**
@@ -82,18 +142,9 @@ public class start {
             // no need to proceed
             return;
         }
-        // a file exists, let's try to get the last user name mentioned
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line = "";
-        String lastId = "";
-            while (line != null) {
-                line = reader.readLine();
-                if(line != null){
-                    lastId = line;
-                }
-                // we don't care about the content, just move to the last line
-            }
-
+        // get the last line of the text file
+        String lastId = getLastLine(file);
+        
         // looks good so far. Did we got a user name?    
         if(lastId.isEmpty()){
             // was empty, let's start again from scratch
@@ -102,11 +153,11 @@ public class start {
             return;
         }    
             
+        // good to resume operations
         System.out.println("Resuming the index since username: " + lastId);
         
         // now get the ID number for this user
         int idNumber = getUserIdNumber(lastId);
-            
         System.out.println("Last login ID: " + idNumber);
         
         if(idNumber == -1){
@@ -114,9 +165,8 @@ public class start {
             return;
         }
         
-        // ok, ready to keep iterating through new users
+        // ok, ready to continue iterating through new users
        iterateUsers(idNumber + "");
-
     }
     
     
@@ -124,7 +174,7 @@ public class start {
      * Get all the users registered on github
      */
     static void iterateUsers(final String lastUser) throws Exception{
-        //Github github = new RtGithub(username, password).entry().through(CarefulWire.class, 50);
+        // the github object
         Github github = new RtGithub(
                 new RtGithub(username, password)
                         .entry().through(CarefulWire.class, 50));
@@ -139,10 +189,51 @@ public class start {
             System.out.println(user.login());
         }
         
-        System.out.println("All done!"
-                + "");
+        System.out.println("All done!");
     }
 
+    /**
+     * Get all the users registered on github
+     */
+    static void iterateRepositories(final String lastRepository) throws Exception{
+       // the github object
+        Github github = new RtGithub(
+                new RtGithub(username, password)
+                        .entry().through(CarefulWire.class, 50));
+        // now go through each repository available
+       
+//        
+//        Iterable<Repos> repos = github.repos().iterate(lastRepository);
+//                
+//                
+//        // open up the text file with the logins
+//        BufferedWriter outLogin = new BufferedWriter(
+//                new FileWriter(filenameUsers, true), 8192);
+//        // iterate the users
+//        for (User user : users) {
+//            outLogin.write(user.login() + "\n");
+//            outLogin.flush();
+//            System.out.println(user.login());
+//        }
+        
+        System.out.println("All done!");
+    }
+   
+    
+    
+    private static void launchRepositoryIndexing() {
+        try {
+            // if there is an older archive, we should resume the operation
+            
+            
+            iterateRepositories("");
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * Gets the user id from a given login name
      * @param loginName
@@ -203,11 +294,11 @@ public class start {
      * Sets the login details that will be used with the github API
      * @param args 
      */
-    private static void setLoginDetails(String[] args) {
+    private static void setLoginDetails() {
         // initialize the preferences object
         prefs = Preferences.userNodeForPackage(start.class);
         // do we have any login details specified?
-        if(args.length < 2){
+//        if(args.length < 2){
             // get the values from save preferences if any
             username = prefs.get("username", "");
             password = prefs.get("password", "");
@@ -238,22 +329,84 @@ public class start {
             } catch (IOException ex) {
                 Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+      
+    }
+
+    /**
+     * When given a user name, go after the repositories where the user
+     * is involved and grab a copy
+     */
+    private static void launchGrabFiles(final String usernameTarget) {
+        if(usernameTarget == null){
+            System.out.println("You need to specify a user name");
             return;
         }
+        // we have a user name, let's start
+        System.out.println("Processing " + usernameTarget);
         
+        // what is our folder?
+        File thisFolder = new File(folderCode, usernameTarget);
         
-        // we have some values, expect them to be the login parameters
-        password = args[2];
-        username = args[1];
-        // now save these into our preferences object
-        prefs.put("username", username);
-        prefs.put("password", password);
+        // do we have the folder we need?
+        utils.files.mkdirs(thisFolder);
+        
+//        // with the user name, grab the object from Github
+//         Github github = new RtGithub(
+//                new RtGithub()
+//                //new RtGithub(username, password)
+//                        .entry().through(CarefulWire.class, 50));
+//        // get the user object associated with a given id
+//        User user = github.users().get("esa");
+//        
+//        try {
+//           
+//           Repos repos = github.repos();
+//           
+//           Repo repo = repos.get(null);
+//           
+//          
+//            
+//        } catch (Exception ex) {
+//            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+       try{ 
+        
+//           final Github github = new RtGithub();
+          
+           Github github = new RtGithub(
+//                new RtGithub()
+                new RtGithub(username, password)
+                        .entry().through(CarefulWire.class, 50));          
+           
+           
+           
+           final JsonResponse resp = github.entry()
+                .uri().path("/users/esa/repos")
+                //.queryParam("q", "java")
+                .back()
+                .fetch()
+                .as(JsonResponse.class);
+           
+           System.out.println(resp.json().read().toString());
+           
+//            final List<JsonObject> items = resp.json().readObject()
+//                .getJsonArray("items")
+//                .getValuesAs(JsonObject.class);
+//            for (final JsonObject item : items) {
+//                System.out.println(
+//                    String.format(
+//                        "repository found: %s",
+//                        item.get("full_name").toString()
+//                    )
+//                );
+//            }
+        
+       }catch (Exception e){
+           e.printStackTrace();
+       }
         
     }
 
-    private static void launchRepositoryIndexing() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }
