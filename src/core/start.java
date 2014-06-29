@@ -28,10 +28,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 /**
  *
@@ -350,32 +355,11 @@ public class start {
         // do we have the folder we need?
         utils.files.mkdirs(thisFolder);
         
-//        // with the user name, grab the object from Github
-//         Github github = new RtGithub(
-//                new RtGithub()
-//                //new RtGithub(username, password)
-//                        .entry().through(CarefulWire.class, 50));
-//        // get the user object associated with a given id
-//        User user = github.users().get("esa");
-//        
-//        try {
-//           
-//           Repos repos = github.repos();
-//           
-//           Repo repo = repos.get(null);
-//           
-//          
-//            
-//        } catch (Exception ex) {
-//            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
+        try{ 
         
-       try{ 
-        
-//           final Github github = new RtGithub();
           
            Github github = new RtGithub(
-//                new RtGithub()
                 new RtGithub(username, password)
                         .entry().through(CarefulWire.class, 50));          
            
@@ -388,24 +372,37 @@ public class start {
                 .fetch()
                 .as(JsonResponse.class);
            
-           System.out.println(resp.json().read().toString());
+           // get the JSON reply
+           final String answer = resp.json().read().toString();
            
-//            final List<JsonObject> items = resp.json().readObject()
-//                .getJsonArray("items")
-//                .getValuesAs(JsonObject.class);
-//            for (final JsonObject item : items) {
-//                System.out.println(
-//                    String.format(
-//                        "repository found: %s",
-//                        item.get("full_name").toString()
-//                    )
-//                );
-//            }
+           // get the needed strings
+           Pattern pattern = Pattern.compile("(?<=(\\\"name\\\":\\\"))([a-zA-Z_-]+)");
+           Matcher matcher = pattern.matcher(answer);
+           while(matcher.find()) {
+               final String repositoryName = answer.substring(matcher.start(), matcher.end());
+               processRepository(usernameTarget, repositoryName);
+//               System.out.println("--> " + repositoryName);
+           }
         
-       }catch (Exception e){
-           e.printStackTrace();
+           
+           
+           //System.out.println(resp.json().read().toString());
+        
+       }catch (IOException e){
+           System.err.println(e.getMessage());
        }
         
+    }
+
+    /**
+     * When given a repository name, this method will download the files
+     * onto the respective folder on disk
+     * @param usernameTarget    Owner of the repository
+     * @param repositoryName    The name of the repository
+     */
+    private static void processRepository(final String usernameTarget, 
+            final String repositoryName) {
+        System.out.println("--> " + repositoryName);
     }
 
     
