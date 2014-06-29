@@ -57,6 +57,7 @@ public class start {
         // or are we interested in indexing repositories?
         if(args[0].equalsIgnoreCase("repositories")){
             System.out.println("Indexing the repositories");
+            launchRepositoryIndexing();
             return;
         }
         
@@ -73,17 +74,14 @@ public class start {
      * gets the last user and then processes from there forward.
      */
     static void launchCrawling() throws Exception{
-        
         // check if our file already exists
         File file = new File(filenameUsers);
-        
         // file doesn't exist, start from scratch
         if(file.exists() == false){
             iterateUsers("");
             // no need to proceed
             return;
         }
-        
         // a file exists, let's try to get the last user name mentioned
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = "";
@@ -253,5 +251,9 @@ public class start {
         prefs.put("username", username);
         prefs.put("password", password);
         
+    }
+
+    private static void launchRepositoryIndexing() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
