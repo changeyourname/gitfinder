@@ -13,8 +13,6 @@
 package core;
 
 import com.jcabi.github.Github;
-import com.jcabi.github.Repo;
-import com.jcabi.github.Repos;
 import com.jcabi.github.RtGithub;
 import com.jcabi.github.User;
 import com.jcabi.github.wire.CarefulWire;
@@ -26,17 +24,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
 
 /**
  *
@@ -366,7 +358,7 @@ public class start {
            
            
            final JsonResponse resp = github.entry()
-                .uri().path("/users/esa/repos")
+                .uri().path("/users/"+usernameTarget+"/repos")
                 //.queryParam("q", "java")
                 .back()
                 .fetch()
@@ -402,7 +394,14 @@ public class start {
      */
     private static void processRepository(final String usernameTarget, 
             final String repositoryName) {
-        System.out.println("--> " + repositoryName);
+      
+        // what is our folder?
+        File thisFolder = new File(folderCode, usernameTarget + "/" + repositoryName);
+        // do we have the folder we need?
+        utils.files.mkdirs(thisFolder);
+        // now download the files
+        rep.download(thisFolder, usernameTarget + "/" + repositoryName);
+        
     }
 
     
