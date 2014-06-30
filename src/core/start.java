@@ -79,31 +79,7 @@ public class start {
                 + "java -jar gitfinder.jar repositories mylogin mypassword");
     }
     
-    /**
-     * Returns the last line from a given text file
-     * @param file  A file on disk 
-     * @return The last line if available or an empty string if nothing
-     * was found
-     */
-    static String getLastLine(File file){
-        String result = "";
-        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String line = "";
-            while (line != null) {
-                line = reader.readLine();
-                if(line != null){
-                    result = line;
-                }
-                // we don't care about the content, just move to the last line
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // all done    
-        return result;
-    }
+   
     
     /**
      * Sets the login details that will be used with the github API

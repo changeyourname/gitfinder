@@ -12,7 +12,12 @@
 
 package core;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 /**
@@ -30,4 +35,33 @@ public class common {
     final static File fileUsers = new File(common.filenameUsers);
     final static File fileRepositories = new File(common.filenameRepositories);
 
+    
+    
+     /**
+     * Returns the last line from a given text file
+     * @param file  A file on disk 
+     * @return The last line if available or an empty string if nothing
+     * was found
+     */
+    static String getLastLine(File file){
+        String result = "";
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String line = "";
+            while (line != null) {
+                line = reader.readLine();
+                if(line != null){
+                    result = line;
+                }
+                // we don't care about the content, just move to the last line
+            }
+            reader.close();
+        } catch (IOException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // all done    
+        return result;
+    }
+    
 }

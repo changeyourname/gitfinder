@@ -17,8 +17,10 @@ import com.jcabi.github.RtGithub;
 import com.jcabi.github.wire.CarefulWire;
 import com.jcabi.http.response.JsonResponse;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -49,15 +51,50 @@ public class rep {
         
         // now go through each name on the user list to grab its repositories
         BufferedReader reader;
+        BufferedWriter writer;
         try {
             reader = new BufferedReader(new FileReader(common.fileUsers));
+            
+            // are we resuming a previous operation?
+            if(common.fileRepositories.exists()){
+                // maybe we should skip onto the last line that was read
+                final String lastLine = common.getLastLine(common.fileRepositories);
+                int i1 = lastLine.indexOf("/");
+                // we need to have a slash, otherwise things should fail here
+                if(i1 < 0){
+                    System.err.println("Error: Last line of repository text file was not valid.");
+                    return;
+                }
+                // now get the last Id that was written to disk
+                final String lastId = lastLine.substring(0, i1);
+                
+                // time to speed up until we find it again on the user list
+                String line = "";
+                // now go and try to find the respective user id
+                while (line != null) {
+                    line = reader.readLine();
+                    // when we find a match, break here
+                    if(utils.text.equals(line, lastId)){
+                        break;
+                    }
+                }
+                // check if we did found the id
+                if(line == null){
+                    System.err.println("Error: Didn't found this Id: " + lastId);
+                    return;
+                }
+            }
+            
+            
+            writer = new BufferedWriter(
+                new FileWriter(common.fileRepositories, true), 8192);
             String line = "";
             while (line != null) {
                 line = reader.readLine();
                 // we don't process the line if it is null
                 if(line != null){
                     // now get the repositories associated to this user
-                    processRepositoriesFromUser(line);
+                    processRepositoriesFromUser(line, writer);
                 }
             }      
             // if there is an older archive, we should resume the operation
@@ -145,44 +182,13 @@ public class rep {
                // all done
                result.add(output);
            }
-           
-           
-//           // get the needed strings
-//           Pattern pattern = Pattern.compile("(?<=(\\\"name\\\":\\\"))([a-zA-Z_-]+)");
-//           Matcher matcher = pattern.matcher(answer);
-//           while(matcher.find()) {
-//               final String repositoryName = answer.substring(matcher.start(), matcher.end());
-////               processRepository(user, repositoryName);
-////               System.out.println("--> " + repositoryName);
-//               if(hasValue(repositoryName, result) == false){
-//                result.add(repositoryName);
-//               }
-//           }
-           //System.out.println(resp.json().read().toString());
+     
        }catch (IOException e){
            System.err.println(e.getMessage());
        }
         // all done
         return result;
     }
-    
-    
-//    /**
-//     * Checks if a given arraylist already contains a entry
-//     * @param what  The entry to test
-//     * @param array The array with all the entries
-//     * @return  True if it has this value already. False otherwise.
-//     */
-//    static boolean hasValue(final String what, ArrayList<String> array){
-//        boolean result = false;
-//        for(final String thisValue : array){
-//            if(text.equals(what, thisValue)){
-//                result = true;
-//                break;
-//            }
-//        }
-//        return result;
-//    }
     
     
     /**
@@ -209,7 +215,7 @@ public class rep {
                 .findGitDir() // scan up the file system tree
                 .build();
 
-        System.out.println("Having repository: " + repository.getDirectory());
+        System.out.println("Downloaded repository: " + repository.getDirectory());
 
         repository.close();
        
@@ -228,11 +234,28 @@ public class rep {
      * stored inside a text file.
      * @param targetUser 
      */
-    private static void processRepositoriesFromUser(final String targetUser) {
+    private static void processRepositoriesFromUser(final String targetUser,
+            BufferedWriter writer) {
         ArrayList<String> repositories = getRepositories(targetUser);
+        String lines = "";
+        // iterate each repository
         for(final String repository : repositories){
-            System.out.println(targetUser + "/" + repository);
+            // prepare the output
+            final String line = targetUser + "/" + repository;
+            System.out.println(line);
+            // add another line
+            lines = lines.concat(line+"\n");
+         }
+              
+        // now write all the lines in a single push
+        try {
+                writer.write(lines);
+                writer.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(rep.class.getName()).log(Level.SEVERE, null, ex);
         }
+     
+        
     }
 
      /**

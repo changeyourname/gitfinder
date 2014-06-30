@@ -16,7 +16,6 @@ import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
 import com.jcabi.github.User;
 import com.jcabi.github.wire.CarefulWire;
-import static core.start.getLastLine;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class user {
             return;
         }
         // get the last line of the text file
-        String lastId = getLastLine(common.fileUsers);
+        String lastId = common.getLastLine(common.fileUsers);
         
         // looks good so far. Did we got a user name?    
         if(lastId.isEmpty()){
