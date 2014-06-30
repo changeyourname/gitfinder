@@ -23,14 +23,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import utils.files;
-import utils.text;
 
 /**
  *
@@ -105,21 +102,17 @@ public class rep {
            
            // get the JSON reply
            final String answer = resp.json().read().toString();
-//           System.err.println("Processing " + user);
             // split the repo message into different items
-           String[] items = answer.split("\"default_branch\": \"master\"");
+           String[] items = answer.split("default_branch\":");
            // now iterate each one
            for(final String item : items){
                // get the name for this item
                final String name = getItem("name", item);
-//               System.out.println(name + "->" + item);
-//               System.exit(1981);
                
                // no need to proceed if the string has no relevant data
                if(name.isEmpty()){
                    continue;
                }
-//               System.err.println(user + "/" + name);
                // Was this repository forked from somewhere?
                final boolean fork = getItemBoolean("fork", item);
 
@@ -131,15 +124,26 @@ public class rep {
                // now get the repository description
                final String description = getItem("description", item);
 
-               // shall we add this value onto our list?
-//               if(hasValue(name, result) == false){
-//                result.add(repositoryName);
-//               }
-               result.add(name + " " + description);
-//               System.out.println(name 
-//                       + " -> "
-//                       + description
-//               );
+               // now get the repository description
+               final String language = getItem("language", item);
+
+               // create the output holder
+               String output = name;
+               
+               // add the language designed by Github
+               // shall we add a description?
+               if(language.isEmpty()){
+                   output += " none";
+               }else{              
+                   output += " " + language;
+               }
+               
+               // shall we add a description?
+               if(description.isEmpty() == false){
+                   output += " " + description;
+               }
+               // all done
+               result.add(output);
            }
            
            
@@ -163,22 +167,22 @@ public class rep {
     }
     
     
-    /**
-     * Checks if a given arraylist already contains a entry
-     * @param what  The entry to test
-     * @param array The array with all the entries
-     * @return  True if it has this value already. False otherwise.
-     */
-    static boolean hasValue(final String what, ArrayList<String> array){
-        boolean result = false;
-        for(final String thisValue : array){
-            if(text.equals(what, thisValue)){
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
+//    /**
+//     * Checks if a given arraylist already contains a entry
+//     * @param what  The entry to test
+//     * @param array The array with all the entries
+//     * @return  True if it has this value already. False otherwise.
+//     */
+//    static boolean hasValue(final String what, ArrayList<String> array){
+//        boolean result = false;
+//        for(final String thisValue : array){
+//            if(text.equals(what, thisValue)){
+//                result = true;
+//                break;
+//            }
+//        }
+//        return result;
+//    }
     
     
     /**
