@@ -31,12 +31,19 @@ public class core {
     final static String filenameUsers = "users.txt";
     final static String filenameRepositories = "repositories.txt";
     
+    // parameters used on the networked mode
+    static public final String 
+            webGetUser = "/request/user",
+            webSubmitRepository = "/submit/repository";
+    
     // check if our file already exists
     final static File fileUsers = new File(core.filenameUsers);
     final static File fileRepositories = new File(core.filenameRepositories);
 
-    // our default server when needed
+    // our default server/client when needed
     final static Server server = new Server();
+    final static Client client = new Client();
+    
     // the class to handle repositories
     final static Repositories rep = new Repositories();
     

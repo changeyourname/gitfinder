@@ -55,6 +55,9 @@ public class Repositories {
          try {
              // open the users' file for reading
             reader = new BufferedReader(new FileReader(core.fileUsers));
+            // initialize the text file where the repositories are written
+            writer = new BufferedWriter(
+                new FileWriter(core.fileRepositories, true), 8192);
             // are we resuming a previous operation?
             if(core.fileRepositories.exists()){
                 // now get the last Id that was written to disk
@@ -101,24 +104,18 @@ public class Repositories {
             System.err.println("Error: Repositories are not initialized");
             return;
         }
-        
-        // now go through each name on the user list to grab its repositories
-        try {
-            writer = new BufferedWriter(
-                new FileWriter(core.fileRepositories, true), 8192);
-            String nextUser = "";
-            while (nextUser != null) {
-                nextUser = getNextUser();
-                // we don't process the line if it is null
-                if(nextUser != null){
-                    // now get the repositories associated to this user
-                    processRepositoriesFromUser(nextUser, writer);
-                }
-            }      
-        // if there is an older archive, we should resume the operation
-        } catch (IOException ex) {
-            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            
+        String nextUser = "";
+        while (nextUser != null) {
+            nextUser = getNextUser();
+            // we don't process the line if it is null
+            if(nextUser != null){
+                // now get the repositories associated to this user
+                String result = processRepositoriesFromUser(nextUser);
+                // ok, all done. Add up the new info!
+                addNewRepositories(result);
+            }
+        }      
     }
     
     /**
@@ -165,9 +162,9 @@ public class Repositories {
         
         try{ 
            Github github = new RtGithub(
-                new RtGithub(core.username, core.password)
-                        .entry().through(CarefulWire.class, 50));          
-           
+//                new RtGithub(core.username, core.password)
+//                        .entry().through(CarefulWire.class, 50));          
+           );
            final JsonResponse resp = github.entry()
                 .uri().path("/users/" + user + "/repos")
                 //.queryParam("q", "java")
@@ -271,12 +268,12 @@ public class Repositories {
      * to a given user on github. The result will be listed to the console and
      * stored inside a text file.
      * @param targetUser 
+     * @return  the lines to be added on our repository text file
      */
-    private void processRepositoriesFromUser(final String targetUser,
-            BufferedWriter writer) {
+    public String processRepositoriesFromUser(final String targetUser) {
         ArrayList<String> repositories = getRepositories(targetUser);
         String lines = "";
-        // iterate each repository
+        // iterate each repository found
         for(final String repository : repositories){
             // prepare the output
             final String line = targetUser + "/" + repository;
@@ -284,7 +281,20 @@ public class Repositories {
             // add another line
             lines = lines.concat(line+"\n");
          }
-              
+        return lines;
+    }
+
+    /**
+     * Write a given number of lines onto our repository text file. There is
+     * no checking about the quality of the content. You are responsible to
+     * ensure that the lines are properly formed. Typically, it is expected
+     * that each line is concluded with an "\n" and that it starts by the useID,
+     * followed by the repository id, concluded language and then comments.
+     * Below is an example:
+     * triplecheck/download Java A repository for downloading files\n
+     * @param lines 
+     */
+    void addNewRepositories(final String lines){
         // now write all the lines in a single push
         try {
                 writer.write(lines);
@@ -293,7 +303,7 @@ public class Repositories {
             Logger.getLogger(Repositories.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
      /**
      * Given a json snippet, we retrieve a value provided as parameter. There
      * is no need for the json to be correct, we accept partial snippets.

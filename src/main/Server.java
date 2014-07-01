@@ -114,17 +114,29 @@ public class Server implements Container {
             
             // requests to ignore such as favicon (by browsers)
             if(rawText.equals("/favicon.ico")){
-                processRequest("", response);
+                answerRequest("", response);
+                return;
             }
             
             // give some feedback that a request occurred
-            System.out.println(time.getDateTimeISO() + " Request for: " + rawText);
+            System.out.println(time.getDateTimeISO() + " " + rawText);
             
             // request for feeding with some new repositories to crawl
-            if(rawText.equals("/get/repositories")){
+            if(rawText.equals(core.webGetUser)){
                 final String result = getUserToProcess();
-                processRequest(result, response);
+                answerRequest(result, response);
+                return;
             }
+            
+            // did we received data from a client?
+            if(rawText.startsWith(core.webSubmitRepository)){
+                final String result = submitRepository(rawText);
+                answerRequest(result, response);
+                return;
+            }
+           
+            // all done
+            answerRequest("404", response);
         }
         
         /**
@@ -133,7 +145,7 @@ public class Server implements Container {
          * @param answer    The text given back to the requester
          * @param response  The object where the web request is held
          */
-        void processRequest(final String answer, Response response){
+        void answerRequest(final String answer, Response response){
             try {
                   // the variable where we write the output for our requester
                   PrintStream body;
@@ -163,5 +175,55 @@ public class Server implements Container {
             // otherwise, give the name
             return answer;
         }
+
+        /**
+         * Handles the case when a client submits the information about a
+         * given repository back into our server. This method assumes that
+         * information is given through the URL on the following format:
+         * /submit/repository/userid/repositoryid/language/description
+         * @param rawText
+         * @return 
+         */
+    private String submitRepository(final String rawText) {
+        // remove the initial keywords
+        final String keyword = "/submit/repository";
+        // now remove the initial keyword from our text
+        String content = rawText.substring(keyword.length());
+        // handle a possible error when no data is provided
+        if(content.isEmpty()){
+            return "501";
+        }
+        // remove initial slash if one is provided
+        if(content.startsWith("/")){
+            content = content.substring(1);
+        }
+        // test again if the result is empty or not
+        if(content.isEmpty()){
+            return "502";
+        }
+        
+        // now partition the URL into separate blocks
+        String[] items = content.split("/");
+        
+        // we expect a specific number of parameters
+        if(items.length != 4){
+            return "503";
+        }
+        
+        // try to fix part of the conversion
+        String language = items[2].replace("%20", " ");
+        String description = items[3].replace("\n", "").replace("%20", " ");
+        
+        
+        // at this point we don't filter much the result and assume everything is correct
+        final String line = items[0] + "/" + items[1] 
+                + " " + language + " " + description + "\n";
+        
+        // write up this new line
+        core.rep.addNewRepositories(line);
+        
+        // all ok, let's conclude
+        return "200";
+    }
         
  }

@@ -81,6 +81,12 @@ public class start {
             return;
         }
   
+        // or are we interested in grabbing files from repositories?
+        if(args[0].equalsIgnoreCase("client")){
+            core.client.start(args[1]);
+            return;
+        }
+  
         
         
         // no arguments specified, show a simple syntax usage
@@ -164,7 +170,6 @@ public class start {
         utils.files.mkdirs(thisFolder);
         // now download the files
         core.rep.download(thisFolder, usernameTarget + "/" + repositoryName);
-        
     }
 
     
