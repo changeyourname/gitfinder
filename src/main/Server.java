@@ -63,8 +63,7 @@ public class Server implements Container {
      * @param portNumber the port of communications (typically 80 for Internet)
      */     
    public void startServer(String portNumber){
-          
-            try {
+           try {
             // get the port number
             int serverPort = Integer.parseInt(portNumber);
             
@@ -191,6 +190,7 @@ public class Server implements Container {
         String content = rawText.substring(keyword.length());
         // handle a possible error when no data is provided
         if(content.isEmpty()){
+            System.out.println("Error 501: " + content);
             return "501";
         }
         // remove initial slash if one is provided
@@ -199,6 +199,7 @@ public class Server implements Container {
         }
         // test again if the result is empty or not
         if(content.isEmpty()){
+            System.out.println("Error 502: " + content);
             return "502";
         }
         
@@ -207,6 +208,7 @@ public class Server implements Container {
         
         // we expect a specific number of parameters
         if(items.length != 4){
+            System.out.println("Error 503: " + content);
             return "503";
         }
         
@@ -217,11 +219,13 @@ public class Server implements Container {
         
         // at this point we don't filter much the result and assume everything is correct
         final String line = items[0] + "/" + items[1] 
-                + " " + language + " " + description + "\n";
+                + " " + language + " " + description;
         
         // write up this new line
-        core.rep.addNewRepositories(line);
-        
+        core.rep.addNewRepositories(line + "\n");
+        // do some output to let everyone know there is some action going            
+        System.out.println("web: " + line);
+
         // all ok, let's conclude
         return "200";
     }

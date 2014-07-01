@@ -83,6 +83,7 @@ public class start {
   
         // or are we interested in grabbing files from repositories?
         if(args[0].equalsIgnoreCase("client")){
+            setLoginDetails();
             core.client.start(args[1]);
             return;
         }
