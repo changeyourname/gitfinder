@@ -76,12 +76,13 @@ public class Server implements Container {
 
             // do the connection itself
             connection.connect(address);
-                   
             
             System.out.println("Server available on port " + portNumber);
             
          } catch (IOException ex) {
-            System.err.println("Failed to open port for server: " + ex.getMessage());
+            System.err.println("Error: Failed to open port " + portNumber 
+                    + ". Reason: " + ex.getMessage());
+            System.exit(500);
       }
    }
 
