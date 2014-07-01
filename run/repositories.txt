@@ -350,3 +350,62 @@ atmos/dot_xen Ruby parsing xen's .xen files for reading and writing
 atmos/express-session-redis JavaScript persistent sessions for express stored in redis
 atmos/face-crime Ruby Put Jon Rohan's face on eeeerybody
 atmos/fitter_happier Ruby A Rails Plugin for adding a simple health check to your application
+errfree/test none
+errfree/test1 none
+mojodna/AaronCam Objective-C Camera + Flickr app skeleton
+mojodna/active_queue Ruby A toolkit for queueing tasks and creating worker processes
+mojodna/anemone Ruby Web Hook servicer / batch request system
+mojodna/bamboo-shooter Ruby (demo) PubSub for Pandas
+mojodna/crud_controller none Abstract resource controller + generator for Rails
+mojodna/debian-mapnik C++ Mirror of git://git.debian.org/pkg-grass/mapnik.git
+mojodna/dovetail Ruby (proof-of-concept) A toolkit for assembling XMPP components.
+mojodna/fire-hydrant Ruby (demo) Tools for consuming Fire Eagle's XMPP PubSub feed.
+mojodna/fireeagle-location-provider none Fire Eagle Location Provider for Google Gears
+mojodna/fireeagle-tutorial Python Sample code for using Fire Eagle from Ruby and Python
+mojodna/firesnake Python (demo) Python-powered Google Earth visualizer for Fire Eagle data
+mojodna/flickr-shape-parser Python (utility) Parses and converts the Flickr Shapefiles Public Dataset, Version 1.0
+mojodna/geode-held JavaScript Geode-HELD + Fire Eagle support
+mojodna/heroku-buildpack-cairo Shell Heroku buildpack with Cairo (and Pixman and FreeType)
+bmizerany/assert Go Asserts to Go testing
+bmizerany/attrubates Ruby Arrtubates sets meta on meta for objects and adds additional rendering helpers for ActionController::Base in Rails.
+bmizerany/aws Go An old simple AWS client in Go (use bmizerany/aws4 for more up to date aws usage).
+bmizerany/aws.go Go
+bmizerany/aws4 Go A Go package for AWS Signature version 4 
+bmizerany/bang Ruby banger
+bmizerany/beldam Ruby clean, easy, ec2 wrapper
+bmizerany/domainy Ruby for getting the base of a domain
+bmizerany/doozer-bench Go bechmark the doozerz
+bmizerany/Elephant Objective-C An Adium Plugin for keeping realtime backup/full-text search of all chats
+bmizerany/em-swirl Ruby An evented Ruby EC2 driver for EventMachine
+jnewland/agile_zen Ruby
+jnewland/alfred-open-windows Shell Alfred extension to switch between open windows of the currently focused application
+jnewland/boolean_web_service Ruby BooleanWebService(:isitchristmas) => false. Well, unless it's christmas. Then it'd be true.
+jnewland/capistrano-log_with_awesome Ruby logging callbacks for capistrano
+jnewland/capsize Ruby A Capistrano extension for managing and running your app on Amazon EC2.
+jnewland/cucumber-json Ruby A cucumber output formatter that outputs JSON
+jnewland/cucumber-newrelic Ruby Cucumber steps for verifing metrics from NewRelic's API
+jnewland/cucumber-scout Ruby Cucumber steps for verifying Scout metrics
+jnewland/cucumber-standalone Ruby generator for standalone cuke projects
+jnewland/fireeagle Ruby Ruby wrapper for Yahoo!'s FireEagle
+jnewland/github-campfire Ruby Sinatra app that pushes your Github Commit info to Campfire
+jnewland/god_examples Ruby examples of some of the crazy awesome things you can do with God
+jnewland/god_web JavaScript iPhone friendly web UI for God
+jnewland/gsa-feeds Ruby A Ruby wrapper for the Google Search Appliance Feeds Protocol
+jnewland/gsa-prototype JavaScript Prototype/Javascript wrapper for the Google Search Appliance Search Protocol. Fancy cross-domain JSON support included.
+joshknowles/db-populate none Rake task to assist with bootstrapping a Rails project database
+joshknowles/dotfiles Shell Misc configuration files
+joshknowles/ec2-chef-example Ruby Collection of Rake tasks and example Chef recipes used to automate the creation of EC2 instances
+joshknowles/gitrdoc Ruby Generate RDoc for your GitHub project
+joshknowles/joshknowles.github.com none Jekyll repository for http://joshknowles.com
+joshknowles/pt Ruby Pivotal Tracker API & Report Generation
+joshknowles/rspec-on-rails-matchers Ruby A collection of RSpec matchers to be used with the Ruby on Rails project
+joshknowles/userscripts none A collection of Userscripts for GreaseMonkey and Fluid
+hornbeck/arc Arc My arc repo
+hornbeck/blerb-core Ruby blerb running on merb-core
+hornbeck/Little-Erlanger Erlang
+hornbeck/resumatoR R R package for the Resumator API
+jwhitmire/csv-mode Emacs Lisp Updated csv-mode for emacs
+jwhitmire/dial-a-script Shell Helpful stuff I put in my ~/bin directory to keep me fat and lazy
+jwhitmire/disco-tmbundle none Textmate Bundle for working with the Disco javscript view framework
+jwhitmire/jwhitmire.github.com none
+jwhitmire/llor-nu-legacy Ruby Legacy code from the original llor.nu site

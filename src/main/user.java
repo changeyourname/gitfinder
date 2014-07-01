@@ -10,7 +10,7 @@
  * FileComment: <text> Methods related to github registered users</text> 
  */
 
-package core;
+package main;
 
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
@@ -35,13 +35,13 @@ public class user {
      */
     static void launchCrawling() throws Exception{
         // check if our file already exists
-        if(common.fileUsers.exists() == false){
+        if(core.fileUsers.exists() == false){
             iterateUsers("");
             // no need to proceed
             return;
         }
         // get the last line of the text file
-        String lastId = common.getLastLine(common.fileUsers);
+        String lastId = core.getLastLine(core.fileUsers);
         
         // looks good so far. Did we got a user name?    
         if(lastId.isEmpty()){
@@ -74,12 +74,12 @@ public class user {
     static void iterateUsers(final String lastUser) throws Exception{
         // the github object
         Github github = new RtGithub(
-                new RtGithub(common.username, common.password)
+                new RtGithub(core.username, core.password)
                         .entry().through(CarefulWire.class, 50));
         Iterable<User> users = github.users().iterate(lastUser);
         // open up the text file with the logins
         BufferedWriter outLogin = new BufferedWriter(
-                new FileWriter(common.filenameUsers, true), 8192);
+                new FileWriter(core.filenameUsers, true), 8192);
         // iterate the users
         for (User user : users) {
             outLogin.write(user.login() + "\n");
@@ -98,7 +98,7 @@ public class user {
      */
     public static int getUserIdNumber(String loginName) {
         Github github = new RtGithub(
-                new RtGithub(common.username, common.password)
+                new RtGithub(core.username, core.password)
                         .entry().through(CarefulWire.class, 50));
         // get the user object associated with a given id
         User user = github.users().get(loginName);

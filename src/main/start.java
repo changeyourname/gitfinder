@@ -10,7 +10,7 @@
  * FileComment: <text> A project for handling the crawl of github.</text> 
  */
 
-package core;
+package main;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +51,7 @@ public class start {
             // ensure that we have the needed credentials for github
             setLoginDetails();
             System.out.println("Indexing repositories");
-            rep.launchRepositoryIndexing();
+            core.rep.launchRepositoryIndexing();
             return;
         }
         
@@ -68,8 +68,8 @@ public class start {
         // or are we interested in grabbing files from repositories?
         if(args[0].equalsIgnoreCase("reset")){
             System.out.println("Resetting user details");
-            common.prefs.remove("username");
-            common.prefs.remove("password");
+            core.prefs.remove("username");
+            core.prefs.remove("password");
             System.out.println("Done");
             return;
         }
@@ -77,8 +77,7 @@ public class start {
         // or are we interested in grabbing files from repositories?
         if(args[0].equalsIgnoreCase("server")){
             System.out.println("Starting the server");
-            common.server.start(args);
-            System.out.println("Done");
+            core.server.start(args);
             return;
         }
   
@@ -88,7 +87,7 @@ public class start {
         System.out.println("Syntax usage: java -jar gitfinder.java users|repositories username password"
                 + "\n"
                 + "Example:\n"
-                + "java -jar gitfinder.jar repositories mylogin mypassword");
+                + "java -jar gitfinder.jar users");
     }
     
    
@@ -99,40 +98,38 @@ public class start {
      */
     private static void setLoginDetails() {
         // initialize the preferences object
-        common.prefs = Preferences.userNodeForPackage(start.class);
-        // do we have any login details specified?
-//        if(args.length < 2){
-            // get the values from save preferences if any
-            common.username = common.prefs.get("username", "");
-            common.password = common.prefs.get("password", "");
-            
-            // no need to continue if they were already set
-            if(common.username.isEmpty() == false && common.password.isEmpty() == false){
-                System.out.println("Using the login details of " + common.username);
-                return;
-            }
-            
-            
-            System.out.println("Attention: No username nor password provided");
-            System.out.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
-            
-            
-            try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            
-                System.out.println("Your github login name: ");
-                common.username = in.readLine();
-                    
-                System.out.println("Your github password: ");
-                common.password = in.readLine();
+        core.prefs = Preferences.userNodeForPackage(start.class);
+        // get the values from save preferences if any
+        core.username = core.prefs.get("username", "");
+        core.password = core.prefs.get("password", "");
 
-                // now save these into our preferences object
-                common.prefs.put("username", common.username);
-                common.prefs.put("password", common.password);
-            } catch (IOException ex) {
-                Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
-            }
-      
+        // no need to continue if they were already set
+        if(core.username.isEmpty() == false && core.password.isEmpty() == false){
+            System.out.println("Using the login details of " + core.username);
+            return;
+        }
+
+
+        System.out.println("Attention: No username nor password provided");
+        System.out.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
+
+
+        try {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+            System.out.println("Your github login name: ");
+            core.username = in.readLine();
+
+            System.out.println("Your github password: ");
+            core.password = in.readLine();
+
+            // now save these into our preferences object
+            core.prefs.put("username", core.username);
+            core.prefs.put("password", core.password);
+        } catch (IOException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -166,7 +163,7 @@ public class start {
         // do we have the folder we need?
         utils.files.mkdirs(thisFolder);
         // now download the files
-        rep.download(thisFolder, usernameTarget + "/" + repositoryName);
+        core.rep.download(thisFolder, usernameTarget + "/" + repositoryName);
         
     }
 

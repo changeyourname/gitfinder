@@ -4,13 +4,13 @@
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-06-30T14:04:22Z
  * LicenseName: EUPL-1.1-without-appendix
- * FileName: common.java  
+ * FileName: core.java  
  * FileType: SOURCE
  * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
- * FileComment: <text> Where we keep global common of the program.</text> 
+ * FileComment: <text> Where we keep global core of the program.</text> 
  */
 
-package core;
+package main;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +24,7 @@ import java.util.prefs.Preferences;
  *
  * @author Nuno Brito, 30th of June 2014 in Darsmtadt, Germany
  */
-public class common {
+public class core {
     static String username = "";
     static String password = "";
     static Preferences prefs;
@@ -32,11 +32,14 @@ public class common {
     final static String filenameRepositories = "repositories.txt";
     
     // check if our file already exists
-    final static File fileUsers = new File(common.filenameUsers);
-    final static File fileRepositories = new File(common.filenameRepositories);
+    final static File fileUsers = new File(core.filenameUsers);
+    final static File fileRepositories = new File(core.filenameRepositories);
 
     // our default server when needed
     final static Server server = new Server();
+    // the class to handle repositories
+    final static Repositories rep = new Repositories();
+    
     
      /**
      * Returns the last line from a given text file

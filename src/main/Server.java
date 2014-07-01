@@ -10,7 +10,7 @@
  * FileComment: <text> Provides a server for distributed processing of the 
 repositories indexing.</text> 
  */
-package core;
+package main;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -24,9 +24,12 @@ import org.simpleframework.http.core.Container;
 import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 import org.simpleframework.util.thread.Scheduler;
+import utils.time;
 
 /**
- *
+ * Don't worry. Keep things simple, make things work. Worry tomorrow
+ * about the problems you don't have today.
+ * 
  * @author Nuno Brito, 1st of July 2014 in Darmstadt, Germany
  */
 public class Server implements Container {
@@ -35,7 +38,7 @@ public class Server implements Container {
     Connection connection;
     public String webOutput = "";
     
-    
+       
     /**
      * Places the server into operation
      * @param args The arguments needed for running the server. We expect these
@@ -45,10 +48,17 @@ public class Server implements Container {
      * Maybe in the future we don't need arguments at all.
      */
     void start(String[] args) {
-        //System.out.println(args[1]);
+        // first step: settings
+        doSettings();
+        // second step: instantiate server
         startServer(args[1]);
     }
 
+    /**
+     * Start our own settings for this server
+     */
+    private void doSettings(){
+    }
     
      /** Start our web server instance
      * @param portNumber the port of communications (typically 80 for Internet)
@@ -87,9 +97,10 @@ public class Server implements Container {
 
  class Task implements Runnable {
   
-      private final Response response;
-      private final Request request;
- 
+      private Response response = null;
+      private Request request = null;
+    
+      
       public Task(Request request, Response response) {
          this.response = response;
          this.request = request;
@@ -101,23 +112,27 @@ public class Server implements Container {
             // get what we are trying to run
             String rawText = request.getTarget();
             
-            // requests to ignore
+            // requests to ignore such as favicon (by browsers)
             if(rawText.equals("/favicon.ico")){
                 processRequest("", response);
             }
             
             // give some feedback that a request occurred
-            System.out.println("Request for: " + rawText);
+            System.out.println(time.getDateTimeISO() + " Request for: " + rawText);
             
             // request for feeding with some new repositories to crawl
             if(rawText.equals("/get/repositories")){
-                processRequest("Getting list of repositories", response);
+                final String result = getUserToProcess();
+                processRequest(result, response);
             }
-            
-            
         }
         
-        
+        /**
+         * When a new request comes from the network, this is the method that
+         * will conclude the reply. 
+         * @param answer    The text given back to the requester
+         * @param response  The object where the web request is held
+         */
         void processRequest(final String answer, Response response){
             try {
                   // the variable where we write the output for our requester
@@ -134,5 +149,19 @@ public class Server implements Container {
                 }
         }
         
+        
+        /**
+         * Gets some users from our list to process
+         */
+        private String getUserToProcess(){
+            // get the next user in line from our repository tracker
+            final String answer = core.rep.getNextUser();
+            // if null, just provide an empty reply
+            if(answer == null){
+                return "";
+            }
+            // otherwise, give the name
+            return answer;
+        }
         
  }

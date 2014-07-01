@@ -10,7 +10,7 @@
  * FileComment: <text> Helps to test some code snippets</text> 
  */
 
-package core;
+package main;
 
 
 /**

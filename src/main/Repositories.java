@@ -4,13 +4,13 @@
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-06-29T23:25:41Z
  * LicenseName: EUPL-1.1-without-appendix
- * FileName: rep.java  
+ * FileName: Repositories.java  
  * FileType: SOURCE
  * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
  * FileComment: <text> Function related to github repositories.</text> 
  */
 
-package core;
+package main;
 
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
@@ -35,84 +35,123 @@ import utils.files;
  *
  * @author Nuno Brito, 29th of June 2014 in Darmstadt, Germany
  */
-public class rep {
+public class Repositories {
+        
+    BufferedReader reader;
+    BufferedWriter writer;    
+     
+    // are we ready to start working?
+    boolean hasInitialized = false;
+        
     
+    public Repositories(){
+        doSettings();
+    }
      
     /**
-     * Launch the indexing of repositories available on github using a
-     * previously indexed list of users.
+     * Prepare the files for editing
      */
-    public static void launchRepositoryIndexing() {
-        // we need the list of users to be available
-        if(common.fileUsers.exists() == false){
-            System.err.println("Didn't found the index of users.");
-            return;
-        }
-        
-        // now go through each name on the user list to grab its repositories
-        BufferedReader reader;
-        BufferedWriter writer;
-        try {
-            reader = new BufferedReader(new FileReader(common.fileUsers));
-            
+    private void doSettings(){
+         try {
+             // open the users' file for reading
+            reader = new BufferedReader(new FileReader(core.fileUsers));
             // are we resuming a previous operation?
-            if(common.fileRepositories.exists()){
-                // maybe we should skip onto the last line that was read
-                final String lastLine = common.getLastLine(common.fileRepositories);
-                int i1 = lastLine.indexOf("/");
-                // we need to have a slash, otherwise things should fail here
-                if(i1 < 0){
-                    System.err.println("Error: Last line of repository text file was not valid.");
-                    return;
-                }
+            if(core.fileRepositories.exists()){
                 // now get the last Id that was written to disk
-                final String lastId = lastLine.substring(0, i1);
-                
+                final String lastId = getLastIndexedId();
                 // time to speed up until we find it again on the user list
-                String line = "";
+                String lastIndexedId = "";
                 // now go and try to find the respective user id
-                while (line != null) {
-                    line = reader.readLine();
+                while (lastIndexedId != null) {
+                    lastIndexedId = reader.readLine();
                     // when we find a match, break here
-                    if(utils.text.equals(line, lastId)){
+                    if(utils.text.equals(lastIndexedId, lastId)){
                         break;
                     }
                 }
                 // check if we did found the id
-                if(line == null){
+                if(lastIndexedId == null){
                     System.err.println("Error: Didn't found this Id: " + lastId);
+                    hasInitialized = false;
                     return;
                 }
             }
             
             
+            } catch (IOException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+            hasInitialized = false;
+        }
+         // all systems ready to go
+         hasInitialized = true;
+    }
+        
+    /**
+     * Launch the indexing of repositories available on github using a
+     * previously indexed list of users.
+     */
+    public void launchRepositoryIndexing() {
+        // we need the list of users to be available
+        if(core.fileUsers.exists() == false){
+            System.err.println("Error: Didn't found the index of users.");
+            return;
+        }
+         // are we good to go?
+        if(hasInitialized == false){
+            System.err.println("Error: Repositories are not initialized");
+            return;
+        }
+        
+        // now go through each name on the user list to grab its repositories
+        try {
             writer = new BufferedWriter(
-                new FileWriter(common.fileRepositories, true), 8192);
-            String line = "";
-            while (line != null) {
-                line = reader.readLine();
+                new FileWriter(core.fileRepositories, true), 8192);
+            String nextUser = "";
+            while (nextUser != null) {
+                nextUser = getNextUser();
                 // we don't process the line if it is null
-                if(line != null){
+                if(nextUser != null){
                     // now get the repositories associated to this user
-                    processRepositoriesFromUser(line, writer);
+                    processRepositoriesFromUser(nextUser, writer);
                 }
             }      
-            // if there is an older archive, we should resume the operation
+        // if there is an older archive, we should resume the operation
         } catch (IOException ex) {
             Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    
-    
+    /**
+     * Gets the next user to have his repositories analysed
+     * @return The next user name to be indexed, or null if none was found
+     */
+    public String getNextUser(){
+        try {
+            return reader.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Repositories.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
     /**
-     * Get all the repositories registered on github. We need a user list
-     * to be available for this purpose.
+     * This method will look into repositories.txt to first find the last
+     * line that was added on the file and then extract the respective username.
+     * @return The user name of the last repository that was written on the file
      */
-    private static void listRepositories(final String lastRepository){
-        System.out.println("All done!");
+    public String getLastIndexedId(){
+        // maybe we should skip onto the last line that was read
+        final String lastLine = core.getLastLine(core.fileRepositories);
+        int i1 = lastLine.indexOf("/");
+        // we need to have a slash, otherwise things should fail here
+        if(i1 < 0){
+            System.err.println("Error: Last line of repository text file was not valid.");
+            return null;
+        }
+        // now get the last Id that was written to disk
+        return lastLine.substring(0, i1);
     }
+    
     
     /**
      * Given a Github.com user, this method provides an arraylist
@@ -120,13 +159,13 @@ public class rep {
      * @param user
      * @return 
      */
-    public static ArrayList<String> getRepositories(final String user){
+    public ArrayList<String> getRepositories(final String user){
         // create the new array
         ArrayList<String> result = new ArrayList();
         
         try{ 
            Github github = new RtGithub(
-                new RtGithub(common.username, common.password)
+                new RtGithub(core.username, core.password)
                         .entry().through(CarefulWire.class, 50));          
            
            final JsonResponse resp = github.entry()
@@ -196,7 +235,7 @@ public class rep {
      * @param location The username/repository identification. We'd
      * expect something like triplecheck/reporter
      */
-    public static void download(final File localPath, final String location){
+    public void download(final File localPath, final String location){
         // we can't have any older files
         files.deleteDir(localPath);
         final String REMOTE_URL = "https://github.com/"+location+".git";
@@ -219,9 +258,9 @@ public class rep {
         repository.close();
        
         } catch (IOException ex) {
-            Logger.getLogger(rep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Repositories.class.getName()).log(Level.SEVERE, null, ex);
         } catch (GitAPIException ex) {
-            Logger.getLogger(rep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Repositories.class.getName()).log(Level.SEVERE, null, ex);
         }
  
              System.out.println("--> " + location);
@@ -233,7 +272,7 @@ public class rep {
      * stored inside a text file.
      * @param targetUser 
      */
-    private static void processRepositoriesFromUser(final String targetUser,
+    private void processRepositoriesFromUser(final String targetUser,
             BufferedWriter writer) {
         ArrayList<String> repositories = getRepositories(targetUser);
         String lines = "";
@@ -251,10 +290,8 @@ public class rep {
                 writer.write(lines);
                 writer.flush();
         } catch (IOException ex) {
-            Logger.getLogger(rep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Repositories.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-        
     }
 
      /**
@@ -264,7 +301,7 @@ public class rep {
      * @param content   The haystack where we'll look for the needle
      * @return          The value of the hay needle
      */
-    private static String getItem(final String parameter, final String content){
+    private String getItem(final String parameter, final String content){
         String result;
         // construct the keyword detection
         final String keyword = 
@@ -294,7 +331,7 @@ public class rep {
      * @param content   The haystack where we'll look for the needle
      * @return          The value of the hay needle
      */
-    private static Boolean getItemBoolean(final String parameter, final String content){
+    private Boolean getItemBoolean(final String parameter, final String content){
         Boolean result;
         // construct the keyword detection
         final String keyword = 
