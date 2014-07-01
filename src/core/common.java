@@ -35,7 +35,8 @@ public class common {
     final static File fileUsers = new File(common.filenameUsers);
     final static File fileRepositories = new File(common.filenameRepositories);
 
-    
+    // our default server when needed
+    final static Server server = new Server();
     
      /**
      * Returns the last line from a given text file

@@ -33,7 +33,7 @@ import utils.files;
 
 /**
  *
- * @author Nuno Brito, 29th of July 2014 in Darmstadt, Germany
+ * @author Nuno Brito, 29th of June 2014 in Darmstadt, Germany
  */
 public class rep {
     
@@ -98,7 +98,6 @@ public class rep {
                 }
             }      
             // if there is an older archive, we should resume the operation
-            //listRepositories("");
         } catch (IOException ex) {
             Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
         }

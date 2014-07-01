@@ -14,7 +14,6 @@ package core;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
@@ -37,11 +36,11 @@ public class start {
      */
     public static void main(String[] args) throws Exception {
 
-        // ensure that we have the needed credentials for github
-        setLoginDetails();
         
         // are we looking to index the users?
         if(args[0].equalsIgnoreCase("users")){
+            // ensure that we have the needed credentials for github
+            setLoginDetails();
             System.out.println("Indexing the users");
             user.launchCrawling();
             return;
@@ -49,6 +48,8 @@ public class start {
         
         // or are we interested in indexing repositories?
         if(args[0].equalsIgnoreCase("repositories")){
+            // ensure that we have the needed credentials for github
+            setLoginDetails();
             System.out.println("Indexing repositories");
             rep.launchRepositoryIndexing();
             return;
@@ -57,11 +58,12 @@ public class start {
                
         // or are we interested in grabbing files from repositories?
         if(args[0].equalsIgnoreCase("grab")){
+            // ensure that we have the needed credentials for github
+            setLoginDetails();
             System.out.println("Grabbing files - NOT IMPLEMENTED");
             //launchGrabFiles(args[1]);
             return;
         }
-
                
         // or are we interested in grabbing files from repositories?
         if(args[0].equalsIgnoreCase("reset")){
@@ -71,7 +73,17 @@ public class start {
             System.out.println("Done");
             return;
         }
+        
+        // or are we interested in grabbing files from repositories?
+        if(args[0].equalsIgnoreCase("server")){
+            System.out.println("Starting the server");
+            common.server.start(args);
+            System.out.println("Done");
+            return;
+        }
   
+        
+        
         // no arguments specified, show a simple syntax usage
         System.out.println("Syntax usage: java -jar gitfinder.java users|repositories username password"
                 + "\n"
