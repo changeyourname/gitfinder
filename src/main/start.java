@@ -70,7 +70,7 @@ public class start {
             System.out.println("Resetting user details");
             core.prefs.remove("username");
             core.prefs.remove("password");
-            System.out.println("Done");
+            System.out.println("Done! Your details were erased from this computer");
             return;
         }
         
@@ -103,8 +103,6 @@ public class start {
      * @param args 
      */
     private static void setLoginDetails() {
-        // initialize the preferences object
-        core.prefs = Preferences.userNodeForPackage(start.class);
         // get the values from save preferences if any
         core.username = core.prefs.get("username", "");
         core.password = core.prefs.get("password", "");

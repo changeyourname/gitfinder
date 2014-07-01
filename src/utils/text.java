@@ -16,6 +16,9 @@
 
 package utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -435,4 +438,38 @@ public class text {
                 && s1.equals(s2);
 }
     
+    
+    
+    /**
+     * Encodes a piece of text using the UTF8 standard
+     * In sum: readable -> unreadable
+    * @param text  The text to be encoded
+     * @return      The resulting HTML compatible text
+     */
+    public static String htmlEncode(final String text){
+        String result = "failed";
+            try {
+                result = URLEncoder.encode(text, "UTF-8" );
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(text.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return result;
+    }
+    
+   /**
+     * Encodes a piece of text using the UTF8 standard
+     * In sum: unreadable -> readable
+     * @param text  The text to be encoded
+     * @return      The resulting HTML compatible text
+     */
+    public static String htmlDecode(final String text){
+        String result = text;
+            try {
+                result = URLDecoder.decode(text, "UTF-8" );
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(text.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return result;
+    }
+   
 }

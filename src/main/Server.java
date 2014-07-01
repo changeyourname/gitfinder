@@ -24,7 +24,6 @@ import org.simpleframework.http.core.Container;
 import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 import org.simpleframework.util.thread.Scheduler;
-import utils.time;
 
 /**
  * Don't worry. Keep things simple, make things work. Worry tomorrow
@@ -119,7 +118,7 @@ public class Server implements Container {
             }
             
             // give some feedback that a request occurred
-            System.out.println(time.getDateTimeISO() + " " + rawText);
+            //System.out.println(time.getDateTimeISO() + " " + rawText);
             
             // request for feeding with some new repositories to crawl
             if(rawText.equals(core.webGetUser)){
@@ -211,8 +210,8 @@ public class Server implements Container {
         }
         
         // try to fix part of the conversion
-        String language = items[2].replace("%20", " ");
-        String description = items[3].replace("\n", "").replace("%20", " ");
+        final String language = utils.text.htmlDecode(items[2]);
+        final String description = utils.text.htmlDecode(items[3]);
         
         
         // at this point we don't filter much the result and assume everything is correct

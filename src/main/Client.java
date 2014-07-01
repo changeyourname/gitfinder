@@ -13,6 +13,9 @@ the results.</text>
 
 package main;
 
+import java.util.ArrayList;
+import structure.Rep;
+
 /**
  *
  * @author Nuno Brito, 1st of July 2014 in Darmstadt, Germany
@@ -36,7 +39,7 @@ public class Client {
      * @param givenAddress URL and port number of where the server is located
      */
     public void start(final String givenAddress){
-        System.out.println("Starting the client mode on " + givenAddress);
+        System.out.println("Starting the client mode, attached to " + givenAddress);
         address = givenAddress;
         
         Thread thread = new Thread(){
@@ -53,30 +56,25 @@ public class Client {
                         break;
                     }
                     
+                    System.out.println("Processing: " + nextUser);
+                    
                     // now process the assigned user
-                    final String result = core.rep.processRepositoriesFromUser(nextUser);
+                    ArrayList<Rep> result = core.rep.getRepositories(nextUser);
                     
                     // we got an empty result, move to the next processing then
                     if(result.isEmpty()){
+                        System.out.println("No repositories for " + nextUser + "\n");
                         continue;
                     }
-                    
                     // kevwil/c-ration Visual Studio Configuration server based on @typesafehub/config and @playframework/playframework which serves up static and dynamic config based on a file hierarchy.
-                    
-                    // we have several lines, need to split them
-                    final String[] lines = result.split("\n");
-                    // now iterate each line
-                    for(final String line : lines){
-                        // get the first space that gives the user/repository combination
-                        int i1 = line.indexOf(" ");
-                        final String userRep = line.substring(0, i1);
-
-                        System.out.println("---->" + userRep);
+                    /// iterate each repository item
+                    for(final Rep rep : result){
+                        // from where we will submit the item to the server
+                        final String answer = utils.internet.webget("http://" 
+                            + address + core.webSubmitRepository
+                        + rep.getWebSubmit());
+                        System.out.println("---->" + rep.getWebSubmit());
                     }
-                    
-                    
-                    
-                    //System.err.println(nextUser + "->" + result);
                     
                     
                     // if we have something to share, send it upstream

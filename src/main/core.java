@@ -27,7 +27,10 @@ import java.util.prefs.Preferences;
 public class core {
     static String username = "";
     static String password = "";
-    static Preferences prefs;
+    
+    // initialize the preferences object
+    static Preferences prefs = Preferences.userNodeForPackage(start.class);
+
     final static String filenameUsers = "users.txt";
     final static String filenameRepositories = "repositories.txt";
     

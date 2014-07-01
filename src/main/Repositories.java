@@ -29,6 +29,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import structure.Rep;
 import utils.files;
 
 /**
@@ -111,7 +112,7 @@ public class Repositories {
             // we don't process the line if it is null
             if(nextUser != null){
                 // now get the repositories associated to this user
-                String result = processRepositoriesFromUser(nextUser);
+                String result = getLinesWithRepositoriesFromUser(nextUser);
                 // ok, all done. Add up the new info!
                 addNewRepositories(result);
             }
@@ -156,15 +157,16 @@ public class Repositories {
      * @param user
      * @return 
      */
-    public ArrayList<String> getRepositories(final String user){
+    public ArrayList<Rep> getRepositories(final String user){
         // create the new array
-        ArrayList<String> result = new ArrayList();
+        ArrayList<Rep> result = new ArrayList();
         
         try{ 
            Github github = new RtGithub(
-//                new RtGithub(core.username, core.password)
-//                        .entry().through(CarefulWire.class, 50));          
-           );
+                new RtGithub(
+                   core.username, core.password
+           )
+                        .entry().through(CarefulWire.class, 50));          
            final JsonResponse resp = github.entry()
                 .uri().path("/users/" + user + "/repos")
                 //.queryParam("q", "java")
@@ -193,29 +195,30 @@ public class Repositories {
                    continue;
                }
 
+               // create the repository object
+               Rep rep = new Rep();
+               rep.setIdUser(user);
+               rep.setIdRepository(name);
+               
                // now get the repository description
                final String description = getItem("description", item);
-
                // now get the repository description
                final String language = getItem("language", item);
 
-               // create the output holder
-               String output = name;
-               
                // add the language designed by Github
                // shall we add a description?
                if(language.isEmpty()){
-                   output += " none";
+                   rep.setLanguage("none");
                }else{              
-                   output += " " + language;
+                   rep.setLanguage(language);
                }
                
                // shall we add a description?
                if(description.isEmpty() == false){
-                   output += " " + description;
+                   rep.setDescription(description);
                }
                // all done
-               result.add(output);
+               result.add(rep);
            }
      
        }catch (IOException e){
@@ -270,13 +273,13 @@ public class Repositories {
      * @param targetUser 
      * @return  the lines to be added on our repository text file
      */
-    public String processRepositoriesFromUser(final String targetUser) {
-        ArrayList<String> repositories = getRepositories(targetUser);
+    public String getLinesWithRepositoriesFromUser(final String targetUser) {
+        ArrayList<Rep> repositories = getRepositories(targetUser);
         String lines = "";
         // iterate each repository found
-        for(final String repository : repositories){
+        for(final Rep rep : repositories){
             // prepare the output
-            final String line = targetUser + "/" + repository;
+            final String line = rep.getOneline();
             System.out.println(line);
             // add another line
             lines = lines.concat(line+"\n");
@@ -367,277 +370,3 @@ public class Repositories {
     
     
 }
-
-
-
-
-
-
-/**
- Example of:
- * https://api.github.com/repos/evanphx/docker
- {
-  "id": 12006301,
-  "name": "docker",
-  "full_name": "evanphx/docker",
-  "owner": {
-    "login": "evanphx",
-    "id": 7,
-    "avatar_url": "https://avatars.githubusercontent.com/u/7?",
-    "gravatar_id": "540cb3b3712ffe045113cb03bab616a2",
-    "url": "https://api.github.com/users/evanphx",
-    "html_url": "https://github.com/evanphx",
-    "followers_url": "https://api.github.com/users/evanphx/followers",
-    "following_url": "https://api.github.com/users/evanphx/following{/other_user}",
-    "gists_url": "https://api.github.com/users/evanphx/gists{/gist_id}",
-    "starred_url": "https://api.github.com/users/evanphx/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/evanphx/subscriptions",
-    "organizations_url": "https://api.github.com/users/evanphx/orgs",
-    "repos_url": "https://api.github.com/users/evanphx/repos",
-    "events_url": "https://api.github.com/users/evanphx/events{/privacy}",
-    "received_events_url": "https://api.github.com/users/evanphx/received_events",
-    "type": "User",
-    "site_admin": false
-  },
-  "private": false,
-  "html_url": "https://github.com/evanphx/docker",
-  "description": "Docker - the open-source application container engine",
-  "fork": true,
-  "url": "https://api.github.com/repos/evanphx/docker",
-  "forks_url": "https://api.github.com/repos/evanphx/docker/forks",
-  "keys_url": "https://api.github.com/repos/evanphx/docker/keys{/key_id}",
-  "collaborators_url": "https://api.github.com/repos/evanphx/docker/collaborators{/collaborator}",
-  "teams_url": "https://api.github.com/repos/evanphx/docker/teams",
-  "hooks_url": "https://api.github.com/repos/evanphx/docker/hooks",
-  "issue_events_url": "https://api.github.com/repos/evanphx/docker/issues/events{/number}",
-  "events_url": "https://api.github.com/repos/evanphx/docker/events",
-  "assignees_url": "https://api.github.com/repos/evanphx/docker/assignees{/user}",
-  "branches_url": "https://api.github.com/repos/evanphx/docker/branches{/branch}",
-  "tags_url": "https://api.github.com/repos/evanphx/docker/tags",
-  "blobs_url": "https://api.github.com/repos/evanphx/docker/git/blobs{/sha}",
-  "git_tags_url": "https://api.github.com/repos/evanphx/docker/git/tags{/sha}",
-  "git_refs_url": "https://api.github.com/repos/evanphx/docker/git/refs{/sha}",
-  "trees_url": "https://api.github.com/repos/evanphx/docker/git/trees{/sha}",
-  "statuses_url": "https://api.github.com/repos/evanphx/docker/statuses/{sha}",
-  "languages_url": "https://api.github.com/repos/evanphx/docker/languages",
-  "stargazers_url": "https://api.github.com/repos/evanphx/docker/stargazers",
-  "contributors_url": "https://api.github.com/repos/evanphx/docker/contributors",
-  "subscribers_url": "https://api.github.com/repos/evanphx/docker/subscribers",
-  "subscription_url": "https://api.github.com/repos/evanphx/docker/subscription",
-  "commits_url": "https://api.github.com/repos/evanphx/docker/commits{/sha}",
-  "git_commits_url": "https://api.github.com/repos/evanphx/docker/git/commits{/sha}",
-  "comments_url": "https://api.github.com/repos/evanphx/docker/comments{/number}",
-  "issue_comment_url": "https://api.github.com/repos/evanphx/docker/issues/comments/{number}",
-  "contents_url": "https://api.github.com/repos/evanphx/docker/contents/{+path}",
-  "compare_url": "https://api.github.com/repos/evanphx/docker/compare/{base}...{head}",
-  "merges_url": "https://api.github.com/repos/evanphx/docker/merges",
-  "archive_url": "https://api.github.com/repos/evanphx/docker/{archive_format}{/ref}",
-  "downloads_url": "https://api.github.com/repos/evanphx/docker/downloads",
-  "issues_url": "https://api.github.com/repos/evanphx/docker/issues{/number}",
-  "pulls_url": "https://api.github.com/repos/evanphx/docker/pulls{/number}",
-  "milestones_url": "https://api.github.com/repos/evanphx/docker/milestones{/number}",
-  "notifications_url": "https://api.github.com/repos/evanphx/docker/notifications{?since,all,participating}",
-  "labels_url": "https://api.github.com/repos/evanphx/docker/labels{/name}",
-  "releases_url": "https://api.github.com/repos/evanphx/docker/releases{/id}",
-  "created_at": "2013-08-09T17:10:08Z",
-  "updated_at": "2013-08-30T00:02:33Z",
-  "pushed_at": "2013-08-18T03:04:03Z",
-  "git_url": "git://github.com/evanphx/docker.git",
-  "ssh_url": "git@github.com:evanphx/docker.git",
-  "clone_url": "https://github.com/evanphx/docker.git",
-  "svn_url": "https://github.com/evanphx/docker",
-  "homepage": "http://www.docker.io",
-  "size": 11238,
-  "stargazers_count": 0,
-  "watchers_count": 0,
-  "language": "Go",
-  "has_issues": false,
-  "has_downloads": true,
-  "has_wiki": true,
-  "forks_count": 0,
-  "mirror_url": null,
-  "open_issues_count": 0,
-  "forks": 0,
-  "open_issues": 0,
-  "watchers": 0,
-  "default_branch": "master",
-  "parent": {
-    "id": 7691631,
-    "name": "docker",
-    "full_name": "dotcloud/docker",
-    "owner": {
-      "login": "dotcloud",
-      "id": 171922,
-      "avatar_url": "https://avatars.githubusercontent.com/u/171922?",
-      "gravatar_id": "d2fbb59e6c8b80a26e48b06ea30d53fd",
-      "url": "https://api.github.com/users/dotcloud",
-      "html_url": "https://github.com/dotcloud",
-      "followers_url": "https://api.github.com/users/dotcloud/followers",
-      "following_url": "https://api.github.com/users/dotcloud/following{/other_user}",
-      "gists_url": "https://api.github.com/users/dotcloud/gists{/gist_id}",
-      "starred_url": "https://api.github.com/users/dotcloud/starred{/owner}{/repo}",
-      "subscriptions_url": "https://api.github.com/users/dotcloud/subscriptions",
-      "organizations_url": "https://api.github.com/users/dotcloud/orgs",
-      "repos_url": "https://api.github.com/users/dotcloud/repos",
-      "events_url": "https://api.github.com/users/dotcloud/events{/privacy}",
-      "received_events_url": "https://api.github.com/users/dotcloud/received_events",
-      "type": "Organization",
-      "site_admin": false
-    },
-    "private": false,
-    "html_url": "https://github.com/dotcloud/docker",
-    "description": "Docker - the open-source application container engine",
-    "fork": false,
-    "url": "https://api.github.com/repos/dotcloud/docker",
-    "forks_url": "https://api.github.com/repos/dotcloud/docker/forks",
-    "keys_url": "https://api.github.com/repos/dotcloud/docker/keys{/key_id}",
-    "collaborators_url": "https://api.github.com/repos/dotcloud/docker/collaborators{/collaborator}",
-    "teams_url": "https://api.github.com/repos/dotcloud/docker/teams",
-    "hooks_url": "https://api.github.com/repos/dotcloud/docker/hooks",
-    "issue_events_url": "https://api.github.com/repos/dotcloud/docker/issues/events{/number}",
-    "events_url": "https://api.github.com/repos/dotcloud/docker/events",
-    "assignees_url": "https://api.github.com/repos/dotcloud/docker/assignees{/user}",
-    "branches_url": "https://api.github.com/repos/dotcloud/docker/branches{/branch}",
-    "tags_url": "https://api.github.com/repos/dotcloud/docker/tags",
-    "blobs_url": "https://api.github.com/repos/dotcloud/docker/git/blobs{/sha}",
-    "git_tags_url": "https://api.github.com/repos/dotcloud/docker/git/tags{/sha}",
-    "git_refs_url": "https://api.github.com/repos/dotcloud/docker/git/refs{/sha}",
-    "trees_url": "https://api.github.com/repos/dotcloud/docker/git/trees{/sha}",
-    "statuses_url": "https://api.github.com/repos/dotcloud/docker/statuses/{sha}",
-    "languages_url": "https://api.github.com/repos/dotcloud/docker/languages",
-    "stargazers_url": "https://api.github.com/repos/dotcloud/docker/stargazers",
-    "contributors_url": "https://api.github.com/repos/dotcloud/docker/contributors",
-    "subscribers_url": "https://api.github.com/repos/dotcloud/docker/subscribers",
-    "subscription_url": "https://api.github.com/repos/dotcloud/docker/subscription",
-    "commits_url": "https://api.github.com/repos/dotcloud/docker/commits{/sha}",
-    "git_commits_url": "https://api.github.com/repos/dotcloud/docker/git/commits{/sha}",
-    "comments_url": "https://api.github.com/repos/dotcloud/docker/comments{/number}",
-    "issue_comment_url": "https://api.github.com/repos/dotcloud/docker/issues/comments/{number}",
-    "contents_url": "https://api.github.com/repos/dotcloud/docker/contents/{+path}",
-    "compare_url": "https://api.github.com/repos/dotcloud/docker/compare/{base}...{head}",
-    "merges_url": "https://api.github.com/repos/dotcloud/docker/merges",
-    "archive_url": "https://api.github.com/repos/dotcloud/docker/{archive_format}{/ref}",
-    "downloads_url": "https://api.github.com/repos/dotcloud/docker/downloads",
-    "issues_url": "https://api.github.com/repos/dotcloud/docker/issues{/number}",
-    "pulls_url": "https://api.github.com/repos/dotcloud/docker/pulls{/number}",
-    "milestones_url": "https://api.github.com/repos/dotcloud/docker/milestones{/number}",
-    "notifications_url": "https://api.github.com/repos/dotcloud/docker/notifications{?since,all,participating}",
-    "labels_url": "https://api.github.com/repos/dotcloud/docker/labels{/name}",
-    "releases_url": "https://api.github.com/repos/dotcloud/docker/releases{/id}",
-    "created_at": "2013-01-18T18:10:57Z",
-    "updated_at": "2014-06-30T08:32:15Z",
-    "pushed_at": "2014-06-30T12:21:58Z",
-    "git_url": "git://github.com/dotcloud/docker.git",
-    "ssh_url": "git@github.com:dotcloud/docker.git",
-    "clone_url": "https://github.com/dotcloud/docker.git",
-    "svn_url": "https://github.com/dotcloud/docker",
-    "homepage": "http://www.docker.com",
-    "size": 113753,
-    "stargazers_count": 13272,
-    "watchers_count": 13272,
-    "language": "Go",
-    "has_issues": true,
-    "has_downloads": true,
-    "has_wiki": true,
-    "forks_count": 2322,
-    "mirror_url": null,
-    "open_issues_count": 656,
-    "forks": 2322,
-    "open_issues": 656,
-    "watchers": 13272,
-    "default_branch": "master"
-  },
-  "source": {
-    "id": 7691631,
-    "name": "docker",
-    "full_name": "dotcloud/docker",
-    "owner": {
-      "login": "dotcloud",
-      "id": 171922,
-      "avatar_url": "https://avatars.githubusercontent.com/u/171922?",
-      "gravatar_id": "d2fbb59e6c8b80a26e48b06ea30d53fd",
-      "url": "https://api.github.com/users/dotcloud",
-      "html_url": "https://github.com/dotcloud",
-      "followers_url": "https://api.github.com/users/dotcloud/followers",
-      "following_url": "https://api.github.com/users/dotcloud/following{/other_user}",
-      "gists_url": "https://api.github.com/users/dotcloud/gists{/gist_id}",
-      "starred_url": "https://api.github.com/users/dotcloud/starred{/owner}{/repo}",
-      "subscriptions_url": "https://api.github.com/users/dotcloud/subscriptions",
-      "organizations_url": "https://api.github.com/users/dotcloud/orgs",
-      "repos_url": "https://api.github.com/users/dotcloud/repos",
-      "events_url": "https://api.github.com/users/dotcloud/events{/privacy}",
-      "received_events_url": "https://api.github.com/users/dotcloud/received_events",
-      "type": "Organization",
-      "site_admin": false
-    },
-    "private": false,
-    "html_url": "https://github.com/dotcloud/docker",
-    "description": "Docker - the open-source application container engine",
-    "fork": false,
-    "url": "https://api.github.com/repos/dotcloud/docker",
-    "forks_url": "https://api.github.com/repos/dotcloud/docker/forks",
-    "keys_url": "https://api.github.com/repos/dotcloud/docker/keys{/key_id}",
-    "collaborators_url": "https://api.github.com/repos/dotcloud/docker/collaborators{/collaborator}",
-    "teams_url": "https://api.github.com/repos/dotcloud/docker/teams",
-    "hooks_url": "https://api.github.com/repos/dotcloud/docker/hooks",
-    "issue_events_url": "https://api.github.com/repos/dotcloud/docker/issues/events{/number}",
-    "events_url": "https://api.github.com/repos/dotcloud/docker/events",
-    "assignees_url": "https://api.github.com/repos/dotcloud/docker/assignees{/user}",
-    "branches_url": "https://api.github.com/repos/dotcloud/docker/branches{/branch}",
-    "tags_url": "https://api.github.com/repos/dotcloud/docker/tags",
-    "blobs_url": "https://api.github.com/repos/dotcloud/docker/git/blobs{/sha}",
-    "git_tags_url": "https://api.github.com/repos/dotcloud/docker/git/tags{/sha}",
-    "git_refs_url": "https://api.github.com/repos/dotcloud/docker/git/refs{/sha}",
-    "trees_url": "https://api.github.com/repos/dotcloud/docker/git/trees{/sha}",
-    "statuses_url": "https://api.github.com/repos/dotcloud/docker/statuses/{sha}",
-    "languages_url": "https://api.github.com/repos/dotcloud/docker/languages",
-    "stargazers_url": "https://api.github.com/repos/dotcloud/docker/stargazers",
-    "contributors_url": "https://api.github.com/repos/dotcloud/docker/contributors",
-    "subscribers_url": "https://api.github.com/repos/dotcloud/docker/subscribers",
-    "subscription_url": "https://api.github.com/repos/dotcloud/docker/subscription",
-    "commits_url": "https://api.github.com/repos/dotcloud/docker/commits{/sha}",
-    "git_commits_url": "https://api.github.com/repos/dotcloud/docker/git/commits{/sha}",
-    "comments_url": "https://api.github.com/repos/dotcloud/docker/comments{/number}",
-    "issue_comment_url": "https://api.github.com/repos/dotcloud/docker/issues/comments/{number}",
-    "contents_url": "https://api.github.com/repos/dotcloud/docker/contents/{+path}",
-    "compare_url": "https://api.github.com/repos/dotcloud/docker/compare/{base}...{head}",
-    "merges_url": "https://api.github.com/repos/dotcloud/docker/merges",
-    "archive_url": "https://api.github.com/repos/dotcloud/docker/{archive_format}{/ref}",
-    "downloads_url": "https://api.github.com/repos/dotcloud/docker/downloads",
-    "issues_url": "https://api.github.com/repos/dotcloud/docker/issues{/number}",
-    "pulls_url": "https://api.github.com/repos/dotcloud/docker/pulls{/number}",
-    "milestones_url": "https://api.github.com/repos/dotcloud/docker/milestones{/number}",
-    "notifications_url": "https://api.github.com/repos/dotcloud/docker/notifications{?since,all,participating}",
-    "labels_url": "https://api.github.com/repos/dotcloud/docker/labels{/name}",
-    "releases_url": "https://api.github.com/repos/dotcloud/docker/releases{/id}",
-    "created_at": "2013-01-18T18:10:57Z",
-    "updated_at": "2014-06-30T08:32:15Z",
-    "pushed_at": "2014-06-30T12:21:58Z",
-    "git_url": "git://github.com/dotcloud/docker.git",
-    "ssh_url": "git@github.com:dotcloud/docker.git",
-    "clone_url": "https://github.com/dotcloud/docker.git",
-    "svn_url": "https://github.com/dotcloud/docker",
-    "homepage": "http://www.docker.com",
-    "size": 113753,
-    "stargazers_count": 13272,
-    "watchers_count": 13272,
-    "language": "Go",
-    "has_issues": true,
-    "has_downloads": true,
-    "has_wiki": true,
-    "forks_count": 2322,
-    "mirror_url": null,
-    "open_issues_count": 656,
-    "forks": 2322,
-    "open_issues": 656,
-    "watchers": 13272,
-    "default_branch": "master"
-  },
-  "network_count": 2322,
-  "subscribers_count": 1
-}
-
- 
- 
- 
- */
