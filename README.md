@@ -1,10 +1,10 @@
 gitfinder
 =========
 
-Java code to crawl and process information available on the GitHub repositories
+Java code to crawl and process information available on GitHub repositories
 
-At the moment it is used for generating an up-to-date list of registered users
-on github and list of associated repositories.
+Quick and useful for generating an up-to-date list of registered users
+on github and then list the associated repositories.
 
 This is a command line application. To run, you will need to provide a 
 github login/password. To ensure privacy, the information is not saved into
@@ -14,7 +14,8 @@ Running for the first time
 ==========================
 
 From the command line, type:
-```java -jar users```
+
+```java -jar gitfinder users```
 
 On the first run you will be asked for the GitHub username and password. Please 
 be sure to type the correct details. If you need to correct the details, then 
@@ -31,29 +32,34 @@ Usage examples
 ==============
 
 Example #1 - creating a list of users:
+
 ```java -jar gitfinder users```
 
+
 Example #2 - creating a list of repositories:
+
 ```java -jar gitfinder repositories```
 
+
 Example #3 - forget the github username/password:
+
 ```java -jar gitfinder reset```
 
 
 Special notes
 =============
 
-More likely you won't be able to run any of these commands without interruption when 
-running from a home computer.
+Normally is not easy to run any of these commands without interruption when 
+running from your desktop computer.
 
-Normally, domestic Internet connection will fail every now and then, or the computer 
-gets shut down after some hours of inactivity. Typically you'd need to restart all over again.
+This happens because domestic Internet connections can fail every now and then, or your computer 
+gets shut down after some hours of inactivity. Typically this would force you to restart all over again.
 
-This code is prepared to be resilient. It will try to keep connections running 
-for as long as possible, and if something fails it will restart from the last 
-indexed information so that you don't need to start from scratch.
+This software is prepared to be resilient and will try to keep connections running 
+for as long as possible. If something fails, you can then restart from the last 
+indexed information and avoid starting from scratch.
 
-If you're using linux, there is a neat way to follow the progress in overall:
+If you're using Linux, there is a neat way to follow the progress in overall:
 
 ```wc -l users.txt```
 
@@ -63,9 +69,9 @@ This command counts the lines, which in our case are the number of users or repo
 Compilation
 ===========
 
-To compile, you can use NetBeans with JDK (Java Development Kit) 6.
+We use NetBeans with JDK (Java Development Kit) 6 to compile the software.
 
-All dependencies needed are included on the project. No special configuration 
+All dependencies are included on the project. No special configuration 
 is needed.
 
 
