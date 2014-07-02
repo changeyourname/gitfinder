@@ -74,8 +74,7 @@ Example #5 - starting the web client (replace 127.0.0.1:9999 with your server ad
 ```java -jar gitfinder client 127.0.0.1:9999```
 
 Example #6 - seeing the status of a given server (using the web browser):
-```http://127.0.0.1:9999/status```
-
+``` http://127.0.0.1:9999/status ```
 
 
 Special notes
