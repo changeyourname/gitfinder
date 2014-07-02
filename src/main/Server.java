@@ -12,6 +12,7 @@ repositories indexing.</text>
  */
 package main;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
@@ -42,6 +43,9 @@ public class Server implements Container {
     // where we place the temporary repositories that will be written
     private final ArrayList<Rep> repWaitingList = new ArrayList();
     public final ArrayList<User> userWaitingList = new ArrayList();
+    
+    // where we save the state of users being processed (fail safe procedure)
+    private File fileQueueUsers = new File("queueUsers.txt");
     
        
     /**
@@ -74,6 +78,9 @@ public class Server implements Container {
 
             // do the connection itself
             connection.connect(address);
+            
+            // load the previous users in our queue list (if any)
+            userLoadState();
             
             System.out.println("Server available on port " + portNumber);
             
@@ -149,7 +156,6 @@ public class Server implements Container {
 
         // place a visual divisory to ease human-identification
         System.out.println("====> " + userId);
-        
         // all done
     }
 
@@ -176,6 +182,8 @@ public class Server implements Container {
         }
         // we have a valid result, delete the mentioned user
         userWaitingList.remove(result);
+        // save the current state
+        userSaveState();
     }
     
     /**
@@ -241,6 +249,52 @@ public class Server implements Container {
         }
         // no duplicates, we can add the user
         userWaitingList.add(user);
+        // save the current state
+        userSaveState();
+    }
+    
+    /**
+     * Saves the current list of users waiting to be processed on disk
+     */
+    void userSaveState(){
+        String result = "";
+        
+        // if we have no queue list, just delete the file
+        if(userWaitingList.isEmpty()){
+            // delete the file (doesn't check if it is open or not)
+            fileQueueUsers.delete();
+            // nothing else to do here
+            return;
+        }
+        
+        // iterate all users in our waiting list
+        for(User user : userWaitingList){
+            result = result.concat(user.getIdUser() + "\n");
+        }
+        // write them up to a file on disk
+        utils.files.SaveStringToFile(fileQueueUsers, result);
+    }
+    
+    /**
+     * Recovers the list of waiting users when the server execution terminated
+     * abruptly.
+     */
+    void userLoadState(){
+        // preflight check
+        if(fileQueueUsers.exists() == false){
+            // no need to continue if exists no backup file
+            return;
+        }
+        // now read the contents of this file to a string
+        final String users = utils.files.readAsString(fileQueueUsers);
+        // and finish by placing them on our queue
+        for(final String user : users.split("\n")){
+            // create the user object and ensure it gets processed with priority
+            User thisUser = new User(user, true);
+            // place this on our queue
+            addUserToQueue(thisUser);
+            System.out.println("Added to waiting list: " + user);
+        }        
     }
     
 }

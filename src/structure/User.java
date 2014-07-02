@@ -25,7 +25,7 @@ public class User {
             * 60 * 2; // wait 2 hours
             ;
     // when was this object created?
-    private final long timeStamp = System.currentTimeMillis();
+    private long timeStamp = System.currentTimeMillis();
     
     public boolean isOld(){
         long timeElapsed = System.currentTimeMillis() - timeStamp;
@@ -37,6 +37,16 @@ public class User {
         idUser = assignedUser;
     }
 
+    public User(final String assignedUser, boolean isOld){
+        // assign a user
+        idUser = assignedUser;
+        // ensure that we mark this user as old and with priority for processing
+        if(isOld){
+            timeStamp = System.currentTimeMillis() - (timeLimit + 1);
+        }
+    }
+
+    
     public String getIdUser() {
         return idUser;
     }
