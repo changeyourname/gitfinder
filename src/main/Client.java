@@ -73,27 +73,19 @@ public class Client {
                         final String answer = utils.internet.webget("http://" 
                             + address + core.webSubmitRepository
                         + rep.getWebSubmit());
-                        System.out.println("---->" + rep.getWebSubmit());
+                        System.out.println(answer + " ---> " + rep.getWebSubmit());
+                    }
+                    // do the concluding command
+                    if(result.size()>0){
+                        final String answer = utils.internet.webget("http://" 
+                            + address + core.webFinishRepository
+                        + "/" + nextUser);
                     }
                     
-                    
-                    // if we have something to share, send it upstream
-//                    final String answer = utils.internet.webget("http://" 
-//                            + address + core.webSubmitRepository);
-                    //utils.time.wait(5);
-                    //System.exit(111);
                 }
             }
         };
         // kickoff the thread
         thread.start();
     }
-    
-    
-    
-    
-    
-    
-    
-    
 }

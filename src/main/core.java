@@ -36,8 +36,9 @@ public class core {
     
     // parameters used on the networked mode
     static public final String 
-            webGetUser = "/request/user",
-            webSubmitRepository = "/submit/repository";
+            webGetUser = "/request/user", // gets a new user to process
+            webSubmitRepository = "/repository/submit", // gives information about a given repository
+            webFinishRepository = "/repository/finish"; // says that no further changes will happen, close it up
     
     // check if our file already exists
     final static File fileUsers = new File(core.filenameUsers);

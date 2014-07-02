@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.simpleframework.http.Request;
@@ -24,6 +25,7 @@ import org.simpleframework.http.core.Container;
 import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 import org.simpleframework.util.thread.Scheduler;
+import structure.Rep;
 
 /**
  * Don't worry. Keep things simple, make things work. Worry tomorrow
@@ -35,7 +37,9 @@ public class Server implements Container {
 
     Scheduler queue;
     Connection connection;
-    public String webOutput = "";
+    
+    // where we place the temporary repositories that will be written
+    private ArrayList<Rep> repWaitingList = new ArrayList();
     
        
     /**
@@ -47,18 +51,11 @@ public class Server implements Container {
      * Maybe in the future we don't need arguments at all.
      */
     void start(String[] args) {
-        // first step: settings
-        doSettings();
-        // second step: instantiate server
+        // instantiate the server
         startServer(args[1]);
     }
 
-    /**
-     * Start our own settings for this server
-     */
-    private void doSettings(){
-    }
-    
+  
      /** Start our web server instance
      * @param portNumber the port of communications (typically 80 for Internet)
      */     
@@ -91,6 +88,73 @@ public class Server implements Container {
         queue.execute(task);
     }
     
+    
+        /**
+     * This method receives the information from a given client and places it on
+     * a queue. The queue holds all pending information that hasn't yet been written
+     * to the repository list. This is intentional, the goal is to only write
+     * information about repositories after a user has been fully analysed.
+     * @param rep 
+     */
+    public void addNewWaitingItem(Rep rep) {
+        // get the unique identifier for this repository
+        final String id = rep.getUID();
+        // we now iterate the current IDs to see if a duplicate exists
+        for(final Rep thisRep : repWaitingList){
+            // if we have a duplicate, no need to proceed
+            if(utils.text.equals(thisRep.getUID(), id)){
+                return;
+            }
+        }
+        // no duplicates found, add up this rep
+        core.server.repWaitingList.add(rep);
+    }
+
+    /**
+     * The final step. In previous steps the client was providing information
+     * about the repositories, now we will write this information on the text
+     * file because we've received a signal that we can proceed
+     * @param userId The user id that we will look for in our waiting list
+     */
+    void finishRepository(final String userId) {
+        // create a temporary holder
+        ArrayList<Rep> newList = new ArrayList();
+        // iterate all the repositories in our waiting list
+        for(Rep rep : repWaitingList){
+            // do we have a match?
+            if(utils.text.equals(rep.getIdUser(), userId)){
+                // add this item on our list
+                newList.add(rep);
+            }
+        }
+        // no need to proceed if nothing was found
+        if(newList.isEmpty()){
+            return;
+        }
+        // now proceed to write up the items
+        for(Rep rep : newList){
+            final String line = rep.getOneline();
+            // write up the new line in our repository text file
+            core.rep.addNewRepositories(line + "\n");
+            // give some feedback to the end user
+            System.out.println("web: " + line);
+            // remove from our waiting list
+            repWaitingList.remove(rep);
+        }
+        
+        System.out.println("====> " + userId);
+        
+        //        // at this point we don't filter much the result and assume everything is correct
+//        final String line = items[0] + "/" + items[1] 
+//                + " " + language + " " + description;
+//        
+//        // write up this new line
+//        core.rep.addNewRepositories(line + "\n");
+//        // do some output to let everyone know there is some action going            
+//        System.out.println("web: " + line);
+        
+        
+    }
     
 }
 
@@ -133,6 +197,14 @@ public class Server implements Container {
                 answerRequest(result, response);
                 return;
             }
+            
+            // did we received data from a client?
+            if(rawText.startsWith(core.webFinishRepository)){
+                final String result = finishRepository(rawText);
+                answerRequest(result, response);
+                return;
+            }
+            
            
             // all done
             answerRequest("404", response);
@@ -179,15 +251,13 @@ public class Server implements Container {
          * Handles the case when a client submits the information about a
          * given repository back into our server. This method assumes that
          * information is given through the URL on the following format:
-         * /submit/repository/userid/repositoryid/language/description
+         * /repository/submit/userid/repositoryid/language/description
          * @param rawText
          * @return 
          */
     private String submitRepository(final String rawText) {
-        // remove the initial keywords
-        final String keyword = "/submit/repository";
-        // now remove the initial keyword from our text
-        String content = rawText.substring(keyword.length());
+        // remove the initial keyword from our text
+        String content = rawText.substring(core.webSubmitRepository.length());
         // handle a possible error when no data is provided
         if(content.isEmpty()){
             System.out.println("Error 501: " + content);
@@ -216,18 +286,51 @@ public class Server implements Container {
         final String language = utils.text.htmlDecode(items[2]);
         final String description = utils.text.htmlDecode(items[3]);
         
+        // create the new repository to be placed on our waiting list
+        Rep rep = new Rep();
+        rep.setIdUser(items[0]);
+        rep.setIdRepository(items[1]);
+        rep.setLanguage(language);
+        rep.setDescription(description);
+        // now add this repository to our queue list
+        core.server.addNewWaitingItem(rep);
         
-        // at this point we don't filter much the result and assume everything is correct
-        final String line = items[0] + "/" + items[1] 
-                + " " + language + " " + description;
-        
-        // write up this new line
-        core.rep.addNewRepositories(line + "\n");
-        // do some output to let everyone know there is some action going            
-        System.out.println("web: " + line);
+//        // at this point we don't filter much the result and assume everything is correct
+//        final String line = items[0] + "/" + items[1] 
+//                + " " + language + " " + description;
+//        
+//        // write up this new line
+//        core.rep.addNewRepositories(line + "\n");
+//        // do some output to let everyone know there is some action going            
+//        System.out.println("web: " + line);
 
         // all ok, let's conclude
         return "200";
     }
+
+    private String finishRepository(final String rawText) {
+        // remove the initial keyword from our text
+        String content = rawText.substring(core.webSubmitRepository.length());
+        // handle a possible error when no data is provided
+        if(content.isEmpty()){
+            System.out.println("Error 501: " + content);
+            return "501";
+        }
+        // remove initial slash if one is provided
+        if(content.startsWith("/")){
+            content = content.substring(1);
+        }
+        // test again if the result is empty or not
+        if(content.isEmpty()){
+            System.out.println("Error 502: " + content);
+            return "502";
+        }
         
+        // now signal that we can write all the entries onto the text file
+        core.server.finishRepository(content);
+        
+        //System.out.println("====>" + content);
+        return "200";
+    }
+
  }

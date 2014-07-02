@@ -87,6 +87,10 @@ public class Rep {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getUID() {
+        return idUser + "/" + idRepository;
+    }
             
             
             
