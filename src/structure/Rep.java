@@ -24,6 +24,10 @@ public class Rep {
             language = "",
             description = "";
 
+    /**
+     * Creates a single line ready to be written on repositories.txt
+     * @return 
+     */
     public String getOneline(){
         // create the basic line
         String result = idUser + "/" + idRepository + " " + language;

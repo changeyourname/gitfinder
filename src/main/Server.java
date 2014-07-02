@@ -26,6 +26,7 @@ import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 import org.simpleframework.util.thread.Scheduler;
 import structure.Rep;
+import structure.User;
 
 /**
  * Don't worry. Keep things simple, make things work. Worry tomorrow
@@ -39,7 +40,8 @@ public class Server implements Container {
     Connection connection;
     
     // where we place the temporary repositories that will be written
-    private ArrayList<Rep> repWaitingList = new ArrayList();
+    private final ArrayList<Rep> repWaitingList = new ArrayList();
+    public final ArrayList<User> userWaitingList = new ArrayList();
     
        
     /**
@@ -117,82 +119,142 @@ public class Server implements Container {
      * @param userId The user id that we will look for in our waiting list
      */
     void finishRepository(final String userId) {
-        // create a temporary holder
+        // start with deleting this user from our user waiting list
+        userWaitingListDelete(userId);
+
+        // create a temporary holder to check the repository waiting list
         ArrayList<Rep> newList = new ArrayList();
         // iterate all the repositories in our waiting list
         for(Rep rep : repWaitingList){
-            // do we have a match?
+            // do we have a match with the deleted id?
             if(utils.text.equals(rep.getIdUser(), userId)){
-                // add this item on our list
+                // now add this item on our list
                 newList.add(rep);
             }
         }
-        // no need to proceed if nothing was found
-        if(newList.isEmpty()){
-            return;
-        }
         
+        // no need to proceed if nothing was found
+        if(newList.isEmpty()==false){
+            // we now proceed to write up the items onto the repositories.txt file
+            for(Rep rep : newList){
+                final String line = rep.getOneline();
+                // write up the new line in our repository text file
+                core.rep.addNewRepositories(line + "\n");
+                // give some feedback to the end user
+                System.out.println("web: " + line);
+                // remove from our waiting list
+                repWaitingList.remove(rep);
+            }
+        }
+
         // place a visual divisory to ease human-identification
         System.out.println("====> " + userId);
         
-        // now proceed to write up the items
-        for(Rep rep : newList){
-            final String line = rep.getOneline();
-            // write up the new line in our repository text file
-            core.rep.addNewRepositories(line + "\n");
-            // give some feedback to the end user
-            System.out.println("web: " + line);
-            // remove from our waiting list
-            repWaitingList.remove(rep);
-        }
-        
-        
-        
-        //        // at this point we don't filter much the result and assume everything is correct
-//        final String line = items[0] + "/" + items[1] 
-//                + " " + language + " " + description;
-//        
-//        // write up this new line
-//        core.rep.addNewRepositories(line + "\n");
-//        // do some output to let everyone know there is some action going            
-//        System.out.println("web: " + line);
-        
-        
+        // all done
     }
 
+    /**
+     * Remove a given user id from our waiting list
+     * @param userId    The user id to remove
+     */
+    private void userWaitingListDelete(final String userId){
+        int result = -1;
+        // go through all users registered
+        for(User user : userWaitingList){
+            // do we have a match?
+            if(utils.text.equals(userId, user.getIdUser())){
+                // it matches, get the index number as reference
+                result = userWaitingList.indexOf(user);
+                // no need to continue
+                break;
+            }
+        }
+        // did we found something?
+        if(result == -1){
+            // seems not, then no action will take place
+            return;
+        }
+        // we have a valid result, delete the mentioned user
+        userWaitingList.remove(result);
+    }
+    
     /**
      * Delivers a text based report about our knowledge base statistics such as
      * the number of registered users, number of indexed repositories and other
      * metrics as deemed relevant.
-     * @return A portion of text ready to be displayed to the end-user
+     * @return An HTML portion of text ready to be displayed to the end-user
      */
     String getStatus() {
         // get the counter values
         int countRep = utils.text.countLines(core.fileRepositories);
         int countUsers = utils.text.countLines(core.fileUsers);
-         
-        String result =  "Number of repositories: " + countRep
-                + "\n"
+        
+        // list the users in queue (if any)
+        String usersInQueue = "";
+        for(User user : userWaitingList){
+            // create the user list
+            final String thisUser = user.getIdUser()
+                    + " since "
+                    + utils.time.getTimeFromLong(user.getTimeStamp())
+                    + "<br>\n";
+            // add the user to our list
+            usersInQueue = usersInQueue.concat(thisUser);
+        }
+        // do we need to add a title
+        if(usersInQueue.isEmpty() == false){
+            usersInQueue = ""
+                    + "<br><br>\n"
+                    + "Users in queue:<br>\n"
+                    + usersInQueue;
+        }
+        
+        
+        // prepare the resulting message 
+        String result =  ""
+                + "<html>"
+                + "<head></head>"
+                + "<body>"
+
+                + "Number of repositories: " + countRep
+                + "<br>\n"
                 + "Number of users: " + countUsers
-                + "";
+                + usersInQueue
+                
+                + "</body>"
+                + "</html>";
         
         // all done
         return result;
     }
+
+    /**
+     * Adds a new user to our queue for processing
+     * @param user The user to be added
+     */
+    void addUserToQueue(User user) {
+        for(User thisUser : userWaitingList){
+            // was this user already added on our queue?
+            if(utils.text.equals(thisUser.getIdUser(), user.getIdUser())){
+                // Seems the case, no need to proceed
+                return;
+            }
+        }
+        // no duplicates, we can add the user
+        userWaitingList.add(user);
+    }
     
 }
-
- class Task implements Runnable {
+ 
+class Task implements Runnable {
   
       private Response response = null;
       private Request request = null;
-    
+
       
       public Task(Request request, Response response) {
          this.response = response;
          this.request = request;
       }
-
       
         @Override
         public void run() {
@@ -205,13 +267,15 @@ public class Server implements Container {
                 return;
             }
             
-            // give some feedback that a request occurred
-            //System.out.println(time.getDateTimeISO() + " " + rawText);
-            
             // request for feeding with some new repositories to crawl
             if(rawText.equals(core.webGetUser)){
-                final String result = getUserToProcess();
-                answerRequest(result, response);
+                final User result = getUserToProcess();
+                if(result == null){
+                    answerRequest("", response);
+                }else{
+                    answerRequest(result.getIdUser(), response);
+                }
+                // all done
                 return;
             }
             
@@ -267,17 +331,33 @@ public class Server implements Container {
         /**
          * Gets some users from our list to process
          */
-        private String getUserToProcess(){
-            // get the next user in line from our repository tracker
+        private User getUserToProcess(){
+            // do we have any old user that wasn't processed yet?
+            for(User user : core.server.userWaitingList){
+                if(user.isOld()){
+                    // yep, we have one. Give it back for processing
+                    return user;
+                }
+            }
+            
+            // no old users to process, just get the next user in line
             final String answer = core.rep.getNextUser();
             // if null, just provide an empty reply
             if(answer == null){
-                return "";
+                return null;
             }
-            // otherwise, give the name
-            return answer;
+            
+            // create a new user
+            User user = new User(answer);
+            // place this user in our waiting queue
+            core.server.addUserToQueue(user);
+            // all done
+            return user;
         }
 
+
+        
+        
         /**
          * Handles the case when a client submits the information about a
          * given repository back into our server. This method assumes that
@@ -314,31 +394,44 @@ public class Server implements Container {
         }
         
         // try to fix part of the conversion
+        final String userId = items[0];
         final String language = utils.text.htmlDecode(items[2]);
         final String description = utils.text.htmlDecode(items[3]);
         
+        // are we permitted to add this information on the repository?
+        boolean notAllowed = true;
+        // iterate through all the users currently being processed
+        for(User user : core.server.userWaitingList){
+            if(utils.text.equals(userId, user.getIdUser())){
+                // we found a match, we're good to proceed
+                notAllowed = false;
+                break;
+            }
+        }
+        // are allowed or not to add this information?
+        if(notAllowed){
+            System.out.println("SR411 - Not allowed to write rep for " + userId);
+            return "504";
+        }
+        
         // create the new repository to be placed on our waiting list
         Rep rep = new Rep();
-        rep.setIdUser(items[0]);
+        rep.setIdUser(userId);
         rep.setIdRepository(items[1]);
         rep.setLanguage(language);
         rep.setDescription(description);
         // now add this repository to our queue list
         core.server.addNewWaitingItem(rep);
-        
-//        // at this point we don't filter much the result and assume everything is correct
-//        final String line = items[0] + "/" + items[1] 
-//                + " " + language + " " + description;
-//        
-//        // write up this new line
-//        core.rep.addNewRepositories(line + "\n");
-//        // do some output to let everyone know there is some action going            
-//        System.out.println("web: " + line);
-
         // all ok, let's conclude
         return "200";
     }
 
+    /**
+     * Process the special web request that informs the server that no further
+     * repositories from a given user need to be processed.
+     * @param rawText   The web request containing the user identification
+     * @return  The result message, 200 when OK or 50x when something went wrong
+     */
     private String finishRepository(final String rawText) {
         // remove the initial keyword from our text
         String content = rawText.substring(core.webSubmitRepository.length());
@@ -360,7 +453,7 @@ public class Server implements Container {
         // now signal that we can write all the entries onto the text file
         core.server.finishRepository(content);
         
-        //System.out.println("====>" + content);
+        // all done
         return "200";
     }
 

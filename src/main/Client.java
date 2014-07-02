@@ -45,8 +45,6 @@ public class Client {
         Thread thread = new Thread(){
             @Override
             public void run(){
-                System.out.println("Client is running");
-                
                 while(true){
                     // get the next user that we want to process
                     final String nextUser = utils.internet.webget("http://" + address + core.webGetUser);
@@ -56,18 +54,27 @@ public class Client {
                         break;
                     }
                     
-                    System.out.println("Processing: " + nextUser);
+                    // introduce an artificial delay to helps analyse this index
+                    //utils.time.wait(2);
+                    
+                    System.out.println("\nProcessing " + nextUser);
                     
                     // now process the assigned user
                     ArrayList<Rep> result = core.rep.getRepositories(nextUser);
                     
                     // we got an empty result, move to the next processing then
                     if(result.isEmpty()){
-                        System.out.println("No repositories for " + nextUser + "\n");
+                        // inform the end-user about what we (didn't) found
+                        System.out.println("No repositories for " + nextUser);
+                        // send the finish message
+                        final String answer = utils.internet.webget("http://" 
+                            + address + core.webFinishRepository
+                        + "/" + nextUser);
+                        // jump to the next user
                         continue;
                     }
-                    // kevwil/c-ration Visual Studio Configuration server based on @typesafehub/config and @playframework/playframework which serves up static and dynamic config based on a file hierarchy.
-                    /// iterate each repository item
+
+                    // iterate each repository item
                     for(final Rep rep : result){
                         // from where we will submit the item to the server
                         final String answer = utils.internet.webget("http://" 
