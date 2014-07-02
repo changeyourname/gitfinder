@@ -25,11 +25,11 @@ Downloading / preparation
 =========================
 
 The easiest way is:
-Step 1: download the zip file made available on https://github.com/triplecheck/gitfinder
-Step 2: extract all files to a folder on disk
-Step 3: open the terminal (or command prompt)
-Step 4: move to the folder that you extracted, get inside the "dist" folder
-Step 5: follow the instructions on the "Running for the first time"
+- Step 1: download the zip file made available on https://github.com/triplecheck/gitfinder
+- Step 2: extract all files to a folder on disk
+- Step 3: open the terminal (or command prompt)
+- Step 4: move to the folder that you extracted, get inside the "dist" folder
+- Step 5: follow the instructions on the "Running for the first time"
 
 If not possible to follow the above instructions. Download the code using NetBeans.
 Inside Netbeans look for "Team" -> "Github" -> "Clone"
