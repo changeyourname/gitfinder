@@ -70,8 +70,11 @@ Example #3 - forget the github username/password:
 Example #4 - starting the web server (replace 9999 with your preferred port):
 ```java -jar gitfinder server 9999```
 
-Example #4 - starting the web client (replace 127.0.0.1:9999 with your server address):
+Example #5 - starting the web client (replace 127.0.0.1:9999 with your server address):
 ```java -jar gitfinder client 127.0.0.1:9999```
+
+Example #6 - seeing the status of a given server (using the web browser):
+```http://127.0.0.1:9999/status```
 
 
 

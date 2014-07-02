@@ -16,6 +16,10 @@
 
 package utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -472,4 +476,29 @@ public class text {
         return result;
     }
    
+    
+       
+    /**
+     * Count the number of lines inside a given file
+     * @param file  A target text file
+     * @return      The number of line
+     */
+    public static int countLines(File file){
+        BufferedReader reader;
+        int counter = 0;
+        try {
+            // first step is reading the older files
+            reader = new BufferedReader(new FileReader(file));
+            // go through each line on our large start
+            while(reader.readLine() != null){
+               counter++;
+            }
+            reader.close();
+        }
+        catch (IOException e){
+            System.err.println("IV359 - Error while counting files");
+        }
+        return counter;
+    } 
+    
 }

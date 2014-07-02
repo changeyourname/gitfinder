@@ -131,6 +131,10 @@ public class Server implements Container {
         if(newList.isEmpty()){
             return;
         }
+        
+        // place a visual divisory to ease human-identification
+        System.out.println("====> " + userId);
+        
         // now proceed to write up the items
         for(Rep rep : newList){
             final String line = rep.getOneline();
@@ -142,7 +146,7 @@ public class Server implements Container {
             repWaitingList.remove(rep);
         }
         
-        System.out.println("====> " + userId);
+        
         
         //        // at this point we don't filter much the result and assume everything is correct
 //        final String line = items[0] + "/" + items[1] 
@@ -154,6 +158,26 @@ public class Server implements Container {
 //        System.out.println("web: " + line);
         
         
+    }
+
+    /**
+     * Delivers a text based report about our knowledge base statistics such as
+     * the number of registered users, number of indexed repositories and other
+     * metrics as deemed relevant.
+     * @return A portion of text ready to be displayed to the end-user
+     */
+    String getStatus() {
+        // get the counter values
+        int countRep = utils.text.countLines(core.fileRepositories);
+        int countUsers = utils.text.countLines(core.fileUsers);
+         
+        String result =  "Number of repositories: " + countRep
+                + "\n"
+                + "Number of users: " + countUsers
+                + "";
+        
+        // all done
+        return result;
     }
     
 }
@@ -201,6 +225,13 @@ public class Server implements Container {
             // did we received data from a client?
             if(rawText.startsWith(core.webFinishRepository)){
                 final String result = finishRepository(rawText);
+                answerRequest(result, response);
+                return;
+            }
+            
+            // did we received data from a client?
+            if(rawText.startsWith(core.webStatus)){
+                final String result = core.server.getStatus();
                 answerRequest(result, response);
                 return;
             }
