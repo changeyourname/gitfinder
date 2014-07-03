@@ -42,7 +42,7 @@ public class start {
             // ensure that we have the needed credentials for github
             setLoginDetails();
             System.out.println("Indexing the users");
-            user.launchCrawling();
+            users.launchCrawling();
             return;
         }
         
@@ -138,15 +138,15 @@ public class start {
     }
 
     /**
-     * When given a user name, go after the repositories where the user
-     * is involved and grab a copy
+     * When given a users name, go after the repositories where the users
+ is involved and grab a copy
      */
     private static void launchGrabFiles(final String usernameTarget) {
         if(usernameTarget == null){
             System.out.println("You need to specify a user name");
             return;
         }
-        // we have a user name, let's start
+        // we have a users name, let's start
         System.out.println("Processing " + usernameTarget);
         
         // what is our folder?

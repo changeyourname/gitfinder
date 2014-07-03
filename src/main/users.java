@@ -4,7 +4,7 @@
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-06-30T14:07:13Z
  * LicenseName: EUPL-1.1-without-appendix
- * FileName: user.java  
+ * FileName: users.java  
  * FileType: SOURCE
  * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
  * FileComment: <text> Methods related to github registered users</text> 
@@ -16,7 +16,10 @@ import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
 import com.jcabi.github.User;
 import com.jcabi.github.wire.CarefulWire;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,12 +29,11 @@ import java.util.logging.Logger;
  *
  * @author Nuno Brito, 30th of June 2014 in Darmstadt, Germany
  */
-public class user {
+public class users {
 
-    
-      /**
+    /**
      * Does the crawling of users at github. If a file already exists,
-     * gets the last user and then processes from there forward.
+     * gets the last users and then processes from there forward.
      */
     static void launchCrawling() throws Exception{
         // check if our file already exists
@@ -43,7 +45,7 @@ public class user {
         // get the last line of the text file
         String lastId = core.getLastLine(core.fileUsers);
         
-        // looks good so far. Did we got a user name?    
+        // looks good so far. Did we got a users name?    
         if(lastId.isEmpty()){
             // was empty, let's start again from scratch
             iterateUsers("");
@@ -54,8 +56,8 @@ public class user {
         // good to resume operations
         System.out.println("Resuming the index since username: " + lastId);
         
-        // now get the ID number for this user
-        int idNumber = user.getUserIdNumber(lastId);
+        // now get the ID number for this users
+        int idNumber = users.getUserIdNumber(lastId);
         System.out.println("Last login ID: " + idNumber);
         
         if(idNumber == -1){
@@ -92,7 +94,7 @@ public class user {
 
     
     /**
-     * Gets the user id from a given login name
+     * Gets the users id from a given login name
      * @param loginName
      * @return the id number of a given login or -1 if the login was not found
      */
@@ -100,7 +102,7 @@ public class user {
         Github github = new RtGithub(
                 new RtGithub(core.username, core.password)
                         .entry().through(CarefulWire.class, 50));
-        // get the user object associated with a given id
+        // get the users object associated with a given id
         User user = github.users().get(loginName);
 
         try {
@@ -138,7 +140,7 @@ public class user {
             
             * 
             */
-            //System.out.println(user.json().toString());
+            //System.out.println(users.json().toString());
             return user.json().getInt("id");
             
         } catch (IOException ex) {
@@ -147,4 +149,47 @@ public class user {
         
         return -1;
     }
+    
+    
+    /**
+     * Returns the last line from a given text file
+     * @param file  A file on disk 
+     * @return The last line if available or an empty string if nothing
+     * was found
+     */
+    public static int getUserLine(final String userId){
+        int counter = 0;
+        String result = null;
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(core.fileUsers));
+            String line;
+            while (result != null) {
+                line = reader.readLine();
+                result = line;
+                
+                if(line == null){
+                    break;
+                }
+                // increate the counter
+                counter++;
+                
+                // do we have a match?
+                if(utils.text.equals(line, userId)){
+                    break;
+                }
+            }
+            reader.close();
+        } catch (IOException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(result == null){
+            counter = -1;
+        }
+        
+        // all done    
+        return counter;
+    }
+    
 }

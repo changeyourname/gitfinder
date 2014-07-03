@@ -56,8 +56,8 @@ public class core {
     // the class to handle repositories
     final static public Repositories rep = new Repositories();
     
-    
-     /**
+     
+    /**
      * Returns the last line from a given text file
      * @param file  A file on disk 
      * @return The last line if available or an empty string if nothing

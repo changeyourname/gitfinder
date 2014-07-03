@@ -21,6 +21,10 @@ import structure.User;
  */
 public class status {
 
+    private static int 
+        countRep = 0,
+        countUsers = 0;
+    
     /**
      * Delivers a text based report about our knowledge base statistics such as
      * the number of registered users, number of indexed repositories and other
@@ -29,12 +33,41 @@ public class status {
      */
     public static String get() {
         // get the counter values
-        int countRep = utils.text.countLines(core.fileRepositories);
-        int countUsers = utils.text.countLines(core.fileUsers);
+        countRep = utils.text.countLines(core.fileRepositories);
+        countUsers = utils.text.countLines(core.fileUsers);
         
-        
+        // get the percentage of user repositories that were already indexed
+        String repositoriesIndexed = getIndexedRepositories();
         
         // list the users in queue (if any)
+        String usersInQueue = getUsersInQueue();
+        
+        // prepare the resulting message 
+        String result =  ""
+                + "<html>"
+                + "<head></head>"
+                + "<body>"
+
+                + "Number of repositories: " + countRep
+                + "<br>\n"
+                + repositoriesIndexed
+                
+                + "Number of users: " + countUsers
+                + usersInQueue
+                
+                
+                + "</body>"
+                + "</html>";
+        
+        // all done
+        return result;
+    }
+
+    
+    /**
+     * Get the users that are currently in the queue, waiting to be processed
+     */
+    private static String getUsersInQueue(){
         String usersInQueue = "";
         for(User user : core.server.userWaitingList){
             // create the user list
@@ -52,25 +85,31 @@ public class status {
                     + "Users in queue:<br>\n"
                     + usersInQueue;
         }
-        
-        
-        // prepare the resulting message 
-        String result =  ""
-                + "<html>"
-                + "<head></head>"
-                + "<body>"
+        // all done
+        return usersInQueue;
+    }
 
-                + "Number of repositories: " + countRep
-                + "<br>\n"
-                + "Number of users: " + countUsers
-                + usersInQueue
-                
-                + "</body>"
-                + "</html>";
-        
+    /**
+     * Reports back the number of repositories that were already indexed.
+     * @return An HTML result ready for printing.
+     */
+    private static String getIndexedRepositories() {
+        // start by getting the last indexed id
+        final String lastId = core.rep.getLastIndexedId();
+        // now find the position of this id within the users.txt file
+        int idPosition = main.users.getUserLine(lastId);
+        // calculate the estimate percentage of users missing to be processed
+        String estimation = utils.misc.getPercentage(idPosition, countUsers);
+        // prepare the output of the result
+        String result = "";
+        // now add the requested information
+        if(estimation.isEmpty() == false){
+            result = "Percentage processed: " + estimation
+                    + "<br>\n";
+        }
         // all done
         return result;
     }
-
+    
     
 }
