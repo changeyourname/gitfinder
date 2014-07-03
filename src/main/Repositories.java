@@ -222,6 +222,7 @@ public class Repositories {
            }
      
        }catch (IOException e){
+           System.err.println("Error occurred in " + utils.time.getDateTime());
            System.err.println(e.getMessage());
        }
         // all done
@@ -297,7 +298,7 @@ public class Repositories {
      * triplecheck/download Java A repository for downloading files\n
      * @param lines 
      */
-    void addNewRepositories(final String lines){
+    public void addNewRepositories(final String lines){
         // now write all the lines in a single push
         try {
                 writer.write(lines);

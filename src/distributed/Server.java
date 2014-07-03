@@ -10,7 +10,7 @@
  * FileComment: <text> Provides a server for distributed processing of the 
 repositories indexing.</text> 
  */
-package main;
+package distributed;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.core;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.core.Container;
@@ -45,7 +46,7 @@ public class Server implements Container {
     public final ArrayList<User> userWaitingList = new ArrayList();
     
     // where we save the state of users being processed (fail safe procedure)
-    private File fileQueueUsers = new File("queueUsers.txt");
+    private final File fileQueueUsers = new File("queueUsers.txt");
     
        
     /**
@@ -56,7 +57,7 @@ public class Server implements Container {
      * port number to use and the third one explains which action to distribute.
      * Maybe in the future we don't need arguments at all.
      */
-    void start(String[] args) {
+    public void start(String[] args) {
         // instantiate the server
         startServer(args[1]);
     }
@@ -186,55 +187,7 @@ public class Server implements Container {
         userSaveState();
     }
     
-    /**
-     * Delivers a text based report about our knowledge base statistics such as
-     * the number of registered users, number of indexed repositories and other
-     * metrics as deemed relevant.
-     * @return An HTML portion of text ready to be displayed to the end-user
-     */
-    String getStatus() {
-        // get the counter values
-        int countRep = utils.text.countLines(core.fileRepositories);
-        int countUsers = utils.text.countLines(core.fileUsers);
-        
-        // list the users in queue (if any)
-        String usersInQueue = "";
-        for(User user : userWaitingList){
-            // create the user list
-            final String thisUser = user.getIdUser()
-                    + " since "
-                    + utils.time.getTimeFromLong(user.getTimeStamp())
-                    + "<br>\n";
-            // add the user to our list
-            usersInQueue = usersInQueue.concat(thisUser);
-        }
-        // do we need to add a title
-        if(usersInQueue.isEmpty() == false){
-            usersInQueue = ""
-                    + "<br><br>\n"
-                    + "Users in queue:<br>\n"
-                    + usersInQueue;
-        }
-        
-        
-        // prepare the resulting message 
-        String result =  ""
-                + "<html>"
-                + "<head></head>"
-                + "<body>"
-
-                + "Number of repositories: " + countRep
-                + "<br>\n"
-                + "Number of users: " + countUsers
-                + usersInQueue
-                
-                + "</body>"
-                + "</html>";
-        
-        // all done
-        return result;
-    }
-
+    
     /**
      * Adds a new user to our queue for processing
      * @param user The user to be added
@@ -349,7 +302,7 @@ class Task implements Runnable {
             
             // did we received data from a client?
             if(rawText.startsWith(core.webStatus)){
-                final String result = core.server.getStatus();
+                final String result = distributed.status.get();
                 answerRequest(result, response);
                 return;
             }

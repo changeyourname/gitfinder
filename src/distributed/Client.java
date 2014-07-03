@@ -11,9 +11,10 @@
 the results.</text> 
  */
 
-package main;
+package distributed;
 
 import java.util.ArrayList;
+import main.core;
 import structure.Rep;
 
 /**

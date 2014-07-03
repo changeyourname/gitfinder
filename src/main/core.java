@@ -12,6 +12,8 @@
 
 package main;
 
+import distributed.Client;
+import distributed.Server;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -30,9 +32,6 @@ public class core {
     
     // initialize the preferences object
     static Preferences prefs = Preferences.userNodeForPackage(start.class);
-
-    final static String filenameUsers = "users.txt";
-    final static String filenameRepositories = "repositories.txt";
     
     // parameters used on the networked mode
     static public final String 
@@ -41,16 +40,21 @@ public class core {
             webFinishRepository = "/repository/finish", // says that no further changes will happen, close it up
             webStatus = "/status";
             
-    // check if our file already exists
-    final static File fileUsers = new File(core.filenameUsers);
-    final static File fileRepositories = new File(core.filenameRepositories);
+    // declare the files that we use on this software
+    final static public String 
+            filenameUsers = "users.txt",
+            filenameRepositories = "repositories.txt";
+
+    final static public File 
+            fileUsers = new File(core.filenameUsers),
+            fileRepositories = new File(core.filenameRepositories);
 
     // our default server/client when needed
-    final static Server server = new Server();
-    final static Client client = new Client();
+    final static public Server server = new Server();
+    final static public Client client = new Client();
     
     // the class to handle repositories
-    final static Repositories rep = new Repositories();
+    final static public Repositories rep = new Repositories();
     
     
      /**
