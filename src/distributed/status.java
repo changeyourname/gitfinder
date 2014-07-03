@@ -48,11 +48,12 @@ public class status {
                 + "<head></head>"
                 + "<body>"
 
+                + "Number of users: " + countUsers
+                + "<br>\n"
                 + "Number of repositories: " + countRep
                 + "<br>\n"
                 + repositoriesIndexed
                 
-                + "Number of users: " + countUsers
                 + usersInQueue
                 
                 
@@ -81,7 +82,7 @@ public class status {
         // do we need to add a title
         if(usersInQueue.isEmpty() == false){
             usersInQueue = ""
-                    + "<br><br>\n"
+                    + "<br>\n"
                     + "Users in queue:<br>\n"
                     + usersInQueue;
         }
@@ -105,8 +106,14 @@ public class status {
         // now add the requested information
         if(estimation.isEmpty() == false){
             result = "Percentage processed: " + estimation
+                    + "%"
                     + "<br>\n";
         }
+        
+        System.err.println("Last ID: " + lastId);
+        System.err.println("ID line: " + idPosition);
+        System.err.println("Users: " + countUsers);
+        
         // all done
         return result;
     }

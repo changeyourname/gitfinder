@@ -18,7 +18,6 @@ import com.jcabi.github.User;
 import com.jcabi.github.wire.CarefulWire;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -152,42 +151,36 @@ public class users {
     
     
     /**
-     * Returns the last line from a given text file
-     * @param file  A file on disk 
+     * Returns the line number where a given user is first found
+     * @param userId    The userId to find inside the text file
      * @return The last line if available or an empty string if nothing
      * was found
      */
     public static int getUserLine(final String userId){
-        int counter = 0;
-        String result = null;
+        int counter = 1;
         BufferedReader reader;
-        try {
+        String line = "";
+            try {
             reader = new BufferedReader(new FileReader(core.fileUsers));
-            String line;
-            while (result != null) {
-                line = reader.readLine();
-                result = line;
-                
-                if(line == null){
-                    break;
-                }
-                // increate the counter
-                counter++;
-                
+            while (line != null) {
                 // do we have a match?
                 if(utils.text.equals(line, userId)){
                     break;
                 }
+                line = reader.readLine();
+                // increment the counter
+                counter++;
+                
             }
             reader.close();
         } catch (IOException ex) {
             Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+            line = null;
         }
         
-        if(result == null){
+        if(line == null){
             counter = -1;
         }
-        
         // all done    
         return counter;
     }
