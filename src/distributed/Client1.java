@@ -4,30 +4,24 @@
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-07-01T18:15:01Z
  * LicenseName: EUPL-1.1-without-appendix
- * FileName: ClientScript.java  
+ * FileName: Client.java  
  * FileType: SOURCE
  * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
  * FileComment: <text> Interact with the server to receive orders and deliver
 the results.</text> 
  */
 
-import distributed.Client;
-import distributed.Client1;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+package distributed;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import main.core;
-import main.start;
 import structure.Rep;
 
 /**
  *
  * @author Nuno Brito, 1st of July 2014 in Darmstadt, Germany
  */
-public class ClientScript implements Client{
+public class Client1 {
     
     // the location and port where the server is located
     private String address = "";
@@ -38,6 +32,7 @@ public class ClientScript implements Client{
     private final boolean canContinue = true;
     private long watchDog = System.currentTimeMillis();
     private Thread thread;
+    final Client1 thisClient = this;
     /**
      * launch the client mode. Basically, we first try to find the server
      * that is mentioned as master and ask what we are supposed to do. If we
@@ -50,28 +45,26 @@ public class ClientScript implements Client{
      * information uphill for storing on the server-side.
      * @param givenAddress URL and port number of where the server is located
      */
-    @Override
     public void start(final String givenAddress){
-        setLoginDetails();
-        System.out.println("Starting scripted client, attached to " + givenAddress);
-        System.out.println("Version 0.1");
+        
+        System.out.println("Starting the client mode, attached to " + givenAddress);
         address = givenAddress;
-        final ClientScript thisClient = this;
-            
+        
         thread = new Thread(){
-            
             @Override
             public void run(){
-                while(true){
+                while(canContinue){
                     // get the next user that we want to process
                     final String nextUser = utils.internet.webget("http://" + address + core.webGetUser);
                     // check if had a successful connection or not
                     if(nextUser.equals(errorConnectionRefused)){
-                       System.err.println("Error: Connection refused on " + address);
-                       System.err.println("Retrying connection in 60 seconds..");
+                        System.err.println("Error: Connection refused on " + address);
                         utils.time.wait(60);
                         continue;
+                        //break;
                     }
+                    // all good, we can proceed
+                    wakeUpDog();
                     // show a message to the end-user
                     System.out.println("\nProcessing " + nextUser);
                     // now process the assigned user
@@ -79,7 +72,7 @@ public class ClientScript implements Client{
                     
                     // a null reply means than error occurred
                     if(result == null){
-                        System.out.println("CL071 - Error occurred, retrying to index again in 60 seconds");
+                        System.out.println("CL071 - Error occurred, retrying to index in 60 seconds");
                         utils.time.wait(60);
                         thisClient.start(givenAddress);
                         return;
@@ -119,43 +112,53 @@ public class ClientScript implements Client{
         thread.start();
     }
     
-        
+    
     /**
-     * Sets the login details that will be used with the github API
-     * @param args 
+     * Reset the clock timer
      */
-    private static void setLoginDetails() {
-        // get the values from save preferences if any
-        core.username = core.prefs.get("username", "");
-        core.password = core.prefs.get("password", "");
-
-        // no need to continue if they were already set
-        if(core.username.isEmpty() == false && core.password.isEmpty() == false){
-            System.out.println("Using the login details of " + core.username);
-            return;
-        }
-
-
-        System.out.println("Attention: No username nor password provided");
-        System.out.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
-
-
-        try {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-            System.out.println("Your github login name: ");
-            core.username = in.readLine();
-
-            System.out.println("Your github password: ");
-            core.password = in.readLine();
-
-            // now save these into our preferences object
-            core.prefs.put("username", core.username);
-            core.prefs.put("password", core.password);
-        } catch (IOException ex) {
-            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    void wakeUpDog(){
+        watchDog = System.currentTimeMillis();
     }
     
-      
+    /**
+     * Has too much time been elapsed since the last time our dog was awaken?
+     * If so, return true. If we're still in the permitted time then do nothing
+     * @return True when the time limit has expired, false when otherwise
+     */
+    boolean isDogTooOld(){
+        return (watchDog + maxWait) < System.currentTimeMillis();
+    }
+    
+    /**
+     * Sometimes the connection goes offline for some odd reason. Therefore we
+     * have this method to launch a thread and check if there has been recent
+     * activity.
+     */
+    void launcWatchDog(){
+        watchDog = System.currentTimeMillis();
+        Thread dogThread = new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    // suspend this thread for some minutes
+                    utils.time.wait(60*10);
+                    // is our watchdog too old?
+                    if(isDogTooOld()){
+                        // it is old, kill the old thread
+                        thread.interrupt();
+                        // wait a bit to finish it off
+                        utils.time.wait(1);
+                        // now start a new one
+                        thisClient.start(address);
+                        // all done, reset the counters
+                        wakeUpDog();
+                    }
+                }
+            }
+        };
+        // kickoff the thread
+        dogThread.start();
+    }
+    
+    
 }

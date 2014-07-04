@@ -13,6 +13,7 @@
 package main;
 
 import distributed.Client;
+import distributed.Client1;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -103,9 +104,17 @@ public class start {
     private static void launchClient(final String[] args){
         // let's get the source code that we want to 
         final String location = "https://raw.githubusercontent.com/triplecheck/gitfinder/master/run/script/ClientScript.java";
+        //final String location = "http://" + args[1] + core.webGetScript;
         final String sourceCode = utils.internet.getTextFile(location);
+        
+        // we can't have an empty source code
+        if(sourceCode.isEmpty()){
+            System.err.println("ST110 - Error, failed to load scripted code");
+            return;
+        }
+        
         // now create a new object with the client source code
-        Client newClass = (Client) utils.bytecode.getObjectNoPackage(sourceCode, Client.class.getCanonicalName());
+        Client newClass = (Client) utils.bytecode.getObjectNoPackage(sourceCode, "ClientScript");
         // run it up
         System.out.println("Running the script client");
         newClass.start(args[1]);

@@ -12,7 +12,6 @@
 
 package main;
 
-import distributed.Client;
 import distributed.Server;
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,7 +52,6 @@ public class core {
 
     // our default server/client when needed
     final static public Server server = new Server();
-    final static public Client client = new Client();
     
     // the class to handle repositories
     final static public Repositories rep = new Repositories();

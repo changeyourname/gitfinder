@@ -12,12 +12,8 @@
 
 package main;
 
-import distributed.Client;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 
 /**
@@ -32,8 +28,8 @@ public class test {
      */
     public static void main(String[] args) throws UnsupportedEncodingException {
         File scriptFile = new File("script", "Client.java");
-        Client newClass = (Client) utils.bytecode.getObjectNoPackage(scriptFile, Client.class.getCanonicalName());
+//        Client newClass = (Client) utils.bytecode.getObjectNoPackage(scriptFile, Client.class.getCanonicalName());
         
-        newClass.start("9999");
+//        newClass.start("9999");
     }    
 }
