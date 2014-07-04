@@ -58,7 +58,9 @@ public class Client {
                     // check if had a successful connection or not
                     if(nextUser.equals(errorConnectionRefused)){
                         System.err.println("Error: Connection refused on " + address);
-                        break;
+                        utils.time.wait(60);
+                        continue;
+                        //break;
                     }
                     // all good, we can proceed
                     wakeUpDog();

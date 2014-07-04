@@ -101,12 +101,13 @@ public class start {
      * source code that we want to run.
      */
     private static void launchClient(final String[] args){
-        // let's get the source code that we want to run
-        final String sourceCode = utils.internet.getTextFile("http://" + args[1]
-        + core.webGetScript);
+        // let's get the source code that we want to 
+        final String location = "https://raw.githubusercontent.com/triplecheck/gitfinder/master/run/script/ClientScript.java";
+        final String sourceCode = utils.internet.getTextFile(location);
         // now create a new object with the client source code
         Client newClass = (Client) utils.bytecode.getObjectNoPackage(sourceCode, Client.class.getCanonicalName());
         // run it up
+        System.out.println("Running the script client");
         newClass.start(args[1]);
     }
    

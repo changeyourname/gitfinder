@@ -52,22 +52,24 @@ public class ClientScript extends Client{
     @Override
     public void start(final String givenAddress){
         setLoginDetails();
-        System.out.println("Starting the client mode, attached to " + givenAddress);
+        System.out.println("Starting the scripted client mode, attached to " + givenAddress);
         address = givenAddress;
-        
+        final ClientScript thisClient = this;
+            
         thread = new Thread(){
+            
             @Override
             public void run(){
-                while(canContinue){
+                while(true){
                     // get the next user that we want to process
                     final String nextUser = utils.internet.webget("http://" + address + core.webGetUser);
                     // check if had a successful connection or not
                     if(nextUser.equals(errorConnectionRefused)){
-                        System.err.println("Error: Connection refused on " + address);
-                        break;
+                       System.err.println("Error: Connection refused on " + address);
+                       System.err.println("Retrying connection in 60 seconds..");
+                        utils.time.wait(60);
+                        continue;
                     }
-                    // all good, we can proceed
-                    wakeUpDog();
                     // show a message to the end-user
                     System.out.println("\nProcessing " + nextUser);
                     // now process the assigned user
@@ -75,9 +77,9 @@ public class ClientScript extends Client{
                     
                     // a null reply means than error occurred
                     if(result == null){
-                        System.out.println("CL071 - Error occurred, retrying to index in 60 seconds");
+                        System.out.println("CL071 - Error occurred, retrying to index again in 60 seconds");
                         utils.time.wait(60);
-                        core.client.start(givenAddress);
+                        thisClient.start(givenAddress);
                         return;
                     }
                     
