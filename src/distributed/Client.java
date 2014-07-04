@@ -26,7 +26,12 @@ public class Client {
     // the location and port where the server is located
     private String address = "";
     private final String errorConnectionRefused = "java.net.ConnectException: Connection refused";
-
+    // how long should we wait before restarting the processing?
+    final long maxWait = 1000 * 60 * 10;
+    
+    private final boolean canContinue = true;
+    private long watchDog = System.currentTimeMillis();
+    private Thread thread;
     /**
      * launch the client mode. Basically, we first try to find the server
      * that is mentioned as master and ask what we are supposed to do. If we
@@ -43,10 +48,10 @@ public class Client {
         System.out.println("Starting the client mode, attached to " + givenAddress);
         address = givenAddress;
         
-        Thread thread = new Thread(){
+        thread = new Thread(){
             @Override
             public void run(){
-                while(true){
+                while(canContinue){
                     // get the next user that we want to process
                     final String nextUser = utils.internet.webget("http://" + address + core.webGetUser);
                     // check if had a successful connection or not
@@ -54,14 +59,20 @@ public class Client {
                         System.err.println("Error: Connection refused on " + address);
                         break;
                     }
-                    
-                    // introduce an artificial delay to helps analyse this index
-                    //utils.time.wait(2);
-                    
+                    // all good, we can proceed
+                    wakeUpDog();
+                    // show a message to the end-user
                     System.out.println("\nProcessing " + nextUser);
-                    
                     // now process the assigned user
                     ArrayList<Rep> result = core.rep.getRepositories(nextUser);
+                    
+                    // a null reply means than error occurred
+                    if(result == null){
+                        System.out.println("CL071 - Error occurred, retrying to index in 60 seconds");
+                        utils.time.wait(60);
+                        core.client.start(givenAddress);
+                        return;
+                    }
                     
                     // we got an empty result, move to the next processing then
                     if(result.isEmpty()){
@@ -96,4 +107,54 @@ public class Client {
         // kickoff the thread
         thread.start();
     }
+    
+    
+    /**
+     * Reset the clock timer
+     */
+    void wakeUpDog(){
+        watchDog = System.currentTimeMillis();
+    }
+    
+    /**
+     * Has too much time been elapsed since the last time our dog was awaken?
+     * If so, return true. If we're still in the permitted time then do nothing
+     * @return True when the time limit has expired, false when otherwise
+     */
+    boolean isDogTooOld(){
+        return (watchDog + maxWait) < System.currentTimeMillis();
+    }
+    
+    /**
+     * Sometimes the connection goes offline for some odd reason. Therefore we
+     * have this method to launch a thread and check if there has been recent
+     * activity.
+     */
+    void launcWatchDog(){
+        watchDog = System.currentTimeMillis();
+        Thread dogThread = new Thread(){
+            @Override
+            public void run(){
+                while(true){
+                    // suspend this thread for some minutes
+                    utils.time.wait(60*10);
+                    // is our watchdog too old?
+                    if(isDogTooOld()){
+                        // it is old, kill the old thread
+                        thread.interrupt();
+                        // wait a bit to finish it off
+                        utils.time.wait(1);
+                        // now start a new one
+                        core.client.start(address);
+                        // all done, reset the counters
+                        wakeUpDog();
+                    }
+                }
+            }
+        };
+        // kickoff the thread
+        dogThread.start();
+    }
+    
+    
 }

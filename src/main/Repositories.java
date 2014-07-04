@@ -14,7 +14,6 @@ package main;
 
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
-import com.jcabi.github.wire.CarefulWire;
 import com.jcabi.http.response.JsonResponse;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -54,6 +53,11 @@ public class Repositories {
      */
     private void doSettings(){
          try {
+             // sometimes we don't have yet a users.txt file
+            if(core.fileUsers.exists() == false){
+                // time to create an empty one
+                utils.files.touch(core.fileUsers);
+            } 
              // open the users' file for reading
             reader = new BufferedReader(new FileReader(core.fileUsers));
             // initialize the text file where the repositories are written
@@ -166,7 +170,9 @@ public class Repositories {
                 new RtGithub(
                    core.username, core.password
            )
-                        .entry().through(CarefulWire.class, 50));          
+                     //   .entry().through(CarefulWire.class, 50));
+              .entry());
+           
            final JsonResponse resp = github.entry()
                 .uri().path("/users/" + user + "/repos")
                 //.queryParam("q", "java")
@@ -224,6 +230,7 @@ public class Repositories {
        }catch (IOException e){
            System.err.println("Error occurred in " + utils.time.getDateTime());
            System.err.println(e.getMessage());
+           result = null;
        }
         // all done
         return result;

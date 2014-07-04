@@ -63,7 +63,7 @@ public class status {
                 
                 + usersInQueue
                 
-                + getLanguageStats()
+                //+ getLanguageStats()
                 
                 + "</body>"
                 + "</html>";

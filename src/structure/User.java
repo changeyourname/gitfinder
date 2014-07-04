@@ -22,7 +22,8 @@ public class User {
     // time line
     private final long timeLimit = 1000 * 60
             // comment the line below to change this limit for 1 minute (useful for testing)
-            * 60 * 2; // wait 2 hours
+            //* 60 * 2; // wait 2 hours
+            * 5  // 5 minutes is enough
             ;
     // when was this object created?
     private long timeStamp = System.currentTimeMillis();
