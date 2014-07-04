@@ -97,6 +97,7 @@ public class files {
                     is.close();
                 }
             } catch (IOException ex) {
+                return null;
             }
         }
         return new String(bytes);

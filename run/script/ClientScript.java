@@ -4,24 +4,29 @@
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-07-01T18:15:01Z
  * LicenseName: EUPL-1.1-without-appendix
- * FileName: Client.java  
+ * FileName: ClientScript.java  
  * FileType: SOURCE
  * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
  * FileComment: <text> Interact with the server to receive orders and deliver
 the results.</text> 
  */
 
-package distributed;
-
+import distributed.Client;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.core;
+import main.start;
 import structure.Rep;
 
 /**
  *
  * @author Nuno Brito, 1st of July 2014 in Darmstadt, Germany
  */
-public class Client {
+public class ClientScript extends Client{
     
     // the location and port where the server is located
     private String address = "";
@@ -44,8 +49,9 @@ public class Client {
      * information uphill for storing on the server-side.
      * @param givenAddress URL and port number of where the server is located
      */
+    @Override
     public void start(final String givenAddress){
-        
+        setLoginDetails();
         System.out.println("Starting the client mode, attached to " + givenAddress);
         address = givenAddress;
         
@@ -109,6 +115,43 @@ public class Client {
         thread.start();
     }
     
+        
+    /**
+     * Sets the login details that will be used with the github API
+     * @param args 
+     */
+    private static void setLoginDetails() {
+        // get the values from save preferences if any
+        core.username = core.prefs.get("username", "");
+        core.password = core.prefs.get("password", "");
+
+        // no need to continue if they were already set
+        if(core.username.isEmpty() == false && core.password.isEmpty() == false){
+            System.out.println("Using the login details of " + core.username);
+            return;
+        }
+
+
+        System.out.println("Attention: No username nor password provided");
+        System.out.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
+
+
+        try {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+            System.out.println("Your github login name: ");
+            core.username = in.readLine();
+
+            System.out.println("Your github password: ");
+            core.password = in.readLine();
+
+            // now save these into our preferences object
+            core.prefs.put("username", core.username);
+            core.prefs.put("password", core.password);
+        } catch (IOException ex) {
+            Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     /**
      * Reset the clock timer

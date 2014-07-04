@@ -307,6 +307,17 @@ class Task implements Runnable {
                 return;
             }
             
+            // did we received data from a client?
+            if(rawText.startsWith(core.webGetScript)){
+                final File file = new File("script", "ClientScript.java");
+                String result = utils.files.readAsString(file);
+                if(result == null){
+                    result = "404";
+                }
+                answerRequest(result, response);
+                return;
+            }
+            
            
             // all done
             answerRequest("404", response);

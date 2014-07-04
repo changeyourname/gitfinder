@@ -6,6 +6,7 @@
             <name>gitfinder</name>
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
+                <root id="src.script.dir"/>
                 <root id="src.dir"/>
             </source-roots>
             <test-roots>

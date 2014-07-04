@@ -12,13 +12,13 @@
 
 package main;
 
+import distributed.Client;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 
 /**
  *
@@ -83,12 +83,10 @@ public class start {
   
         // or are we interested in grabbing files from repositories?
         if(args[0].equalsIgnoreCase("client")){
-            setLoginDetails();
-            core.client.start(args[1]);
+            launchClient(args);
             return;
         }
   
-        
         
         // no arguments specified, show a simple syntax usage
         System.out.println("Syntax usage: java -jar gitfinder.java users|repositories username password"
@@ -97,7 +95,57 @@ public class start {
                 + "java -jar gitfinder.jar users");
     }
     
+    /**
+     * Launches the client that will be running on this instance of the software.
+     * To launch each client we will ask the server to provide us with the
+     * source code that we want to run.
+     */
+    private static void launchClient(final String[] args){
+        // let's get the source code that we want to run
+        final String sourceCode = utils.internet.getTextFile("http://" + args[1]
+        + core.webGetScript);
+        // now create a new object with the client source code
+        Client newClass = (Client) utils.bytecode.getObjectNoPackage(sourceCode, Client.class.getCanonicalName());
+        // run it up
+        newClass.start(args[1]);
+    }
    
+
+    /**
+     * When given a users name, go after the repositories where the users
+ is involved and grab a copy
+     */
+    private static void launchGrabFiles(final String usernameTarget) {
+        if(usernameTarget == null){
+            System.out.println("You need to specify a user name");
+            return;
+        }
+        // we have a users name, let's start
+        System.out.println("Processing " + usernameTarget);
+        
+        // what is our folder?
+        File thisFolder = new File(folderCode, usernameTarget);
+       
+    }
+
+    /**
+     * When given a repository name, this method will download the files
+     * onto the respective folder on disk
+     * @param usernameTarget    Owner of the repository
+     * @param repositoryName    The name of the repository
+     */
+    private static void processRepository(final String usernameTarget, 
+            final String repositoryName) {
+      
+        // what is our folder?
+        File thisFolder = new File(folderCode, usernameTarget + "/" + repositoryName);
+        // do we have the folder we need?
+        utils.files.mkdirs(thisFolder);
+        // now download the files
+        core.rep.download(thisFolder, usernameTarget + "/" + repositoryName);
+    }
+
+    
     
     /**
      * Sets the login details that will be used with the github API
@@ -134,41 +182,6 @@ public class start {
         } catch (IOException ex) {
             Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
-
-    /**
-     * When given a users name, go after the repositories where the users
- is involved and grab a copy
-     */
-    private static void launchGrabFiles(final String usernameTarget) {
-        if(usernameTarget == null){
-            System.out.println("You need to specify a user name");
-            return;
-        }
-        // we have a users name, let's start
-        System.out.println("Processing " + usernameTarget);
-        
-        // what is our folder?
-        File thisFolder = new File(folderCode, usernameTarget);
-       
-    }
-
-    /**
-     * When given a repository name, this method will download the files
-     * onto the respective folder on disk
-     * @param usernameTarget    Owner of the repository
-     * @param repositoryName    The name of the repository
-     */
-    private static void processRepository(final String usernameTarget, 
-            final String repositoryName) {
-      
-        // what is our folder?
-        File thisFolder = new File(folderCode, usernameTarget + "/" + repositoryName);
-        // do we have the folder we need?
-        utils.files.mkdirs(thisFolder);
-        // now download the files
-        core.rep.download(thisFolder, usernameTarget + "/" + repositoryName);
     }
 
     

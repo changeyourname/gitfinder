@@ -12,6 +12,8 @@
 
 package main;
 
+import distributed.Client;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -26,16 +28,12 @@ public class test {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.UnsupportedEncodingException
      */
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String test = "ncdc/logstash-openshift-plugin/Ruby/Plugin for LogStash to retrieve OpenShift gear environment variables and add them as fields to the events";
-
-        String send = URLEncoder.encode(test, "UTF-8" );
-        String receive = URLDecoder.decode(send, "UTF-8");
-
-        System.out.println(send);
-        System.out.println(receive);
+        File scriptFile = new File("script", "Client.java");
+        Client newClass = (Client) utils.bytecode.getObjectNoPackage(scriptFile, Client.class.getCanonicalName());
         
-        
+        newClass.start("9999");
     }    
 }

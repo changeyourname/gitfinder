@@ -27,18 +27,20 @@ import java.util.prefs.Preferences;
  * @author Nuno Brito, 30th of June 2014 in Darsmtadt, Germany
  */
 public class core {
-    static String username = "";
-    static String password = "";
+    public static String 
+            username = "",
+            password = "";
     
     // initialize the preferences object
-    static Preferences prefs = Preferences.userNodeForPackage(start.class);
+    public static Preferences prefs = Preferences.userNodeForPackage(start.class);
     
     // parameters used on the networked mode
     static public final String 
             webGetUser = "/request/user", // gets a new user to process
             webSubmitRepository = "/repository/submit", // gives information about a given repository
             webFinishRepository = "/repository/finish", // says that no further changes will happen, close it up
-            webStatus = "/status";
+            webStatus = "/status",
+            webGetScript = "/script/client";
             
     // declare the files that we use on this software
     final static public String 
