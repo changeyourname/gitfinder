@@ -26,6 +26,10 @@ import java.util.prefs.Preferences;
  * @author Nuno Brito, 30th of June 2014 in Darsmtadt, Germany
  */
 public class core {
+    
+    public static final int
+            version = 1;
+    
     public static String 
             username = "",
             password = "";

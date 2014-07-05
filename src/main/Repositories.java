@@ -159,20 +159,23 @@ public class Repositories {
     /**
      * Given a Github.com user, this method provides an arraylist
      * with all the respective repositories available
-     * @param user
+     * @param user      The user name that we want to index
+     * @param username  The credentials username
+     * @param password  The credentials password
      * @return 
      */
-    public ArrayList<Rep> getRepositories(final String user){
+    public ArrayList<Rep> getRepositories(final String user, final String username,
+            final String password){
         // create the new array
         ArrayList<Rep> result = new ArrayList();
         
         try{ 
            Github github = new RtGithub(
                 new RtGithub(
-                   core.username, core.password
+                   username, password
            )
                         .entry().through(CarefulWire.class, 50));
-            //  .entry());
+//              .entry());
            
            final JsonResponse resp = github.entry()
                 .uri().path("/users/" + user + "/repos")
@@ -183,6 +186,14 @@ public class Repositories {
            
            // get the JSON reply
            final String answer = resp.json().read().toString();
+           
+           /**
+            * Did we had an empty answer?
+            */
+           if(answer.equals("[]")){
+               // reply as an empty answer
+               return new ArrayList();
+           }
            
            // something wrong happened here
            if(answer.length() < 25){
@@ -290,7 +301,8 @@ public class Repositories {
      * @return  the lines to be added on our repository text file
      */
     public String getLinesWithRepositoriesFromUser(final String targetUser) {
-        ArrayList<Rep> repositories = getRepositories(targetUser);
+        ArrayList<Rep> repositories = getRepositories(targetUser, 
+                core.username, core.password);
         String lines = "";
         // iterate each repository found
         for(final Rep rep : repositories){

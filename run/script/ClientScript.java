@@ -36,7 +36,7 @@ public class ClientScript implements Client{
     final long maxWait = 1000 * 60 * 10;
     
     private final boolean canContinue = true;
-    private Thread thread;
+//    private Thread thread;
     /**
      * launch the client mode. Basically, we first try to find the server
      * that is mentioned as master and ask what we are supposed to do. If we
@@ -45,20 +45,22 @@ public class ClientScript implements Client{
      * 
      * If the server is found, we receive instructions about what action should
      * be done and then proceed to execute. Most likely we will be requesting
-     * small pieces of informprivate long watchDog = System.currentTimeMillis();
-    ation, processing our share and submitting this
-     * information uphill for storing on the server-side.
-     * @param givenAddress URL and port number of where the server is located
+     * small pieces of data, processing our share and submitting this
+     * information upstream for storing on the server-side.
+     * @param args The parameters that we will support in different manners
+     * @param username  Login username
+     * @param password  Login password
      */
-    @Override
-    public void start(final String givenAddress){
-        getLogin();
+    public void startThread(final String[] args, final String username, 
+            final String password){
+        // we assume that the first parameter indicates the connecting address
+        final String givenAddress = args[1];
         System.out.println("Starting scripted client, attached to " + givenAddress);
         System.out.println("Version 0.2");
         address = givenAddress;
         final ClientScript thisClient = this;
             
-        thread = new Thread(){
+        Thread thread = new Thread(){
             
             @Override
             public void run(){
@@ -67,27 +69,31 @@ public class ClientScript implements Client{
                     final String nextUser = utils.internet.webget("http://" + address + core.webGetUser);
                     // check if had a successful connection or not
                     if(nextUser.equals(errorConnectionRefused)){
-                       System.err.println("CL70 Error: Connection refused on " + address);
-                       System.err.println("Retrying connection in 60 seconds..");
-                        utils.time.wait(60);
+                        // something went wrong, wait for some time
+                        doWait(30, "CL70 Error: Connection refused ("
+                               + address
+                               + ")");
                         continue;
                     }
-                    // show a message to the end-user
-                    System.out.println("\nProcessing " + nextUser);
-                    // now process the assigned user
-                    ArrayList<Rep> result = core.rep.getRepositories(nextUser);
+                    // we're going ok, show a message to the end-user
+                    System.out.println("\n"
+                            + username
+                            + " is processing " + nextUser);
+                    // now process the assigned user and get a batch of reps
+                    ArrayList<Rep> result = core.rep.getRepositories(nextUser, username, password);
                     
                     // a null reply means than error occurred
                     if(result == null){
                         doWait(10, "CL82 Error");
-                        thisClient.start(givenAddress);
+                        // we need to repeat the processing
+                        thisClient.start(args);
                         return;
                     }
                     
-                    // we got an empty result, move to the next processing then
+                    // did we got an empty result? move to the next user
                     if(result.isEmpty()){
                         // inform the end-user about what we (didn't) found
-                        System.out.println("No repositories for " + nextUser);
+                        System.out.println(username + ": No repositories for " + nextUser);
                         // send the finish message
                         final String answer = utils.internet.webget("http://" 
                             + address + core.webFinishRepository
@@ -96,15 +102,16 @@ public class ClientScript implements Client{
                         continue;
                     }
 
-                    // iterate each repository item
+                    // we found repositories, iterate each one
                     for(final Rep rep : result){
-                        // from where we will submit the item to the server
+                        // the URL to submit our item to the server
                         final String answer = utils.internet.webget("http://" 
                             + address + core.webSubmitRepository
                         + rep.getWebSubmit());
-                        System.out.println(answer + " ---> " + rep.getWebSubmit());
+                        // give some output to end-users
+                        System.out.println(username + " ---> " + rep.getWebSubmit());
                     }
-                    // do the concluding command
+                    // do the concluding command. Result needs to have reps
                     if(result.size()>0){
                         final String answer = utils.internet.webget("http://" 
                             + address + core.webFinishRepository
@@ -140,6 +147,39 @@ public class ClientScript implements Client{
     
         
     /**
+     * Takes care of the user credentials that will be used with GitHub.
+     * @param args  The arguments provided from command line
+     */
+    @Override
+    public void start(String[] args) {
+        // do we have some kind of text file with the user details?
+        File file = new File("password.txt");
+        // does the password file exists?
+        if(file.exists()==false){
+            // just use the normal user/password procedure
+            setLoginDetails();
+            return;
+        }
+        // otherwise read the text file and use these details instead
+        final String text = utils.files.readAsString(file);
+        // now split each line into a field
+        final String[] lines = text.split("\n");
+        // iterate through each combination of username/password
+        for(final String line : lines){
+            // split the username from the password
+            final String[] parts = line.split(",");
+            // we expect the first line to have the username
+            String username = parts[0];
+            // and the second line to have the password
+            String password = parts[1];
+            // give some output
+            System.out.println("Using credentials of " + username);
+            // launch the thread
+            startThread(args, username, password);
+        }
+    }
+    
+    /**
      * Sets the login details that will be used with the github API
      * @param args 
      */
@@ -154,10 +194,8 @@ public class ClientScript implements Client{
             return;
         }
 
-
         System.out.println("Attention: No username nor password provided");
         System.out.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
-
 
         try {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -176,30 +214,5 @@ public class ClientScript implements Client{
         }
     }
 
-    /**
-     * Takes care of the user credentials that will be used with GitHub.
-     */
-    private void getLogin() {
-        // do we have some kind of text file with the user details?
-        File file = new File("password.txt");
-        // does the password file exists?
-        if(file.exists()==false){
-            // just use the normal user/password procedure
-            setLoginDetails();
-            return;
-        }
-        // otherwise read the text file and use these details instead
-        final String lines = utils.files.readAsString(file);
-        // now split each line into a field
-        final String[] line = lines.split("\n");
-        // we expect the first line to have the username
-        core.username = line[0];
-        // and the second line to have the password
-        core.password = line[1];
-        // give some output
-        System.out.println("Using credentials of " + core.username);
-        // all done
-    }
-    
       
 }

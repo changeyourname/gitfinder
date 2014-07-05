@@ -13,7 +13,6 @@
 package main;
 
 import distributed.Client;
-import distributed.Client1;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -37,9 +36,16 @@ public class start {
      */
     public static void main(String[] args) throws Exception {
 
+        System.out.println("TripleCheck Indexer "
+                + " (version " + core.version + ")"
+                + "\nFree software. For more details visit https://github.com/triplecheck"
+                + "");
+        
+        // get the main parameter
+        final String parameter = args[0];
         
         // are we looking to index the users?
-        if(args[0].equalsIgnoreCase("users")){
+        if(parameter.equalsIgnoreCase("users")){
             // ensure that we have the needed credentials for github
             setLoginDetails();
             System.out.println("Indexing the users");
@@ -48,7 +54,7 @@ public class start {
         }
         
         // or are we interested in indexing repositories?
-        if(args[0].equalsIgnoreCase("repositories")){
+        if(parameter.equalsIgnoreCase("repositories")){
             // ensure that we have the needed credentials for github
             setLoginDetails();
             System.out.println("Indexing repositories");
@@ -58,7 +64,7 @@ public class start {
         
                
         // or are we interested in grabbing files from repositories?
-        if(args[0].equalsIgnoreCase("grab")){
+        if(parameter.equalsIgnoreCase("grab")){
             // ensure that we have the needed credentials for github
             setLoginDetails();
             System.out.println("Grabbing files - NOT IMPLEMENTED");
@@ -67,7 +73,7 @@ public class start {
         }
                
         // or are we interested in grabbing files from repositories?
-        if(args[0].equalsIgnoreCase("reset")){
+        if(parameter.equalsIgnoreCase("reset")){
             System.out.println("Resetting user details");
             core.prefs.remove("username");
             core.prefs.remove("password");
@@ -76,14 +82,14 @@ public class start {
         }
         
         // or are we interested in grabbing files from repositories?
-        if(args[0].equalsIgnoreCase("server")){
+        if(parameter.equalsIgnoreCase("server")){
             System.out.println("Starting the server");
             core.server.start(args);
             return;
         }
   
         // or are we interested in grabbing files from repositories?
-        if(args[0].equalsIgnoreCase("client")){
+        if(parameter.equalsIgnoreCase("client")){
             launchClient(args);
             return;
         }
@@ -92,7 +98,16 @@ public class start {
         // no arguments specified, show a simple syntax usage
         System.out.println("Syntax usage: java -jar gitfinder.java users|repositories username password"
                 + "\n"
-                + "Example:\n"
+                + "\n Possible parameters:"
+                + "\n   users"
+                + "\n   repositories"
+                + "\n   client"
+                + "\n   server"
+                + "\n   reset"
+                + "\n"
+                + "\n Please refer to the documentation on http://github.com/triplecheck/gitfinder"
+                + " for details about each switch and respective examples."
+                + "\nExample:\n"
                 + "java -jar gitfinder.jar users");
     }
     
@@ -137,7 +152,7 @@ public class start {
         Client newClass = (Client) utils.bytecode.getObjectNoPackage(sourceCode, "ClientScript");
         // run it up
         System.out.println("Running the script client");
-        newClass.start(args[1]);
+        newClass.start(args);
     }
    
 

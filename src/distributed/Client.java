@@ -20,6 +20,6 @@ package distributed;
 public interface Client {
     
     
-    public void start(final String givenAddress);
+    public void start(final String[] args);
         
 }
