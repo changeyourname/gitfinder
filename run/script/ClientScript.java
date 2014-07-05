@@ -12,8 +12,8 @@ the results.</text>
  */
 
 import distributed.Client;
-import distributed.Client1;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -36,7 +36,6 @@ public class ClientScript implements Client{
     final long maxWait = 1000 * 60 * 10;
     
     private final boolean canContinue = true;
-    private long watchDog = System.currentTimeMillis();
     private Thread thread;
     /**
      * launch the client mode. Basically, we first try to find the server
@@ -46,15 +45,16 @@ public class ClientScript implements Client{
      * 
      * If the server is found, we receive instructions about what action should
      * be done and then proceed to execute. Most likely we will be requesting
-     * small pieces of information, processing our share and submitting this
+     * small pieces of informprivate long watchDog = System.currentTimeMillis();
+    ation, processing our share and submitting this
      * information uphill for storing on the server-side.
      * @param givenAddress URL and port number of where the server is located
      */
     @Override
     public void start(final String givenAddress){
-        setLoginDetails();
+        getLogin();
         System.out.println("Starting scripted client, attached to " + givenAddress);
-        System.out.println("Version 0.1");
+        System.out.println("Version 0.2");
         address = givenAddress;
         final ClientScript thisClient = this;
             
@@ -155,6 +155,31 @@ public class ClientScript implements Client{
         } catch (IOException ex) {
             Logger.getLogger(start.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Takes care of the user credentials that will be used with GitHub.
+     */
+    private void getLogin() {
+        // do we have some kind of text file with the user details?
+        File file = new File("password.txt");
+        // does the password file exists?
+        if(file.exists()==false){
+            // just use the normal user/password procedure
+            setLoginDetails();
+            return;
+        }
+        // otherwise read the text file and use these details instead
+        final String lines = utils.files.readAsString(file);
+        // now split each line into a field
+        final String[] line = lines.split("\n");
+        // we expect the first line to have the username
+        core.username = line[0];
+        // and the second line to have the password
+        core.password = line[1];
+        // give some output
+        System.out.println("Using credentials of " + core.username);
+        // all done
     }
     
       
