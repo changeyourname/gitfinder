@@ -67,7 +67,7 @@ public class ClientScript implements Client{
                     final String nextUser = utils.internet.webget("http://" + address + core.webGetUser);
                     // check if had a successful connection or not
                     if(nextUser.equals(errorConnectionRefused)){
-                       System.err.println("Error: Connection refused on " + address);
+                       System.err.println("CL70 Error: Connection refused on " + address);
                        System.err.println("Retrying connection in 60 seconds..");
                         utils.time.wait(60);
                         continue;
@@ -79,8 +79,7 @@ public class ClientScript implements Client{
                     
                     // a null reply means than error occurred
                     if(result == null){
-                        System.out.println("CL071 - Error occurred, retrying to index again in 60 seconds");
-                        utils.time.wait(60);
+                        doWait(10, "CL82 Error");
                         thisClient.start(givenAddress);
                         return;
                     }
@@ -113,6 +112,26 @@ public class ClientScript implements Client{
                     }
                     
                 }
+            }
+
+            /**
+             * An error happened. This method will show a message and decreasing
+             * timer until the requested waiting time has expired. This is mostly
+             * used with network connections, which require trying several times.
+             * @param i         Number of seconds to wait
+             * @param message   Error code to show the end-user
+             */
+            private void doWait(final int i, final String message) {
+                int count = i;
+                        System.out.println(message + ", retrying again in "
+                                + utils.text.pluralize(count, "second")
+                        );
+                        count--;
+                        while(count>0){
+                            utils.time.wait(1);
+                            System.out.println(count + "..");
+                            count--;
+                        }
             }
         };
         // kickoff the thread

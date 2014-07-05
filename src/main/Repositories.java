@@ -14,6 +14,7 @@ package main;
 
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;
+import com.jcabi.github.wire.CarefulWire;
 import com.jcabi.http.response.JsonResponse;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -170,8 +171,8 @@ public class Repositories {
                 new RtGithub(
                    core.username, core.password
            )
-                     //   .entry().through(CarefulWire.class, 50));
-              .entry());
+                        .entry().through(CarefulWire.class, 50));
+            //  .entry());
            
            final JsonResponse resp = github.entry()
                 .uri().path("/users/" + user + "/repos")
@@ -182,6 +183,13 @@ public class Repositories {
            
            // get the JSON reply
            final String answer = resp.json().read().toString();
+           
+           // something wrong happened here
+           if(answer.length() < 25){
+               System.out.println("RP188 - ERROR, Answer from github rep was too short:"
+                       + "" + answer);
+               return null;
+           }
             // split the repo message into different items
            String[] items = answer.split("default_branch\":");
            // now iterate each one

@@ -1,0 +1,839 @@
+mojombo/asteroids JavaScript Destroy your Atom editor, Asteroids style!
+defunkt/acts_as_textiled Ruby Makes your models act as textiled.
+defunkt/ambition Ruby include Enumerable — Unmaintained
+defunkt/ambitious_activerecord Ruby Unmaintained Ambitious ActiveRecord adapter, for Ambition.
+defunkt/barefootexamples Ruby none
+defunkt/burn none Sinatra => Campfire
+defunkt/cache_fu Ruby Ghost from Christmas past. Unmaintained.
+defunkt/cheat Ruby Cheating is fun!
+defunkt/cheat.el Emacs_Lisp Cheat Emacs mode
+defunkt/choice Ruby Choice is a gem for defining and parsing command line options with a friendly DSL.
+defunkt/cijoe Ruby CI Joe is a fun Continuous Integration server.
+defunkt/coffee-mode Emacs_Lisp Emacs Major Mode for CoffeeScript
+defunkt/colored Ruby Colors in your terminal.
+defunkt/currency_converter Objective-C none
+defunkt/defunkt.github.com none My GitHub Page
+defunkt/dodgeball.github.com Ruby yes
+defunkt/dotjs Ruby ~/.js
+defunkt/electron-wordwrap none none
+defunkt/emacs Emacs_Lisp My Emacs config
+defunkt/evilbot CoffeeScript an evil bot that's definitely not for convore
+defunkt/exception_logger Ruby Unmaintained. Sorry.
+defunkt/facebox JavaScript Facebook-style lightbox, built in jQuery
+defunkt/fakefs Ruby A fake filesystem. Use it in your tests.
+pjhyett/auto_migrations Ruby Rails plugin for automating migrations
+pjhyett/blackjax Ruby buzzword-powered blackjack game
+pjhyett/errcount Ruby simple mongrel handler for a sweet hit counter
+pjhyett/ThoughtStream Ruby rails-powered tumblelog i wrote in 2007
+pjhyett/vjot JavaScript The greatest jotting web app of all time
+pjhyett/zoned Ruby Rails plugin for dead-simple timezone support
+wycats/abbot-from-scratch Ruby none
+wycats/abbot-ng Ruby a place to store my in-progress work on the redone SproutCore build tools
+wycats/active_params none none
+wycats/alexandria Ruby Ruby bindings to the Google Data API
+wycats/allocation_counter Ruby none
+wycats/artifice Ruby Replaces Net::HTTP with a subclass that routes all requests to a Rack application
+wycats/asdf Ruby Make the current directory available on port 9292
+wycats/at-media none The code from my @media talk
+wycats/benchwarmer Ruby Prettier Benchmarking for Ruby
+wycats/bootstrap-nitrous Ruby none
+wycats/bundler Ruby none
+wycats/cargo-website CSS none
+wycats/chainable_compare Ruby none
+wycats/croshwindow JavaScript none
+wycats/css_to_xpath Ruby Extracted from Nokogiri in anticipation of merging into Merb
+wycats/dm-adapters Ruby DataMapper Adapters
+ezmobius/acl_system2 Ruby An access control plugin for Rails
+ezmobius/bmhsearch C Fast string searcher, useful for multi-part post parsing
+ezmobius/chef-101 Ruby A sample chef recipe repo for learning chef-solo
+ezmobius/chef-deploy Ruby Chef Resources and Providers for deploying ruby web apps without capistrano
+ezmobius/ey-lessql Ruby a collection of chef recipes to install, configure and run a variety of NoSQL db's on the engine yard cloud.
+ezmobius/ez-scheme Ruby scheme on the rbx vm
+ezmobius/ez-where Ruby query/conditions builder for ActiveRecord and other ORMS
+ezmobius/LocheGSplicer C++ Splices multiple 3D Printer gcode files into a single gcode file for multiple extruder printing.
+ezmobius/merbivore Ruby merb website
+ezmobius/nanite Ruby self assembling fabric of ruby daemons
+ezmobius/nginx-ey-balancer C nginx max connections queue
+ezmobius/redactor Ruby An Actor library based around Redis. Useful for coordination, command and control of distributed ruby processes
+ezmobius/super-nginx C killer build of nginx *and* luajit-beta6 plus 21 other modules
+ezmobius/tlabs-mendelmax none Documentation and other tidbits for the TrinityLabs MendelMax 1.5+
+ivey/adventure_cats JavaScript Adventure Cats, a game by Ellie and her Dad
+ivey/blog JavaScript none
+ivey/carpark Ruby Carpark adds LISP-style car, cdr, and endless combinations of them to the standard Ruby Array, allowing for terse and powerful decomposition of deeply nested arrays: [1, [2, 3, [4, 5], [[[6]]]]].caaaadddadr => 6
+ivey/clj-gweezlebur-utils Clojure ivey's clojure utility functions
+ivey/clj-highrise Clojure WORK IN PROGRESS, DO NOT USE
+ivey/colapp Ruby none
+ivey/enigma-codebook Ruby Sinatra app to generate codebooks for Enigma machines
+ivey/ethical-eating none Gentle Guide to Ethical Eating
+ivey/fav2rt Ruby Turn a set of Twitter favorites into Retweets
+ivey/ivey.github.com none none
+evanphx/benchmark-ips Ruby Provides iteration per second benchmarking for Ruby
+evanphx/benchmark_suite Ruby A set of enhancements to benchmark.rb
+evanphx/callbox none A twilio app to control my callbox
+evanphx/distance_between Ruby A RubyMotion App that uses calculates the distance between 2 locations
+evanphx/evanphx.github.com none My page
+evanphx/ficus C++ LLVM + Lisp!
+evanphx/Gauge Ruby A live status viewer for Rubinius
+evanphx/gemjour Ruby Serve and install gems over Bonjour
+evanphx/go-crypto-dh Go Diffie-Hellman algorithm for Go
+evanphx/gx Ruby A set of git tools
+evanphx/harq C++ A simple, high speed message queue with optional message durability
+vanpelt/CardMaven Objective-C An iOS card game app that allows for multiple variants of games, multi-player over bluetooth, and much more... 
+vanpelt/chris-snez none My better half and I now have our own website...
+vanpelt/dm-imap-adapter Ruby An IMAP adapter for DataMapper.  Supports reading, writing, updating... the whole works.
+vanpelt/instimage JavaScript A lightweight javascript interface for choosing images from arbitrary urls
+vanpelt/jsawesome JavaScript Awesome JSON
+vanpelt/merb_async_observer Ruby Makes beanstalkd play nice with Merb
+vanpelt/merb_facebooker Ruby A plugin that makes the facebooker gem play nice with Merb
+vanpelt/merb_paginate Ruby A rip-off of will_paginate to get pagination going on merb
+vanpelt/shortr Ruby A simple url shortner
+vanpelt/sigmod JavaScript My presentation about CrowdFlower for SIGMOD 2012
+vanpelt/stat none A Rakefile that makes static website creation and deploying stupid simple
+vanpelt/vandev JavaScript My blog
+vanpelt/vanpelt.github.com none Github Pages Repo
+wayneeseguin/alogr Ruby AlogR is a threadsafe non-blocking asynchronous configurable logger for Ruby.
+wayneeseguin/ar_migration_branches Ruby Active Record Migration Branches
+wayneeseguin/autozest Ruby AutoZest is an autotest addon that: * automated growl installation * generation of .autotest with growl & autozest config * generation of .autozest.yml config file * autozest.sqlite3 database file for pulling random messages based on severity
+wayneeseguin/datasciencecoursera none Data Science @ Coursera
+wayneeseguin/db none dbm
+wayneeseguin/dbm none none
+wayneeseguin/dynamic_reports Ruby Dynamic Reporting Engine for Ruby && Rails
+wayneeseguin/getdata-004-project R Getting and Cleaning Data (004) Course Project
+wayneeseguin/hash_extension Ruby Provides ActiveRecord finder methods that return hashes and makes hashes more object-like. 
+wayneeseguin/hello_world none Hello World Rails Application for testing deployments.
+wayneeseguin/jquery_templates JavaScript jQuery Templating Engine to enable .jqt script file processing.
+wayneeseguin/merblogger JavaScript A Merb Blogging &amp; Publishing Platform using Merb, DataMapper, haml and jQuery.
+wayneeseguin/merbtastic none Merb + Webgen CMS system that has dynamic routing, Nginx config and static site generation with haml/sass/erb/... support.
+brynary/asset-trip Ruby Rails asset bundling plugin that will expand your mind
+brynary/badger Ruby none
+brynary/cucumber-tmbundle Ruby TextMate bundle for Cucumber story runner
+kevinclark/chordal Io A library in Io for generating chords
+kevinclark/dotfiles VimL My configs
+kevinclark/dust Ruby Lint for Ruby. Moved to http://wiki.github.com/kevinclark/nitpick/
+kevinclark/glu.ttono.us JavaScript Blog archives and new engine
+kevinclark/indexer Go A simple search engine engine in Go
+kevinclark/kata C++ Code kata
+kevinclark/Lesson-Plans Python none
+kevinclark/nitpick Ruby A lint for Ruby
+kevinclark/project_euler Haskell Project Euler problems
+kevinclark/ruby-kqueue Ruby KQueue bindings for Ruby
+kevinclark/snake3 JavaScript none
+kevinclark/Stat-Aggregator Python A stat aggregator
+kevinclark/Tiny-Dropwizard-Example Scala The smallest possible dropwizard service
+technoweenie/15 none none
+technoweenie/activesupport_notifications_backport Ruby none
+technoweenie/active_record_context Ruby simple identity map for active record.  eager loading associations FTL
+technoweenie/acts_as_paranoid Ruby ActiveRecord plugin allowing you to hide and restore records without actually deleting them.
+technoweenie/acts_as_versioned Ruby ActiveRecord plugin for versioning your models.
+technoweenie/allofthestars Ruby stars!  riak search!  toys!
+technoweenie/app_bootstrap none app:bootstrap rake task providing a command line menu to setup a rails app.  
+technoweenie/attachment_fu Ruby Treat an ActiveRecord model as a file attachment, storing its patch, size, content type, etc.
+technoweenie/camo.go Go none
+technoweenie/can_search Ruby Build common named scopes automatically, and provide a simple way to merge them with a single #search call.
+technoweenie/chat_gram Ruby Barebones Instagram realtime endpoint for posting images to a chat service (Campfire).
+technoweenie/coffee-resque CoffeeScript none
+technoweenie/coffee-sprites JavaScript simple html 5 animation/sprites system heavily inspired by http://gamesinhtml5.blogspot.com/2010/07/game-in-progress-sprites-and-animation.html
+technoweenie/context_on_crack none experimental macros for testing rails controllers.  port of rspec_on_rails_on_crack
+technoweenie/cronwtf JavaScript silly cron => english translator
+technoweenie/dealer.js JavaScript none
+technoweenie/duplikate Ruby Syncs one directory to another (example: a git project to an svn repo)
+technoweenie/elixir-rubyports Elixir none
+technoweenie/emoji-css-builder Ruby Quick Ruby rake task for generating CSS and tiled image for displaying emoji in browsers.
+technoweenie/fantomex CoffeeScript [ALPHA] Small, per-process persistent queue.
+technoweenie/fantomex.rb Ruby [ALPHA] Small, per-process persistent queue.
+technoweenie/faraday-zeromq Ruby none
+macournoyer/confoo Ruby My Confoo.ca presentation: How to kick assess with asynchronous processing
+macournoyer/fast_output_buffer C A faster output buffer for ActionView.
+macournoyer/gh-contest Ruby none
+macournoyer/invisible Ruby The invisible framework
+macournoyer/iolounge none My personal casual comforting place to play w/ Io
+macournoyer/macournoyer.com CSS my awesome personal website
+macournoyer/macournoyer.github.com none ze github pages of mine
+macournoyer/meshu Ruby MeshU presentation
+macournoyer/min Java The Min language
+macournoyer/mor7 Ruby My Montreal on Rails 7 presentation of Thin
+macournoyer/mtlrb-jan12 Ruby Montreal.rb January 2012 presentation on creating an homoiconic programming language in < 150 LOC.
+macournoyer/mysql_s3_backup Ruby A simple backup script for Mysql and S3 with incremental backups.
+macournoyer/nanodb none an ultra tiny db
+macournoyer/node-cusec JavaScript node.js CUSEC 2010 presentation stuff
+macournoyer/node-syscalls C++ Node wrapper to some UNIX syscalls. Used during http://truthabouteventloops.com/.
+macournoyer/orange Ruby Yummy & juicy compiler
+macournoyer/peg C fork of peg/leg
+macournoyer/pusher Ruby The Rack App that pushes (aka Rack::Comet)
+takeo/groundhog none Simple Mootools based recurring events calculation
+takeo/MooZoom JavaScript An image zoomer for MooTools
+takeo/outlook-with-attitude JavaScript Turning Outlook Web Access from a Gent to a G
+takeo/takeo.github.com JavaScript takeo.me website
+Caged/aixmlserialize Objective-C Aims to convert to and from NSXMLDocuments and NSDictionarys on the iPhone (using KissXML) and OS X.
+Caged/bbref-graphs JavaScript Chrome extension to convert tables of statistics to charts on http://basketball-reference.com
+Caged/census-tools Shell Tools for working with NHGIS (https://www.nhgis.org) census data.
+Caged/cfb-recruiting CoffeeScript none
+Caged/cocos2d-game Objective-C Xcode Template for cocos2d-based iPhone games.  Includes cocos2d 0.6.3 & the Chipmunk physics engine.
+Caged/concurrent-nsoperation Objective-C Concurrent NSOperation Sample
+Caged/council-report Ruby Fetch and parse Portland City Council data
+Caged/d3-tip JavaScript d3 tooltips
+Caged/d3line JavaScript multiple scales example
+Caged/datavis-template Ruby A template for middleman for quickly prototyping datavis stuff in CoffeeScript.  Comes with jquery, d3, topojson, bower and more.
+Caged/dragnet Ruby Attempts to extract readable content and embedded links from HTML markup & web pages
+Caged/ecsv JavaScript This project has been replaced by http://github.com/wdavidw/node-csv-parser
+Caged/emergence Ruby Sinatra template for quick frontend prototyping
+Caged/experiments JavaScript Various Experiments :fire:
+Caged/exposition C Objective-C documentation parser and docset generator.
+Caged/flex-layout-demos none Simple examples implementing the Flexible Box Layout
+Caged/geopaste JavaScript quick and dirty ui prototype
+Caged/ghunit-tmbundle none Textmate Bundle for GHUnit
+Caged/gitnub Ruby A Gitk-like application written in RubyCocoa that looks like it belongs on a Mac.  See the wiki for downloads and screenshots.
+Caged/groomlake Ruby Ruby parsers for some Adobe file formats.
+Caged/gtbfm-textmate-bundle Objective-C A TextMate bundle for Google's Toolbox for Mac.  Includes writing Unit Test for iPhone & the Mac among other useful code and tools.
+Caged/httpriot Objective-C Simple HTTP Rest Library for iPhone and Cocoa projects.
+topfunky/ar_fixtures Ruby Dumps YAML fixtures from existing data using ActiveRecord
+topfunky/basic_model Ruby A very thin wrapper around CouchRest, for use with CouchDB and Ruby on Rails.
+topfunky/bigapp Ruby An application with many files. For testing only.
+topfunky/bong Ruby A benchmarking helper for httperf.
+topfunky/calendar_helper Ruby Calendar-generating plugin for Ruby
+topfunky/cappuccino-couchdb Objective-J A class for working with CouchDB documents from Cappuccino/Objective-J
+topfunky/CocoaHelpDemo Objective-C Demo application for generating bundled help documentation (requires Flying Meat's VoodoPad application)
+topfunky/css_graphs Ruby Rails plugin for making HTML markup to display a bar graph.
+topfunky/demo-mocha-watch-bug JavaScript A demo to show a bug in mocha's --watch option
+topfunky/demo-simplest-socket-io JavaScript Very simple socket.io demo.
+topfunky/demo-vows-callbacks CoffeeScript A demo for Rob Conery. Nothing to see here.
+topfunky/geddy-coffee-script-demo JavaScript Demo app using CoffeeScript with the Geddy web framework for Node.js
+anotherjesse/anotherjesse.github.com none none
+anotherjesse/bb-site Ruby Book Burro website (couchdb+sinatra)
+anotherjesse/big-brother Python use the iSight camera to remind you that you are being watched
+anotherjesse/bookburro JavaScript Book Burro for Firefox
+anotherjesse/caltrain JavaScript source of caltrainapp.com
+anotherjesse/chrome-s3 JavaScript chrome extension to browse Amazon S3
+anotherjesse/chromr none flickr new tab ui
+anotherjesse/contacts Ruby rails 2.1 + sproutcore
+anotherjesse/dotfiles Emacs_Lisp none
+anotherjesse/droplet none rain drops of music from the cloud
+anotherjesse/elasticfox JavaScript ec2 extension for firefox
+anotherjesse/erlanguniversity Erlang hacking during kevin smith's web+erlang course
+anotherjesse/erlws Erlang b
+anotherjesse/euler Ruby my project euler solutions
+anotherjesse/finally JavaScript none
+anotherjesse/firenomics Python Firenomics is a place to find and share awesome extensions. 
+anotherjesse/flashlitebox ActionScript Full screen \
+anotherjesse/fobliki Python Forum, Blog, Wiki for AppEngine
+anotherjesse/fotomatic ActionScript Flash photo widget prototype - hacked at last SHDH of 2007
+anotherjesse/foxtracs JavaScript firefox trac integration
+roland/Carousel none Monotouch Carousel
+roland/formflow JavaScript FormFlow
+roland/HttpBuildQuery C# Equivalent of http_build_query in PHP
+roland/ShowTracker Java An Android App to manage your TV Shows
+roland/TestServiceStackService C# none
+tomtt/bandcamp Ruby A utility to download the low quality mp3 files for a band on bandcamp.com
+tomtt/brainfuckr Ruby A Ruby Brainfuck implementation
+tomtt/contentapi-ruby Ruby none
+tomtt/cucumber-skin Ruby A cucumber formatter that generates html files to present test results
+tomtt/cuke-inspector JavaScript Inspect the steps in a cucumber suite
+tomtt/elisp_behave Emacs_Lisp A fork of just the bahave files for emacs BDD from technomancy's DotFiles
+tomtt/emacs-rails Emacs_Lisp Tomtt's version of the minor mode for editing RubyOnRails code in Emacs
+tomtt/flocklocal Ruby do good.fast
+tomtt/grog Ruby A wrapper script for git-log - shows subject, time and author of each commit plus branches and tags
+tomtt/hideguides Ruby none
+tomtt/lonely-planet-for-rails none Rails interface to lonely planet API
+tomtt/method_info Ruby Get info about an object's methods
+tomtt/mind-apples Ruby none
+tomtt/patch_irb_completion Ruby A utility to help you check if irb completion has been patched to allow completion from the ruby debugger prompt
+tomtt/photo_handler Ruby Utilities for managing digital images
+tomtt/pingscript Ruby Scripts that interact with service to track ping delay
+nitay/coursera-general-game-playing Scala Coursera GGP Course
+nitay/coursera-reactive-programming Scala Coursera Principles of Reactive Programming
+nitay/coursera-scala Scala Functional Programming Principles in Scala
+nitay/giraph-in-action-book-code Java none
+nitay/java-utils Java Java utilities and helpers
+nitay/sonatype-facebook-hadoop none Deploying Facebook's Hadoop to Sonatype
+nitay/sonatype-yourkit Shell none
+nitay/udacity-software-debugging Python Udacity Software Debugging Course
+kevwil/aspen Java a JRuby web server similar to Thin
+kevwil/c-ration JavaScript Configuration server based on @typesafehub/config and @playframework/playframework which serves up static and dynamic config based on a file hierarchy.
+kevwil/c-ration-sample none Sample config repository for testing
+kevwil/c-ration-sample2 none none
+kevwil/easyhttp JavaScript A simplified wrapper around the core node.js http client.
+kevwil/gityup-haskell Haskell just like svnup-haskell but for git ;-)
+kevwil/gityup-lua Lua given a directory full of Git working directories, iterate through them and pull updates
+kevwil/go-blog-cassandra Go playing with Go using Revel for web/REST and Cassandra for data
+kevwil/hapi-blog-cassandra JavaScript playing with Node.js with Hapi framework for web/REST and Cassandra for data
+kevwil/hellotxt Ruby HelloTxt Ruby client/library
+kevwil/homebrew-patches Ruby My \
+kevwil/kevwil.github.io CSS my github pages site
+kevwil/mcp none Master Control Program - an extensible collection of programs with a Git-like command pass-through
+kevwil/pipecleaner JavaScript filter for unix pipes and streams
+kevwil/slow Ruby Web server used to test long delays and error codes on RESTful web service calls
+kevwil/svnup-haskell Haskell A small utility that updates all Subversion working copies under a given folder.
+kevwil/Toggle-Airport Shell detect ethernet connection in Mac laptops
+KirinDave/bilecast none A Podcast hosted by me and featuring Coda Hale and Cliff Moon (and guests)
+KirinDave/Clipping Scala A simple, persistent variable library
+KirinDave/clj-interface none Clojure wrapper for Erlang's JInterface.
+KirinDave/clj-time Clojure A date and time library for Clojure, wrapping the Joda Time library.
+KirinDave/dot-emacs Emacs_Lisp My dotemacs stuff. It's not beautiful, but it's functional.
+KirinDave/Emacs-Of-The-Future Emacs_Lisp Updating my emacs dotfiles distribution. These are much more up to date.
+KirinDave/erlenmeyer Scheme A binding between erlang and mzscheme.
+KirinDave/example-chat Clojure A simple example of a chat server in Clojure that I intend to blog about.
+KirinDave/Fanboy Haskell An irc bot in haskell, experimental in nature, using WAY OVERSPEC'D tools.
+KirinDave/fuzed Erlang A new revision of Fuzed, the Erlang-based frontend for web apps. Check out the mailing list at http://groups.google.com/group/fuzed
+KirinDave/fuzed-old Ruby An integrated replacement for Mongrel+Revproxy systems in erlang
+KirinDave/gen_leader_revival Erlang A project to unify various implementations of the Erlang library gen_leader into a modern, robust single implementation
+jamesgolick/action_mailer_verp Ruby Send VERP emails with actionmailer. http://en.wikipedia.org/wiki/Variable_envelope_return_path
+jamesgolick/action_messager Ruby Dead simple IM notifications for your app
+jamesgolick/activerecordless_migrations Ruby none
+jamesgolick/active_presenter Ruby The presenter library you already know.
+jamesgolick/always_verify_ssl_certificates Ruby Ruby's net/http is setup to never verify SSL certificates by default. Most ruby libraries do the same. That means that you're not verifying the identity of the server you're communicating with and are therefore exposed to man in the middle attacks. This gem monkey-patches net/http to force certificate verification and make turning it off impossible. 
+jamesgolick/attribute_fu Ruby a better version of this functionality is in rails 2.3. use that!
+jamesgolick/blank Ruby Blank is GiraffeSoft’s blank rails starter app.
+jamesgolick/cassandra-munin-plugins none Munin plugins for apache cassandra.
+jamesgolick/classy_resources Ruby Think resource_controller, except for sinatra.
+jamesgolick/client_proxy Ruby Basic ruby proxy class to use around service clients that handles retrying requests and failover.
+jamesgolick/conductor Ruby Build clusters in the cloud with conductor.
+jamesgolick/conductor-rails Ruby A rails stack for conductor.
+jamesgolick/degrade Ruby Keep track of service error rates using redis. Degrade functionality if they're too high.
+jamesgolick/dirty_callbacks Ruby none
+jamesgolick/dotfiles VimL none
+jamesgolick/enum_field Ruby none
+atmos/aloha_2009 none my talk on open source business models and independent record labels
+atmos/as_time_goes_by Ruby an example sinatra/rspec/datamapper/webrat app with selenium built in
+atmos/atmos.github.io Ruby worthless shit
+atmos/atmos.org JavaScript redirect shit from heroku to github pages
+atmos/atmos.org-redirector Ruby redirect atmos.org on ec2 to www.atmos.org on github
+atmos/braintree_transparent_redirect_slice Ruby A slice for interfacing with braintree's transparent redirect stuff in a merb app
+atmos/butt C++ Unofficial fork of http://danielnoethen.de/
+atmos/camo CoffeeScript a small http proxy to simplify routing images through an SSL host
+atmos/campfiyah Ruby Faraday API for Campfire
+atmos/capybara-standalone Ruby rspec2 and capybara testing, a simple example.
+atmos/cider Shell bootstrap your mac for open source development
+atmos/ciderapp.org Ruby the site that serves up your recipes
+atmos/cinderella Ruby how your apple laptop should work
+atmos/dot_xen Ruby parsing xen's .xen files for reading and writing
+atmos/express-session-redis JavaScript persistent sessions for express stored in redis
+atmos/face-crime Ruby Put Jon Rohan's face on eeeerybody
+atmos/fitter_happier Ruby A Rails Plugin for adding a simple health check to your application
+errfree/test none none
+errfree/test1 none none
+mojodna/AaronCam Objective-C Camera + Flickr app skeleton
+mojodna/active_queue Ruby A toolkit for queueing tasks and creating worker processes
+mojodna/anemone Ruby Web Hook servicer / batch request system
+mojodna/bamboo-shooter Ruby (demo) PubSub for Pandas
+mojodna/crud_controller none Abstract resource controller + generator for Rails
+mojodna/debian-mapnik C++ Mirror of git://git.debian.org/pkg-grass/mapnik.git
+mojodna/dovetail Ruby (proof-of-concept) A toolkit for assembling XMPP components.
+mojodna/fire-hydrant Ruby (demo) Tools for consuming Fire Eagle's XMPP PubSub feed.
+mojodna/fireeagle-location-provider none Fire Eagle Location Provider for Google Gears
+mojodna/fireeagle-tutorial Python Sample code for using Fire Eagle from Ruby and Python
+mojodna/firesnake Python (demo) Python-powered Google Earth visualizer for Fire Eagle data
+mojodna/flickr-shape-parser Python (utility) Parses and converts the Flickr Shapefiles Public Dataset, Version 1.0
+mojodna/geode-held JavaScript Geode-HELD + Fire Eagle support
+mojodna/heroku-buildpack-cairo Shell Heroku buildpack with Cairo (and Pixman and FreeType)
+bmizerany/assert Go Asserts to Go testing
+bmizerany/attrubates Ruby Arrtubates sets meta on meta for objects and adds additional rendering helpers for ActionController::Base in Rails.
+bmizerany/aws Go An old simple AWS client in Go (use bmizerany/aws4 for more up to date aws usage).
+bmizerany/aws.go Go none
+bmizerany/aws4 Go A Go package for AWS Signature version 4 
+bmizerany/bang Ruby banger
+bmizerany/beldam Ruby clean, easy, ec2 wrapper
+bmizerany/domainy Ruby for getting the base of a domain
+bmizerany/doozer-bench Go bechmark the doozerz
+bmizerany/Elephant Objective-C An Adium Plugin for keeping realtime backup/full-text search of all chats
+bmizerany/em-swirl Ruby An evented Ruby EC2 driver for EventMachine
+jnewland/agile_zen Ruby none
+jnewland/alfred-open-windows Shell Alfred extension to switch between open windows of the currently focused application
+jnewland/boolean_web_service Ruby BooleanWebService(:isitchristmas) => false. Well, unless it's christmas. Then it'd be true.
+jnewland/capistrano-log_with_awesome Ruby logging callbacks for capistrano
+jnewland/capsize Ruby A Capistrano extension for managing and running your app on Amazon EC2.
+jnewland/cucumber-json Ruby A cucumber output formatter that outputs JSON
+jnewland/cucumber-newrelic Ruby Cucumber steps for verifing metrics from NewRelic's API
+jnewland/cucumber-scout Ruby Cucumber steps for verifying Scout metrics
+jnewland/cucumber-standalone Ruby generator for standalone cuke projects
+jnewland/fireeagle Ruby Ruby wrapper for Yahoo!'s FireEagle
+jnewland/github-campfire Ruby Sinatra app that pushes your Github Commit info to Campfire
+jnewland/god_examples Ruby examples of some of the crazy awesome things you can do with God
+jnewland/god_web JavaScript iPhone friendly web UI for God
+jnewland/gsa-feeds Ruby A Ruby wrapper for the Google Search Appliance Feeds Protocol
+jnewland/gsa-prototype JavaScript Prototype/Javascript wrapper for the Google Search Appliance Search Protocol. Fancy cross-domain JSON support included.
+joshknowles/db-populate none Rake task to assist with bootstrapping a Rails project database
+joshknowles/dotfiles Shell Misc configuration files
+joshknowles/ec2-chef-example Ruby Collection of Rake tasks and example Chef recipes used to automate the creation of EC2 instances
+joshknowles/gitrdoc Ruby Generate RDoc for your GitHub project
+joshknowles/joshknowles.github.com none Jekyll repository for http://joshknowles.com
+joshknowles/pt Ruby Pivotal Tracker API & Report Generation
+joshknowles/rspec-on-rails-matchers Ruby A collection of RSpec matchers to be used with the Ruby on Rails project
+joshknowles/userscripts none A collection of Userscripts for GreaseMonkey and Fluid
+hornbeck/arc Arc My arc repo
+hornbeck/blerb-core Ruby blerb running on merb-core
+hornbeck/Little-Erlanger Erlang none
+hornbeck/resumatoR R R package for the Resumator API
+thewoolleyman/address_book_name_inverter Ruby address_book_name_inverter to fix mac address book with switched/duplicate first/last names from import
+thewoolleyman/adv_duplicator none Garry's Mod Advance Duplicator Folder
+thewoolleyman/amibuilder none This project is deprecated. It has been rewritten and improved as \
+thewoolleyman/bashtips none My scratch area for figuring out and remembering Bash idioms
+thewoolleyman/bookmark_converter Ruby Converts .URL files containing 'URL=' lines into an html page of bookmarks 
+thewoolleyman/bootstrap-ruby Shell Simple scripts to install and configure various versions of Ruby from scratch on bare-bones machines.
+thewoolleyman/boxbuilder none Boxbuilder builds boxes!  Basic Bash scripts to bootstrap barebones-OS boxes with chef-solo.  Tracker Project: http://www.pivotaltracker.com/projects/101913
+thewoolleyman/boxbuilder_example_dependency_chef_repo Ruby Second example chef repo for boxbuilder.  See main project at http://github.com/thewoolleyman/boxbuilder
+thewoolleyman/boxbuilder_example_main_chef_repo Ruby First example chef repo for boxbuilder.  See main project at http://github.com/thewoolleyman/boxbuilder
+thewoolleyman/boxbuilder_lightning_talk none Lightning Talk for Boxbuilder (http://github.com/thewoolleyman/boxbuilder) - initially given at SunnyConf
+thewoolleyman/ccrb_rvm_test Ruby Testing rvm integration with cruisecontrol.rb
+thewoolleyman/cf-rails Ruby cloudfoundry test rails project
+thewoolleyman/cichef none CI, served.
+thewoolleyman/cinabox Ruby Continuous Integration.  In a Box!
+thewoolleyman/ci_for_the_rails_guy_or_gal Ruby Detailed Tutorial on Continuous Integration with Rails, presented at RailsConf 2008
+thewoolleyman/convergence Ruby TDD'ing algorithm to make a hologram follow (converge upon) an owner - to be converted to E2 (Expression 2) language in Garry's Mod
+thewoolleyman/deleteabunch Ruby Delete a bunch of files/dirs when there's too many for the unix shell to handle via a glob and the find command syntax ain't working for you
+jwhitmire/csv-mode Emacs_Lisp Updated csv-mode for emacs
+jwhitmire/dial-a-script Shell Helpful stuff I put in my ~/bin directory to keep me fat and lazy
+jwhitmire/disco-tmbundle none Textmate Bundle for working with the Disco javscript view framework
+jwhitmire/jwhitmire.github.com none none
+jwhitmire/llor-nu-legacy Ruby Legacy code from the original llor.nu site
+elbowdonkey/axonome JavaScript javascript isometric rendering kit
+elbowdonkey/balsa_chopper none OpenSCAD Balsa Chopper
+elbowdonkey/elbowdonkey.github.io JavaScript none
+elbowdonkey/flightcontrol Java none
+elbowdonkey/gcode_to_canvas JavaScript A humble GCode simulator.
+elbowdonkey/impsock C++ none
+elbowdonkey/infiniteexcitebike JavaScript none
+elbowdonkey/IsometricMap JavaScript Isometric projection maps in Impact
+elbowdonkey/isopaint JavaScript An isometric pixel art drawing tool.
+elbowdonkey/js_state JavaScript A simple Javascript state machine.
+elbowdonkey/mbpro_tidy none 3D printable thing that aligns Magsafe, Thunderbolt, and USB connections for a 15\
+elbowdonkey/photo_gallery Ruby photo_gallery
+elbowdonkey/printables none My collection of 3D printable objects, usually written in OpenSCAD
+elbowdonkey/teensy_vrc_adapter none A Teensy 3.1 based VRC Pro adapter
+reinh/accord Ruby Chord and scale definition library. Ruby. Work in progress.
+reinh/Atatonic-CSS-Framework none A CSS Framework with it's main focus on solid typography.
+reinh/batunit Shell Bourne Again Test Unit framework
+reinh/bin Ruby My ~/bin
+reinh/CodeSearch Haskell google codesearch in Haskell. Do not use this for anything.
+reinh/codr Ruby Convert ruby code with comments to Markdown
+reinh/coffeequest CoffeeScript none
+reinh/coffeescript-stemcell CoffeeScript none
+reinh/commandant Ruby A simple library for writing commands with subcommands (like git)
+reinh/config_badger Ruby Config badger don't care.
+reinh/cv Ruby My Resume
+reinh/d3js-stemcell CoffeeScript none
+reinh/diceboy JavaScript none
+reinh/DijkstraMap Haskell none
+reinh/dm none DataMapper
+reinh/dotfiles VimL My dotfiles
+reinh/dotvim VimL My .vim
+reinh/dotvim-old VimL My .vim
+reinh/doubleweb Ruby Record and playback Net::HTTP requests. Useful for testing.
+timocratic/benchmark-timed_each Ruby A wrapper for Benchmark.benchmark that enmurates over a collection
+timocratic/dotfiles Ruby Tim Connor's dot and lib files
+timocratic/snippets Ruby A rubygem/rails-engine for editing snippets of markdown that compiled to html
+timocratic/test_benchmark Ruby  *NOT ACTIVELY MAINTAINED* Rails plugin (and/or ruby gem) for benchmarking your test::units: a rework of the original by topfunky
+rsanheim/braincron Ruby none
+rsanheim/braincron_consumer Ruby none
+rsanheim/brain_buster Ruby BrainBuster - a logic captcha for Rails
+rsanheim/chatterbox Ruby This is not maintained.
+rsanheim/chatterbox-email Ruby none
+rsanheim/cloud-talk none none
+rsanheim/honey_badger Ruby Honey Badger don't care - he will show your Rails.env, your deployment info, whatever.
+rsanheim/isis Ruby isis
+rsanheim/madison-code-and-coffee none A little repo to organize informal Madison morning coffee and hacking
+rsanheim/nachos Ruby not maintained - use preflight https://github.com/rsanheim/preflight
+rsanheim/playground none none
+rsanheim/prag_dave_testing Ruby Dave Thomas' proof of concept test library
+rsanheim/preflight Ruby Keep your git repos up to date in the background
+rsanheim/repo-repo none none
+rsanheim/rsanheim.github.com none robsanheim.com
+rsanheim/rspec-rails23 Ruby Rspec2 for Rails 2.3.5 - No support guaranteed -- see README!
+rsanheim/runcoderun-gem Ruby RunCodeRun command line gem
+rsanheim/stuff-and-things none none
+schacon/agitmemnon JavaScript Git/Cassandra Ruby Library
+schacon/agitmemnon-server Python Cassandra/Git backed python Git server
+schacon/article C none
+schacon/asgit ActionScript ActionScript Git library and browser implementation
+schacon/blah Ruby none
+schacon/blink Arduino Example file to blink the LED on an Arduino
+schacon/collabgit JavaScript ShowOff preso on collaborating with Git
+schacon/cowsay Shell git version of awesome cowsay project
+schacon/ddd JavaScript developer driven development talk
+schacon/django-schedule Python none
+uggedal/accomplish none As minimal a task list as possible
+uggedal/alpine-conf C none
+uggedal/apkaux Shell none
+uggedal/aports C Mirror of Alpine Linux ports
+uggedal/click JavaScript Simulate mouse events
+uggedal/conf Shell Zero dependency configuration management
+uggedal/ctf3 C Stripe CTF v3
+uggedal/deepnotify JavaScript Takes a root dir and recursively streams present and future files
+uggedal/depict Go Simple S3 based picture backup and browser
+uggedal/django-notices Python Efficient and lightweight notices for Django
+uggedal/docker-alpine Shell Docker base image for Alpine Linux
+uggedal/dotfiles Perl User config for eivind@uggedal.com
+uggedal/exifdate JavaScript Parse EXIF dates to Date objects
+uggedal/exifier JavaScript Transform stream which reads generic image filenames and writes both the generic src and the dest filenames with EXIF creation dates.
+uggedal/exify JavaScript Convert generic image filenames to filenames with EXIF creation dates
+uggedal/extractif JavaScript none
+uggedal/gaux none Auxiliary scripts for Gentoo
+uggedal/go-vim VimL Mirror of upstream go vim files for usage with pathogen. See wiki page for mirroring script.
+uggedal/going C Simple process supervisor
+uggedal/jsons JavaScript Streaming JSON.stringify() and JSON.parse() of arrays
+bruce/archibald none Sinatra app to interactively merge family trees (GEDCOM)
+bruce/atom-csscomb CoffeeScript Atom Editor Plugin for CSSComb
+bruce/bitmask-attribute Ruby Official repo is now: https://github.com/joelmoss/bitmask_attributes
+bruce/bruce-io JavaScript Another take on http://bruce.io
+bruce/bruce.github.io JavaScript Website bulid
+bruce/bruce.io JavaScript Source for website
+bruce/bumpspark Ruby Generates bumpspark-style sparklines as PNG (including Data URI support) from Ruby and Rails.
+bruce/clojure-experiments Shell Bruce's Clojure experiments
+bruce/compare-app Ruby Ruby 1.8/1.9 Comparison app
+bruce/dash-haskell Haskell Provides an API for Haskell applications to the FiveRuns Dash service, http://dash.fiveruns.com
+bruce/delve Ruby A simple [experimental] API to access additional information on Ruby 1.9+ objects and methods.
+bruce/dotfiles Emacs_Lisp My dotfiles
+bruce/emacs-spacegray-theme Emacs_Lisp A Hyperminimal UI Theme for Emacs
+bruce/erlison Erlang A simple single-purpose Usenet client that takes NZBs and downloads files.
+bruce/frth JavaScript frth
+sam/async-example Scala Working on an scala/async example.
+sam/bbd Ruby Backbone App Demo from BOH Session at RailsConf 2012
+sam/blog Scala It's a blog.
+sam/collections-vs Scala Ruby vs Scala Collections forked from https://gist.github.com/mattetti/3936587
+sam/doubleshot Ruby Build and Dependency Management for mixed Java/Ruby projects.
+sam/geminaboxplus Ruby A ready-to-go Geminabox install
+sam/harbor-ftp Ruby An embedded FTP Server for JRuby wrapping Apache's FTPServer libraries
+sam/imgscalr-scala-example Scala Example usage of imgscalr in Scala.
+sam/infinispan-configuration Ruby Configuration example for Infinispan to explore clustering, eviction, etc.
+sam/jar-hello-world Ruby This is just the jetty-hello-world program packaged as a single jar.
+sam/jetty-hello-world Ruby none
+sam/map-benchmarks Ruby A benchmark between a JRuby Hash, Hazelcast and Infinispan.
+sam/onchange Java File System Watcher for Doubleshot based on JDK7's java.nio.file.WatchService
+sam/sam.github.com Ruby GitHub Page
+sam/sbt-cloudant-play-plugin Scala Cloudant Plugin for SBT
+sam/scala-hello-world Scala scala-hello-world
+sam/servlet-hello-world Java An example of a Servlet app you can run inside a container
+sam/simple-hello-world Java HelloWorld example using the Simple Framework
+sam/spray-blocking Scala Example of blocking behavior in Spray-Can
+sam/todolist Scala Sample application from http://www.playframework.org/documentation/2.0.4/ScalaTodoList
+bs/dotfiles VimL none
+bs/jschesstest JavaScript none
+bs/pleasejobme JavaScript A project to help people connect with Twitter Employees at SxSW.
+bs/starling Ruby Starling Message Queue
+bs/yeswecode-screensaver Objective-C none
+mmower/bishop Ruby A bayesian classifier library for Ruby
+mmower/bones JavaScript A kind of cranky app for tracking weight & eating.
+mmower/cell-culture-1 JavaScript A first go at Langston's cellular automata in the browser
+mmower/cell-culture-3 JavaScript Extended the cellculture library to do Conway's \
+mmower/coreplus Ruby Some extensions to Ruby Core & Stdlib that I use
+mmower/crashcity none Open crash logging application
+mmower/dg834statsd Ruby An ADSL line stats collecting daemon for DG834v1 routers
+mmower/diffly Objective-C Diffly is a tool for exploring Subversion working copies. It shows all files with changes and, clicking on a file, shows a highlighted view of the changes for that file. When you are ready to commit Diffly makes it easy to select the files you want to check-in and assemble a useful commit message.
+mmower/elysium Objective-C A Generative MIDI Sequencer for Mac OS X
+mmower/embeddable-macruby none Fixes MacRuby to build the framework inherently relocatable and to load fixed BridgeSupport metadata from the framework.
+mmower/errata_plugin Ruby Rails plugin for logging errata for the Errata client
+mmower/Freeman Objective-C An attempt to automate some aspects of building in Native Instruments Reaktor 5
+mmower/Gen Objective-C Objective-C Code Generator
+mmower/godo Ruby go (to project) do (stuffs)
+mmower/Grayson none The application I built to help myself track spending & budget for purchases
+mmower/Hexdump JavaScript Javascript hexdump library
+mmower/KRBN JavaScript Kauffman's Random Boolean Networks
+mmower/lmdial Objective-C Cocoa \
+mmower/lmhoneycombview Objective-C A custom NSView subclass that presents a honeycomb with selectable hexagonal cells
+mmower/lmswitch Objective-C Cocoa \
+mmower/bishop Ruby A bayesian classifier library for Ruby
+mmower/bones JavaScript A kind of cranky app for tracking weight & eating.
+mmower/cell-culture-1 JavaScript A first go at Langston's cellular automata in the browser
+mmower/cell-culture-3 JavaScript Extended the cellculture library to do Conway's \
+mmower/coreplus Ruby Some extensions to Ruby Core & Stdlib that I use
+mmower/crashcity none Open crash logging application
+mmower/dg834statsd Ruby An ADSL line stats collecting daemon for DG834v1 routers
+mmower/diffly Objective-C Diffly is a tool for exploring Subversion working copies. It shows all files with changes and, clicking on a file, shows a highlighted view of the changes for that file. When you are ready to commit Diffly makes it easy to select the files you want to check-in and assemble a useful commit message.
+mmower/elysium Objective-C A Generative MIDI Sequencer for Mac OS X
+mmower/embeddable-macruby none Fixes MacRuby to build the framework inherently relocatable and to load fixed BridgeSupport metadata from the framework.
+mmower/errata_plugin Ruby Rails plugin for logging errata for the Errata client
+mmower/Freeman Objective-C An attempt to automate some aspects of building in Native Instruments Reaktor 5
+mmower/Gen Objective-C Objective-C Code Generator
+mmower/godo Ruby go (to project) do (stuffs)
+mmower/Grayson none The application I built to help myself track spending & budget for purchases
+mmower/Hexdump JavaScript Javascript hexdump library
+mmower/KRBN JavaScript Kauffman's Random Boolean Networks
+mmower/lmdial Objective-C Cocoa \
+mmower/lmhoneycombview Objective-C A custom NSView subclass that presents a honeycomb with selectable hexagonal cells
+mmower/lmswitch Objective-C Cocoa \
+abhay/abhay.github.io none none
+abhay/calais Ruby A Ruby interface to the Open Calais API (http://opencalais.com)
+abhay/erlang-bcrypt C Erlang wrapper for OpenBSD's Blowfish password hashing code
+abhay/eunit Erlang Git tracking branch of EUnit, a unit testing framework for Erlang
+abhay/gchart Ruby GChart exposes the Google Chart API (http://code.google.com/apis/chart) via a friendly Ruby interface. It can generate the URL for a given chart (for webpage use), or download the generated PNG (for offline use).
+abhay/gladman-aes C Git mirror of Brian Gladman's AES code
+abhay/mochiweb.old Erlang Erlang HTTP toolkit
+abhay/sample-rpc-server Erlang A Sample RPC Server using Mochiweb
+abhay/skydeck Ruby Access to the Skydeck API from Ruby
+rabble/fluiddb Ruby Ruby client library to FluidDB
+rabble/icalico Ruby social calendaring web app for conferences
+rabble/ptest none testing out how github pages
+rabble/revent_public Ruby A public version of the Revent repo
+rabble/riot JavaScript rewrite of protest.net
+rabble/urbanmapping none Library to interface to the urbanmapping rest api for neighborhood lookups
+benburkert/bootstrap-razor Shell A simple script to get up and running with Razor.
+benburkert/chef_fail Ruby none
+benburkert/community_shelf Ruby A simple app for managing a bookshelf, and a demo app for DataMapper, Merb, merb-cache
+benburkert/cruisecontrolrb Ruby CruiseControl.rb is a continuous integration tool, written in Ruby. It is quick to install, simple to use and easy to hack.
+benburkert/database-recipes Ruby A starter repo for custom chef recipes on EY's cloud platform
+benburkert/dm-is-permalink none permalinks for DM
+benburkert/dot-compleat none my .compleat directory
+benburkert/dotfiles VimL These are my dotfiles. There are many like them, but these ones are mine.
+benburkert/dvorax0r C++ custom key bindings for KeyRemap4MacBook
+benburkert/emp Ruby EMP = Event Machine + xMPp
+benburkert/epticsmix Ruby vanity me for skiing
+benburkert/ey-backup Ruby backup gem for backing up databases and filesystems to s3 with rolling windows and a download reapply backup script
+benburkert/ey-check none none
+benburkert/frontend-recipes none none
+benburkert/heroku-gpgme Shell Build gpgme for heroku
+benburkert/hosebird Ruby A Ruby gem for Twitter's new Streaming API codename Hosebird
+benburkert/ht Go ht - http + tee
+indirect/andre.arko.net Ruby blog
+indirect/arko.net Ruby homepage
+indirect/boxen-ponysay Puppet Have ponies say things said by horse_ebooks
+indirect/brewbygems Ruby Make RubyGems and Homebrew play nice together
+indirect/casperjs-require-relative-coffeescript CoffeeScript none
+indirect/daneel Ruby A 19,230 year old robot.
+indirect/dash-casperjs Ruby none
+indirect/dash-emoji Ruby none
+indirect/dash-httpstatuses Ruby none
+indirect/dash-littlebookoncs CSS none
+indirect/dash-phantomjs Ruby none
+indirect/dash-rust Ruby none
+indirect/dm-activemodel Ruby An adapter to help DataMapper conform to the ActiveModel API without warnings
+indirect/emojinate Ruby convert unicode emojis into :names: and pngs
+indirect/ey-jenkins Ruby Jenkins, on EY, instantly deployable with `ey deploy`
+fearoffish/aether JavaScript Cloud computing management console - initially for Chef Server with EC2
+fearoffish/bosh-info Ruby Grab information from a bosh release, right now just the cf-release, and just differences between properties (between tags)
+fearoffish/britify Ruby Translate from American to British and British to American (for amusement only)
+fearoffish/chatter Ruby A demo application that summarises chat messages
+fearoffish/cheese Ruby Cheese is a set of ruby scripts available to all under the MIT license. They reduce the steps needed to administrate a web server using nginx, svn and mongrel.
+fearoffish/chef-fiddler Ruby Classes that interact with chef servers (to be included in other projects)
+fearoffish/cloud_founder JavaScript A dashboard for interacting with BOSH and a private CloudFoundry
+fearoffish/compile_assets Ruby Sprockets compilation of assets, just playing right now.
+jsierles/asterisk-cookbook Ruby A Chef cookbook for creating an Asterisk server
+jsierles/braindump Ruby A practical, fun and educational UNIX command wrapper
+jsierles/chef_cookbooks_deprecated Perl Opinionated chef recipes for Ubuntu/Debian. Manage nginx, unicorn, UNIX user accounts, postgresql, and more!
+jsierles/driven Ruby Easy distributed load testing 
+jsierles/dueling Ruby none
+peimei/actsassubscribeable Ruby The acts_as_subscribeable plugin is a generator and plugin to allow the subscription based email notification 
+peimei/has_many_tenses Ruby Allows models to have associations and instance bools based on past recent and future
+peimei/jitsu-framework-base-website Ruby The Modular \
+peimei/jitsu-framework-gem Ruby Jitsu is a modular website development framework using Ruby on Rails
+brixen/archer none A programming language using only Unicode arrows.
+brixen/brixen.github.io JavaScript none
+brixen/brixen.io none A collection of stuff.
+brixen/charm Ruby Rubinius helping Ruby swallow Java, one bytecode at a time.
+brixen/clojure none CloXure is Clojure running on the Rubinius VM
+brixen/Epigram Haskell Mirror of Epigram darcs repository (darcs-fastconvert export of http://www.e-pig.org/darcs/Pig09 | git fast-import)
+brixen/eyesore-theme none A Limechat theme
+brixen/formalizingstlc none http://formalizingstlc.org
+brixen/getsecurenow.org JavaScript http://getsecurenow.org
+brixen/isnodejsbetter none http://isnodejsbetter,com
+brixen/joy-of-atomy none Joy of Clojure examples and exercises written in Atomy (http://atomy-lang.org)
+tmornini/bitcoin_wealth_distribution Ruby none
+outerim/coffer Ruby Aspires to be an S3 like storage system with simplified authentication
+outerim/travis_reprise Ruby A stupid gem to trigger travis. Use RESPONSIBLY.
+engineyard/appcloud-for-chrome-webstore Ruby The manifest + assets for a Hosted App on the Chrome WebStore
+engineyard/ardm Ruby Use Datamapper DSL on top of ActiveRecord
+engineyard/ar_properties Ruby Explicit properties for ActiveRecord
+engineyard/async Ruby Yet another background processing abstraction layer
+engineyard/chat JavaScript Sample Node.js App for Engine Yard Cloud
+engineyard/chronatog Ruby third party api integration service example
+engineyard/cloudex Ruby Lookup for vm on TMK
+engineyard/datafabric-example Ruby none
+engineyard/deploy_day_app JavaScript Everyone's own business as a Rails app. Ready to be deployed.
+sr/ape Ruby The Atom Protocol Exerciser
+sr/atom none Ruby library for working with the Atom 1.0 syndication format
+sr/atom-test Ruby Atom syndication format test suite for Ruby. 
+sr/atom-tools Ruby mirror of the darcs repository (ruby lib for atom/atompub)
+sr/beadmin Python Python scripts hacked together to manage bearnaise.net
+sr/bob-test Ruby Test helpers for Bob's family
+sr/bobette Ruby Bob's sister
+sr/connect-basic-auth JavaScript basic auth middleware for Connect
+sr/couchdb-mail none Playing around with CouchDB and Email
+sr/dst Ruby todo-list manager I wrote back in 2008 with the help of Gregory Brown in order to learn Ruby and TDD
+sr/dumbapp Ruby DumbApp is a simple AtomPub (RFC 5023) implementation based on Mongrel and ActiveRecord.
+sr/dwm C mirror of dwm http://hg.suckless.org/dwm
+sr/ey-integrity Ruby   Deploy a continuous integration server onto http://cloud.engineyard.com 
+sr/ape Ruby The Atom Protocol Exerciser
+sr/atom none Ruby library for working with the Atom 1.0 syndication format
+sr/atom-test Ruby Atom syndication format test suite for Ruby. 
+sr/atom-tools Ruby mirror of the darcs repository (ruby lib for atom/atompub)
+sr/beadmin Python Python scripts hacked together to manage bearnaise.net
+sr/bob-test Ruby Test helpers for Bob's family
+sr/bobette Ruby Bob's sister
+sr/connect-basic-auth JavaScript basic auth middleware for Connect
+sr/couchdb-mail none Playing around with CouchDB and Email
+sr/dst Ruby todo-list manager I wrote back in 2008 with the help of Gregory Brown in order to learn Ruby and TDD
+sr/dumbapp Ruby DumbApp is a simple AtomPub (RFC 5023) implementation based on Mongrel and ActiveRecord.
+sr/dwm C mirror of dwm http://hg.suckless.org/dwm
+sr/ey-integrity Ruby   Deploy a continuous integration server onto http://cloud.engineyard.com 
+lifo/cramp JavaScript Real-time web application framework in Ruby
+lifo/cramp-pub-sub-chat-demo Ruby Cramp + Redis Pub/Sub + WebSockets
+lifo/enlighten-websockets Ruby Cramp + WebSockets for enlighten
+lifo/fast_context Ruby Make your shoulda contexts faster
+lifo/journey_demo Ruby Nothing to see here
+lifo/lifo.github.com none Mod Porter
+lifo/misfit_client Ruby none
+lifo/sidekick Ruby Nothing to see here
+lifo/snoop Ruby Cramp + WebSockets + IRC
+lifo/testing none Testing
+lifo/tickle Ruby Run your tests in parallel processes
+lifo/tramp Ruby Asynchronous ORM layer
+lifo/cramp JavaScript Real-time web application framework in Ruby
+lifo/cramp-pub-sub-chat-demo Ruby Cramp + Redis Pub/Sub + WebSockets
+lifo/enlighten-websockets Ruby Cramp + WebSockets for enlighten
+lifo/fast_context Ruby Make your shoulda contexts faster
+lifo/journey_demo Ruby Nothing to see here
+lifo/lifo.github.com none Mod Porter
+lifo/misfit_client Ruby none
+lifo/sidekick Ruby Nothing to see here
+lifo/snoop Ruby Cramp + WebSockets + IRC
+lifo/testing none Testing
+lifo/tickle Ruby Run your tests in parallel processes
+lifo/tramp Ruby Asynchronous ORM layer
+rsl/acts_as_snook Ruby A comment spam solution that doesn't rely on CAPTCHAs, Javascript, or external web services. In other words, a comment spam solution that doesn't suck!
+rsl/board_of_review none Comment spam detection and marking system
+rsl/bored_of_review none Comment spam detection and marking system
+rsl/catchall none A catchall site for my Nginx configuration
+rsl/dotfiles Shell My dotfiles
+rsl/is_gay none This space left intentionally blank.
+rsl/mollusque Ruby none
+rsl/proxy_attributes Ruby ProxyAttributes is designed to \
+rsl/rsl.github.com none Nathaniel likes to dance (even if I do not).
+rsl/shoulda_render_json Ruby Shoulda macros for making very basic assertions about JSON responses
+rsl/skinny_scaffold Ruby Skinny scaffolds for Rails 4
+rsl/skinny_spec Ruby Skinny Spec is a collection of Rspec helper methods designed to help trim the fat and DRY up some of the bloat that sometimes results from properly specing your classes and templates.
+rsl/stringex Ruby Some [hopefully] useful extensions to Ruby’s String class. It is made up of three libraries: ActsAsUrl [permalink solution with better character translation], Unidecoder [Unicode to Ascii transliteration], and StringExtensions [miscellaneous helper methods for the String class].
+rsl/tabula_rasa Ruby none
+imownbey/blawgz none A blog which generates HTML and then uploads it via SCP
+imownbey/davidblane Ruby none
+imownbey/ddttt Ruby none
+imownbey/docbox Ruby Wiki interface allowing people to contribute to the documentation of a project
+imownbey/docbox-sample-app Ruby Sample App for Docbox
+imownbey/dygraphs JavaScript Dygraphs with some extra loving
+imownbey/httpclient CoffeeScript none
+imownbey/imownbey.github.io JavaScript none
+imownbey/inspires none Inspires blog
+imownbey/iownbey.github.com none Inspir.es
+imownbey/jim Io An irc bot written in io. To learn and stuff
+imownbey/Node-Registry Scala Node registration with some store
+imownbey/summarize none none
+imownbey/throwaway none none
+imownbey/twitter_sicp Scheme A group excursion of twitter employees into computation via scheme
+dylanegan/amqp-rabbitmq-article Ruby The examples from http://www.infoq.com/articles/AMQP-RabbitMQ
+dylanegan/animated none none
+dylanegan/at-the-movies Ruby Pulling that shit in yo!
+dylanegan/candidate Ruby Manifesto API client.
+dylanegan/cards none A collection of card game rules.
+dylanegan/clarence Ruby none
+dylanegan/configarrr Ruby Just like a pirate would!
+dylanegan/dadame Ruby Locate Dada Falafel and provide directions.
+dylanegan/fog-bouncer Ruby A simple way to define and manage security groups for AWS with the backing support of fog.
+dylanegan/fraggle-block Ruby A synchronous Ruby client for Doozer.
+dylanegan/geonames.js JavaScript Stalking you in many different ways.
+dylanegan/hellanzb Ruby XMLRPC API all wrapped up
+dylanegan/howmanydylans Ruby How Many Dylans?
+dylanegan/htmlip none FUCKING POINTLESS!
+dylanegan/isitciderweather.js JavaScript Client side version of isitciderweather.
+dylanegan/just-the-tip none A collection of random tips.
+dylanegan/lincoln-s-birthday none Lincoln's Birthday
+dylanegan/manifesto Ruby S3 backed manifests.
+dylanegan/merman CoffeeScript none
+dylanegan/openid-store-sequel Ruby Storing your OpenIDs in your Sequels.
+dylanegan/openid_store_mongoid Ruby Storing your OpenIDs in your MongoDBs.
+dylanegan/packer.js JavaScript Not just for holidays, but for packing and unpacking to and from binary sequences in node.js.
+jm/acte-math Ruby A math trivia game built by middle school students I've been tutoring in Ruby.  App was built in 3 weeks, learning Ruby and Sinatra from the ground up.
+jm/acte-trivia Ruby Another application from the kids I've been tutoring in Ruby (this time a group led/mentored by @pjdavis).  A simple trivia game.
+jm/acts_as_good_speeler Ruby Plugin to fix some of the weird/wrong pluralizations in Rails
+jm/branched_migrations Ruby Branching of database migrations.
+jm/burst Ruby Ruby parsing reStructuredText
+jm/context Ruby A super tight library to add contexts to tests.
+jm/dataplace Ruby A phpMyAdmin-esque app in Sinatra
+jm/dcov Ruby Documentation coverage analyzer for Ruby code
+jm/deprecate none Deprecate (primarily) test code after a certain date, version, or other arbitrary condition is met.
+jm/ditchdaddy Ruby Ditch GoDaddy, join the DNSimple/Namecheap/Gandi.net party
+jm/docr Ruby A clean replacement for RDoc.  Uses as much of RDoc as possible at this point and will eventually replace/refactor where possible.
+jm/estimette Ruby Suck at estimation?  Great!  Estimette can help.
+jm/fed Ruby none
+jm/fleet Ruby The fleet little web framework in Ruby.
+jm/foundry Ruby Another fixture replacement using named_scope.  It's fast and simple.
+jm/fresno Ruby Framework for writing FRC controller code in Mirah
+jm/gem_audit Ruby Client for GemAudit.org
+jm/gem_audit_server none API for serving up gem-related CVEs
+jm/gem_git Ruby Tools for working with gems' source code with Git
+jm/go-semver Go A semantic version library for Go
+willcodeforfoo/911 Ruby Suite of tools for trying to make sense of semi-structured crime reporting data in semi-real time.
+willcodeforfoo/action_mailer_layouts Ruby Enable the use of layouts in ActionMailer templates, this fork's goal is to enable content_for blocks
+willcodeforfoo/chart_fu Ruby Easy charting library for Ruby with multiple backends
+willcodeforfoo/dotfiles VimL Configuration files for bash, vim, etc.
+willcodeforfoo/dotvim VimL none
+willcodeforfoo/drone-cc none Simple CCMenu component for the Drone CI server
+willcodeforfoo/ec2-imagemagick Ruby Quick set of scripts to do image manipulation on S3 on EC2, likely to be of little use to anyone
+willcodeforfoo/foo_tools Ruby Random Rails stuff that I've cribbed from other places and improved upon, mostly to bootstrap a new Rails project quickly
+willcodeforfoo/ical-time none Utility for pulling data out of iCal, useful for time tracking
+willcodeforfoo/jumpcut Objective-C Fork of Steve Cook's Jumpcut clipboard history utility (jumpcut.sourceforge.net), hopefully adding web syncing
+willcodeforfoo/persistence Ruby Dead simple continuous integration server, meant to be easy to setup on Heroku but certainly could run on other platforms
+willcodeforfoo/radiant-dav-extension Ruby Access Radiant through WebDAV
+willcodeforfoo/redmine_hour_summary Ruby none
+willcodeforfoo/s3sync Ruby Fork of the original to add a couple minor features
+willcodeforfoo/simple-mongo-cms Ruby Simple, MongoDB driven CMS in Ruby
+BrianTheCoder/brianthecoder.github.com none pages!
+BrianTheCoder/car_pc CoffeeScript Code for my car pc built with node.js and running on a raspberry pi!
+BrianTheCoder/cool_breeze Ruby A new type of orm, so awesome I'm calling it a urm(ultimate relation mapper)....its that good.
+BrianTheCoder/couchdb_presentation_code Ruby Code for using different gems with couchdb
+BrianTheCoder/Dashboard Ruby a modular admin dashboard
+BrianTheCoder/davenport JavaScript Couchdb blog
+BrianTheCoder/dealer Ruby Beat vegas through simulation
+BrianTheCoder/dm-is-schemaless Ruby Schemaless data in a traditional rdbms. Inspired by friendfeed
+BrianTheCoder/dm-preferences none TODO: one-line summary of your gem
+BrianTheCoder/forumtastic none The most excellent forum slice for merb
+BrianTheCoder/geolocator JavaScript Simple js wrapper around geolocator
+freeformz/codeeval Ruby none
+freeformz/cookbooks Ruby My Chef cookbooks
+freeformz/copy-librato Ruby Copy Librato stuff from one account to another
+freeformz/disk-stats Ruby none
+freeformz/Dotfiles VimL Dotfiles
+freeformz/dotvim VimL none
+freeformz/exp Go Just show me the requests and respond with 200
+freeformz/factor Go Go Proxy
+freeformz/filechan none File Channel
+freeformz/foofoo none none
+freeformz/freeformz.github.com Ruby Stuffs
+freeformz/go-on-heroku Shell none
+freeformz/godium Go Go libsodium bindings
+hassox/abr_lookup Ruby An ABN/ACN lookup tool
+hassox/any_view Ruby Universal View helpers with minimal requirements
+hassox/black Ruby A hackable blog stack
+hassox/chain JavaScript A Simple Application Convention for Node
+hassox/dm-polymorphic Ruby An initial repo for polymorphism in datamapper
+hassox/dm-zone-types Ruby Time zone aware data types
+hassox/formz Ruby Ruby framework / ORM agnostic form utilities
+hassox/gabber-client JavaScript Gabbertalk Client
+hassox/hash_path Ruby Easily find hash paths
+automatthew/activemdb Ruby Sad little library for read access to Access (MDB) databases
+automatthew/ambitious_activeldap Ruby Ambition adapter for ActiveLdap
+automatthew/ascribe JavaScript ASCII charting for JavaScript
+automatthew/automatthew.github.com none self
+automatthew/ax CoffeeScript A simple Node.js logger.
+automatthew/cassie Ruby Pure-Ruby CSS generator
+automatthew/desire Ruby Redis wrappers
+automatthew/djinn CoffeeScript Javascript Finite State Automata
+automatthew/dotfiles Ruby mine
+automatthew/flipper Ruby Load testing helper: track target and test configs, storing with each result
+automatthew/fyte none JVM assembler written in a Forth
+automatthew/harp Ruby A mixin for creating application REPLs with Readline support
+automatthew/minfinite C minimal FSMs in C, using function pointers in macros
+automatthew/moonstone Ruby JRuby wrapper and base classes for Lucene indexing
+automatthew/pez_libs none libs for Pez
+automatthew/rakegen Ruby Rake extension for generating and updating projects from templates
+automatthew/ruby2java Ruby none
+automatthew/rupez Ruby Pez in Ruby, via FFI
+automatthew/squeeze Ruby Data reduction in Ruby
+queso/chatApp JavaScript A simple app built during an AirPair session.
+queso/dotfiles Shell My OSX dotfiles
+queso/envelopes Ruby A quick budgeting app based on the envelope system
+queso/follower-down none Shutdown page for follower.io
+queso/general-hawk Ruby A Sinatra app to monitor multiple CIJoe Projects
+queso/impressionist Ruby A fork that supports redis
+queso/integrity-campfire Ruby Campfire notifier for the Integrity continuous integration server
+queso/mapit Ruby A rails plugin that bridges the gap between ActiveRecord and Google Maps JS
+queso/meteor-talk CoffeeScript A talk on the What, why, and how of Meteor.js
+queso/performance-sucks JavaScript Performance sucks?  Make it better.
+queso/qcicon PHP Queen City IndieCon
+queso/railsconf-building-api none Presentation for RailsConf 2010 - Building an API with Rails

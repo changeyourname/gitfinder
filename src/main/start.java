@@ -102,19 +102,30 @@ public class start {
      * source code that we want to run.
      */
     private static void launchClient(final String[] args){
+        String sourceCode = "";
         // let's get the source code that we want to run
-        String location = "https://raw.githubusercontent.com/triplecheck/gitfinder/master/run/script/ClientScript.java";
+        String location;
         // other options to process?
         if(args.length > 2){
-            String option = args[2];
+            final String option = args[2];
+            // shall we launch the version available on the server?
             if(option.equals("internal")){
                 System.out.println("Using the internal script from the server");
                 location = "http://" + args[1] + core.webGetScript;
+                sourceCode = utils.internet.getTextFile(location);
             }
+            // shall we used the compiled version we have
+            if(option.equals("local")){
+                System.out.println("Using the internal script on our local folder");
+                sourceCode = utils.files.readAsString(new File("script", "ClientScript.java"));
+            }
+        }else{
+            // get the source code file from github by default
+            location = "https://raw.githubusercontent.com/triplecheck/gitfinder/master/run/script/ClientScript.java";
+            sourceCode = utils.internet.getTextFile(location);
         }
         
         
-        final String sourceCode = utils.internet.getTextFile(location);
         
         // we can't have an empty source code
         if(sourceCode.isEmpty()){
