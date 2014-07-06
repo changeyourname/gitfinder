@@ -35,6 +35,10 @@ public class ClientScript implements Client{
     // how long should we wait before restarting the processing?
     final long maxWait = 1000 * 60 * 10;
     
+    // create a list of threads to keep up with our worker
+    ArrayList<Thread> threadList = new ArrayList();
+    
+    
     private final boolean canContinue = true;
 //    private Thread thread;
     /**
@@ -50,13 +54,14 @@ public class ClientScript implements Client{
      * @param args The parameters that we will support in different manners
      * @param username  Login username
      * @param password  Login password
+     * @param thread    The thread where the code will run
      */
-    public void startThread(final String[] args, final String username, 
+    public Thread startThread(final String[] args, final String username, 
             final String password){
         // we assume that the first parameter indicates the connecting address
         final String givenAddress = args[1];
         System.out.println("Starting scripted client, attached to " + givenAddress);
-        System.out.println("Version 0.2");
+        System.out.println("Version 0.3");
         address = givenAddress;
         final ClientScript thisClient = this;
             
@@ -80,8 +85,12 @@ public class ClientScript implements Client{
                             + username
                             + " is processing " + nextUser);
                     // now process the assigned user and get a batch of reps
-                    ArrayList<Rep> result = core.rep.getRepositories(nextUser, username, password);
-                    
+                    ArrayList<Rep> result = null;
+                    try{
+                        result = core.rep.getRepositories(nextUser, username, password);
+                    }catch (Exception e){
+                        result = null;
+                    }
                     // a null reply means than error occurred
                     if(result == null){
                         doWait(10, "CL82 Error");
@@ -130,19 +139,20 @@ public class ClientScript implements Client{
              */
             private void doWait(final int i, final String message) {
                 int count = i;
-                        System.out.println(message + ", retrying again in "
+                        System.err.println(message + ", retrying again in "
                                 + utils.text.pluralize(count, "second")
                         );
                         count--;
                         while(count>0){
                             utils.time.wait(1);
-                            System.out.println(count + "..");
+                            System.out.println(count + ".. (" + message + ")");
                             count--;
                         }
             }
         };
         // kickoff the thread
         thread.start();
+        return thread;
     }
     
         
@@ -151,15 +161,100 @@ public class ClientScript implements Client{
      * @param args  The arguments provided from command line
      */
     @Override
-    public void start(String[] args) {
-        // do we have some kind of text file with the user details?
+    public void start(final String[] args) {
+        // launch all the threads in mass
+        launchThreads(args);
+        
+        // now start the thread that will force the worker restart
+        Thread thread = new Thread(){
+            
+            @Override
+            public void run(){
+                while(true){
+                    // wait some time
+                    utils.time.wait(30*1);
+                    // launch all the threads in mass
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    System.out.println("Restart!");
+                    launchThreads(args);
+                }
+            }
+        };
+        // kickoff the thread
+        thread.start();
+    
+    }
+    
+    /**
+     * Launches all the threads in mass
+     * @param args 
+     */
+    private void launchThreads(String[] args){
+    // do we have some kind of text file with the user details?
         File file = new File("password.txt");
         // does the password file exists?
         if(file.exists()==false){
             // just use the normal user/password procedure
             setLoginDetails();
+            // launch a single processing thread
+            startThread(args, core.username, core.password);
             return;
         }
+        
+        // now clean up our array
+        for(Thread thread : threadList){
+            try{
+                thread.stop();
+                thread.interrupt();
+                thread = null;
+                
+            }catch (Exception e){
+            System.err.println("CS208 Error interrupting thread");
+            }
+        }
+        // clean up the thread list
+        threadList = new ArrayList();
+        
         // otherwise read the text file and use these details instead
         final String text = utils.files.readAsString(file);
         // now split each line into a field
@@ -175,9 +270,12 @@ public class ClientScript implements Client{
             // give some output
             System.out.println("Using credentials of " + username);
             // launch the thread
-            startThread(args, username, password);
+            Thread thread = startThread(args, username, password);
+            threadList.add(thread);
+            
         }
     }
+    
     
     /**
      * Sets the login details that will be used with the github API
@@ -194,8 +292,8 @@ public class ClientScript implements Client{
             return;
         }
 
-        System.out.println("Attention: No username nor password provided");
-        System.out.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
+        System.err.println("Attention: No username nor password provided");
+        System.err.println("In order to use the Github API in full speed, you need to provide a github login/password\n");
 
         try {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

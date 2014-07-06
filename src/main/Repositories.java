@@ -174,8 +174,8 @@ public class Repositories {
                 new RtGithub(
                    username, password
            )
-                        .entry().through(CarefulWire.class, 50));
-//              .entry());
+//                        .entry().through(CarefulWire.class, 50));
+              .entry());
            
            final JsonResponse resp = github.entry()
                 .uri().path("/users/" + user + "/repos")
